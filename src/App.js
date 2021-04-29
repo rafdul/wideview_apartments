@@ -32,8 +32,8 @@ const App = () => (
             <Switch>
               <Route exact path='/' component={Homepage} />
               <Route exact path='/products' component={ProductsAll} />
-              <Route exact path='/post/products/:categoryId' component={ProductsByCategory} />
-              <Route exact path='/post/products/:categoryId/:id' component={ProductOne} />
+              <Route exact path='/products/:categoryId' component={ProductsByCategory} />
+              <Route exact path='/products/:categoryId/:id' component={ProductOne} />
               <Route exact path='/cart' component={Cart} />
               <Route path='*' component={NotFound} />
             </Switch>

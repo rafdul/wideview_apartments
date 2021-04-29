@@ -26,13 +26,13 @@ const Component = ({className, category}) => (
         <div key={item.id} className={styles.cards_group__item}>
           <Card  className={styles.flex}>
             <CardActionArea>
-              <Link to={`#`} className={styles.link}>
+              <Link to={`/products/${item.name}`} className={styles.link}>
                 <div className={styles.imageConatiner}>
                   <CardMedia
                     className={styles.image}
                     component="img"
                     image={item.image}
-                    title={item.title}
+                    title={item.name}
                   />
                 </div>
                 <CardContent>
