@@ -37,7 +37,7 @@ const Component = ({className}) => {
             {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
             <Nav className={clsx('mr-auto', styles.list_flex)} >
               <Nav.Link href="#1" className={styles.list_item}>Seaside</Nav.Link>
-              <Nav.Link href="#2" className={styles.list_item}>Cieties</Nav.Link>
+              <Nav.Link href="#2" className={styles.list_item}>Cities</Nav.Link>
               <Nav.Link href="#3" className={styles.list_item}>Mountains</Nav.Link>
               <Nav.Link href="#4" className={styles.list_item}>Countryside</Nav.Link>
             </Nav>

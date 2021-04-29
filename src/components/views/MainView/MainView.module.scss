@@ -1,4 +1,52 @@
 @import '../../../styles/settings.scss';
 
-// .root {
-// }
+.root {
+  .subtitle {
+    text-align: center;
+    margin: $base-size*3;
+    letter-spacing: 2px;
+
+    &__first {
+      margin-bottom: $base-size*2;
+    }
+  }
+
+  .cards_group {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    align-content: stretch;
+
+    &__item {
+      flex-basis: 45%;
+      margin: $main-spacing;
+      flex-grow: 1;
+      align-self: stretch;
+
+      .flex{
+        height: 100%;
+      }
+
+      .link {
+        text-decoration: none;
+        color: $color-text;
+      }
+
+      .imageContainer {
+
+        .image {
+          max-height: 40vh;
+        }
+      }
+
+      .text {
+        text-align: center;
+        font-family: $font-text;
+        letter-spacing: 2px;
+      }
+
+    }
+  }
+}

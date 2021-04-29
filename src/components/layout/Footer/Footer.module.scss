@@ -1,8 +1,33 @@
 @import '../../../styles/settings.scss';
+@import "../../../styles/mixins.scss";
+
 
 .root {
   .footer {
     background-color: $color-background-dark;
     color: $color-text-light;
+
+    .container {
+      @include container;
+    }
+
+    .item {
+      padding: $main-spacing;
+    }
+
+    .group {
+      display: flex;
+      flex-wrap: nowrap;
+    }
+
+    .socialmedia{
+      text-align: center;
+
+      &__icon {
+        margin: 0 $main-spacing*3;
+        font-size: $base-size*3;
+      }
+    }
+
   }
 }
