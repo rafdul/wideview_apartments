@@ -1,0 +1,16 @@
+@import '../../../styles/settings.scss';
+
+.root {
+  margin: 0 auto;
+  max-width: 1920px;
+  height: 250px;
+
+  .carousel__item{
+    height: 500px;
+  }
+
+  .carousel__text{
+    bottom: 50%;
+    color: #ad731c;
+  }
+}

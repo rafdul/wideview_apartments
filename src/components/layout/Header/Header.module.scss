@@ -1,0 +1,28 @@
+@import '../../../styles/settings.scss';
+@import "../../../styles/mixins.scss";
+
+.root {
+  .container{
+    @include container;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__logo{
+      max-width: 275px;
+
+      .image{
+        width: 100%;
+      }
+    }
+
+    &__cart {
+      color: $color-text;
+
+      .icon{
+        font-size: $base-size*2;
+      }
+    }
+
+  }
+}
