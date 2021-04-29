@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 
 import Carousel from 'react-bootstrap/Carousel';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import clsx from 'clsx';
 
 // import { connect } from 'react-redux';
@@ -24,32 +24,47 @@ const Component = ({className}) => {
         <Carousel.Item className={styles.carousel__item}>
           <img
             className="d-block w-100"
-            src="/images/carousel-images/apartment_sea-1280.jpg"
+            srcSet="
+              /images/carousel-images/apartment_sea-640.jpg 640w,
+              /images/carousel-images/apartment_sea-1280.jpg 1280w,
+              /images/carousel-images/apartment_sea-1920.jpg 1920w
+            "
+            src="/images/carousel-images/apartment_sea-1920.jpg"
             alt="First slide"
           />
           <Carousel.Caption className={styles.carousel__text}>
-            <h2>Discover apartments for rent in 50+ countries!</h2>
+            <h1>Discover apartments for rent in 50+ countries!</h1>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item className={styles.carousel__item} >
           <img
             className="d-block w-100"
-            src="/images/carousel-images/apartment-1280.jpg"
+            srcSet="
+              /images/carousel-images/apartment-640.jpg 640w,
+              /images/carousel-images/apartment-1280.jpg 1280w,
+              /images/carousel-images/apartment-1920.jpg 1920w
+            "
+            src="/images/carousel-images/apartment-1920.jpg"
             alt="Second slide"
           />
 
           <Carousel.Caption className={styles.carousel__text}>
-            <h2>Explore our most popular offers</h2>
+            <h1>Explore our most popular offers</h1>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item className={styles.carousel__item} >
           <img
             className="d-block w-100"
-            src="/images/carousel-images/dining-room-1280.jpg"
+            srcSet="
+              /images/carousel-images/dining-room-640.jpg 640w,
+              /images/carousel-images/dining-room-1280.jpg 1280w,
+              /images/carousel-images/dining-room-1920.jpg 1920w
+            "
+            src="/images/carousel-images/dining-room-1920.jpg"
             alt="Third slide"
           />
           <Carousel.Caption className={styles.carousel__text}>
-            <h2>Hundreds of cities around the world! Where will you go?</h2>
+            <h1>Hundreds of cities around the world! Where will you go?</h1>
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>

@@ -2,8 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
+
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
@@ -16,11 +20,11 @@ import styles from './Header.module.scss';
 
 
 const Component = ({className}) => {
-  const [value, setValue] = React.useState(0);
+  // const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  // const handleChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
 
   return(
     <div className={clsx(className, styles.root)}>
@@ -28,16 +32,25 @@ const Component = ({className}) => {
         <div className={styles.container__logo}>
           <img src="/images/logo.svg" alt="logo" title="logo" className={styles.image}/>
         </div>
-        <div>
-          <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-            <Tab label="Seaside" />
+        <div className={styles.container__menu}>
+          <Navbar bg="light" variant="light" className={styles.list}>
+            {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" /> */}
+            <Nav className={clsx('mr-auto', styles.list_flex)} >
+              <Nav.Link href="#1" className={styles.list_item}>Seaside</Nav.Link>
+              <Nav.Link href="#2" className={styles.list_item}>Cieties</Nav.Link>
+              <Nav.Link href="#3" className={styles.list_item}>Mountains</Nav.Link>
+              <Nav.Link href="#4" className={styles.list_item}>Countryside</Nav.Link>
+            </Nav>
+          </Navbar>
+          {/* <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+            <Tab label="Seaside" className={styles.list_item}/>
             <Tab label="Cieties" />
             <Tab label="Mountains" />
             <Tab label="Countryside" />
-          </Tabs>
+          </Tabs> */}
         </div>
-        <div>
-          <Link to={'#'} className={styles.container__cart}>
+        <div className={styles.container__cart}>
+          <Link to={'#'} className={styles.link}>
             <FontAwesomeIcon icon={faShoppingCart} className={styles.icon}/>
           </Link>
         </div>
