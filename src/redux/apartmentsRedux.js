@@ -1,5 +1,6 @@
 /* selectors */
 export const getAllApartments = ({apartments}) => apartments.data;
+export const getOneApartment = ({apartments}, id) => apartments.data.find(item => item.id === id);
 
 /* action name creator */
 const reducerName = 'apartments';
