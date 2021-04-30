@@ -227,7 +227,7 @@ export const initialState = {
       {
         id: 'd2',
         category: 'countryside',
-        name: 'Cisza i spokój',
+        name: 'Green Silence',
         city: 'Village Corner',
         description: 'Maecenas eget velit non eros vulputate leo ac lacus euismod pede, molestie vitae, cursus a, sodales tempor. Phasellus semper convallis. Praesent tristique enim, sagittis tortor. ',
         price: 450,

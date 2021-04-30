@@ -24,7 +24,52 @@ const Component = ({className, apartment}) => (
   <div className={clsx(className, styles.root)}>
     <div className={styles.container}>
       {console.log('apartment', apartment)}
-      <h3>{apartment.name}</h3>
+      <h3 className={styles.title}>{apartment.name}</h3>
+      <h5 className={styles.subtitle}>{apartment.city}</h5>
+      <p className={styles.subtitle}>{apartment.description}</p>
+      <Grid container>
+        <div className={styles.grid}>
+          <section className={styles.big_image}>
+            <CardMedia
+              className={styles.image}
+              component="img"
+              image={apartment.image}
+              title={apartment.name}
+            />
+          </section>
+          <section className={styles.big_text}>
+            <span className={styles.marketing_box}>
+              <h3 className={styles.marketing}>Exclusive relax </h3>
+            </span>
+          </section>
+          <section className={styles.small_image}>
+            <CardMedia
+              className={styles.image}
+              component="img"
+              image={apartment.image}
+              title={apartment.name}
+            />
+          </section>
+          <section className={styles.small_text}>
+            <span className={styles.marketing_box}>
+              <h3 className={styles.marketing}>We are waiting for you</h3>
+            </span>
+          </section>
+          <section className={styles.medium_image}>
+            <CardMedia
+              className={styles.image}
+              component="img"
+              image={apartment.image}
+              title={apartment.name}
+            />
+          </section>
+
+        </div>
+      </Grid>
+
+
+
+
       <Grid container>
         <Grid item xs={12} sm={4}>
           <Paper elevation={3}>
