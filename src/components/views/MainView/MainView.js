@@ -27,7 +27,7 @@ const Component = ({className, category}) => (
           <Card  className={styles.flex}>
             <CardActionArea>
               <Link to={`/products/${item.name}`} className={styles.link}>
-                <div className={styles.imageConatiner}>
+                <div className={styles.imageContainer}>
                   <CardMedia
                     className={styles.image}
                     component="img"

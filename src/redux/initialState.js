@@ -40,7 +40,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'private',
         balcony: 1,
-        image: '',
+        image: '/images/offers/sea1864448_640.jpg',
       },
       {
         id: 'a2',
@@ -53,20 +53,20 @@ export const initialState = {
         kitchen: 2,
         swimpool: 'private',
         balcony: 2,
-        image: '',
+        image: '/images/offers/sea3100785_640.jpg',
       },
       {
         id: 'a3',
         category: 'seaside',
-        name: 'Ocean Apartment High',
-        city: 'Barcelona',
+        name: 'Ocean Penthouse',
+        city: 'Laguna Beach',
         description: 'Maecenas eget velit non eros vulputate leo ac lacus euismod pede, molestie vitae, cursus a, sodales tempor. Phasellus semper convallis. Praesent tristique enim, sagittis tortor. ',
         price: 400,
         bedrooms: 2,
         kitchen: 1,
         swimpool: 'public',
         balcony: 1,
-        image: '',
+        image: '/images/offers/sea3715707_640.jpg',
       },
       {
         id: 'a4',
@@ -79,12 +79,12 @@ export const initialState = {
         kitchen: 2,
         swimpool: 'private',
         balcony: 3,
-        image: '',
+        image: '/images/offers/sea5114392_640.jpg',
       },
       {
-        id: 'a4',
+        id: 'a5',
         category: 'seaside',
-        name: 'Ocean Apartment High',
+        name: 'Atlantic Apartment High',
         city: 'Miami',
         description: 'Maecenas eget velit non eros vulputate leo ac lacus euismod pede, molestie vitae, cursus a, sodales tempor. Phasellus semper convallis. Praesent tristique enim, sagittis tortor. ',
         price: 800,
@@ -92,7 +92,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'public',
         balcony: 3,
-        image: '',
+        image: '/images/offers/sea1030758_640.jpg',
       },
       {
         id: 'b1',
@@ -105,7 +105,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 1,
-        image: '',
+        image: '/images/offers/city460762_640.jpg',
       },
       {
         id: 'b2',
@@ -118,7 +118,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 1,
-        image: '',
+        image: '/images/offers/city1927719_640.jpg',
       },
       {
         id: 'b3',
@@ -131,7 +131,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 1,
-        image: '',
+        image: '/images/offers/city2614141_640.jpg',
       },
       {
         id: 'b4',
@@ -144,7 +144,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 1,
-        image: '',
+        image: '/images/offers/city3137416_640.jpg',
       },
       {
         id: 'c1',
@@ -157,7 +157,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 2,
-        image: '',
+        image: '/images/offers/mount54906_640.jpg',
       },
       {
         id: 'c2',
@@ -170,7 +170,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 1,
-        image: '',
+        image: '/images/offers/mount726325_640.jpg',
       },
       {
         id: 'c3',
@@ -183,7 +183,7 @@ export const initialState = {
         kitchen: 2,
         swimpool: 'private',
         balcony: 2,
-        image: '',
+        image: '/images/offers/mount1626578_640.jpg',
       },
       {
         id: 'c4',
@@ -196,7 +196,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 1,
-        image: '',
+        image: '/images/offers/mount2881296_640.jpg',
       },
       {
         id: 'c5',
@@ -209,7 +209,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 1,
-        image: '',
+        image: '/images/offers/mount3178666_640.jpg',
       },
       {
         id: 'd1',
@@ -222,7 +222,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 1,
-        image: '',
+        image: '/images/offers/country389264_640.jpg',
       },
       {
         id: 'd2',
@@ -235,7 +235,7 @@ export const initialState = {
         kitchen: 2,
         swimpool: 'private',
         balcony: 2,
-        image: '',
+        image: '/images/offers/country1882178_640.jpg',
       },
       {
         id: 'd3',
@@ -248,7 +248,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 2,
-        image: '',
+        image: '/images/offers/country962240_640.jpg',
       },
     ],
     loading: {

@@ -6,3 +6,18 @@
   max-width: 1180px;
   // height: 200px;
 }
+
+@mixin flex-cards {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  flex-basis: 100%;
+  flex-wrap: wrap;
+  align-content: stretch;
+}
+
+@mixin flex-cards-item {
+  margin: $main-spacing;
+  flex-grow: 1;
+  align-self: stretch;
+}
