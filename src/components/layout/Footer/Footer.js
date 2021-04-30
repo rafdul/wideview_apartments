@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
+import LinkUI from '@material-ui/core/Link';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
@@ -22,6 +23,7 @@ const Component = ({className}) => (
         <Grid item xs={12} sm={8} className={styles.item}>
           <h5>WideView</h5>
           <p>Suspendisse at magna. Cum sociis natoque penatibus et lacus iaculis odio et wisi accumsan augue mi, gravida at, velit. Mauris id elit tincidunt wisi nunc, vitae eros cursus dignissim id, semper orci, gravida ullamcorper mauris. Nunc velit sed justo.</p>
+          <p><Link to={`/products/`}>All apartments</Link></p>
         </Grid>
         <Grid item xs={12} sm={4}>
           <h5>Newsletter</h5>
@@ -35,15 +37,15 @@ const Component = ({className}) => (
           </div>
         </Grid>
         <Grid item xs={12} className={styles.socialmedia}>
-          <Link href="#">
+          <LinkUI href="#">
             <FontAwesomeIcon icon={faFacebook} href="#" className={styles.socialmedia__icon}/>
-          </Link>
-          <Link href="#">
+          </LinkUI>
+          <LinkUI href="#">
             <FontAwesomeIcon icon={faTwitter} className={styles.socialmedia__icon}/>
-          </Link>
-          <Link href="#">
+          </LinkUI>
+          <LinkUI href="#">
             <FontAwesomeIcon icon={faInstagram} className={styles.socialmedia__icon}/>
-          </Link>
+          </LinkUI>
         </Grid>
       </Grid>
     </div>

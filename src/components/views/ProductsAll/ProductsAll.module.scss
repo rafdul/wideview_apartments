@@ -1,4 +1,27 @@
 @import '../../../styles/settings.scss';
+@import "../../../styles/mixins.scss";
 
-// .root {
-// }
+
+.root {
+  .container {
+    @include container;
+
+    .title {
+      margin: $main-spacing*3 0;
+      text-align: center;
+      text-transform: uppercase;
+      font-family: $font-text;
+      letter-spacing: 2px;
+    }
+
+    .cards {
+      @include flex-cards;
+      margin-bottom: $main-spacing*4;
+
+      // &__item {
+      //   @include flex-cards-item;
+      //   flex-basis: 30%;
+      // }
+    }
+  }
+}
