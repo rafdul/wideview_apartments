@@ -65,10 +65,48 @@
           text-align: center;
         }
       }
+    }
+
+    .cardbox {
+      margin: $base-size/2;
+    }
+
+    .map {
+      height: 300px;
+    }
+
+    .content {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
 
 
+      &__flex {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: baseline;
+        margin: $main-spacing*2 $main-spacing;
 
+        .name {
+          flex: 1;
+          margin-right: $main-spacing;
+        }
 
+        .date {
+          margin: auto;
+        }
+
+        .choose {
+          flex: 2;
+        }
+      }
+    }
+
+    .btnBook {
+      text-align: center;
+      margin-bottom: $main-spacing*3;
     }
   }
 }
