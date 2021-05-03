@@ -40,7 +40,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'private',
         balcony: 1,
-        image: '/images/offers/sea1864448_640.jpg',
+        image: ['/images/offers/sea1864448_640.jpg', '/images/offers/sea389253_640.jpg', '/images/offers/sea389267_640.jpg'],
       },
       {
         id: 'a2',
@@ -53,7 +53,7 @@ export const initialState = {
         kitchen: 2,
         swimpool: 'private',
         balcony: 2,
-        image: '/images/offers/sea3100785_640.jpg',
+        image: ['/images/offers/sea3100785_640.jpg', '/images/offers/sea416135_640.jpg', '/images/offers/sea891778_640.jpg'],
       },
       {
         id: 'a3',
@@ -66,7 +66,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'public',
         balcony: 1,
-        image: '/images/offers/sea3715707_640.jpg',
+        image: ['/images/offers/sea3715707_640.jpg', '/images/offers/sea943428_640.jpg', '/images/offers/sea1030754_640.jpg'],
       },
       {
         id: 'a4',
@@ -79,7 +79,7 @@ export const initialState = {
         kitchen: 2,
         swimpool: 'private',
         balcony: 3,
-        image: '/images/offers/sea5114392_640.jpg',
+        image: ['/images/offers/sea5114392_640.jpg', '/images/offers/sea1362960_640.jpg', '/images/offers/sea1938008_640.jpg'],
       },
       {
         id: 'a5',
@@ -92,7 +92,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'public',
         balcony: 3,
-        image: '/images/offers/sea1030758_640.jpg',
+        image: ['/images/offers/sea1030758_640.jpg', '/images/offers/sea2408868_640.jpg', '/images/offers/sea2414599_640.jpg'],
       },
       {
         id: 'b1',
@@ -105,7 +105,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 1,
-        image: '/images/offers/city460762_640.jpg',
+        image: ['/images/offers/city460762_640.jpg', '/images/offers/city186699_640.jpg', '/images/offers/city406901_640.jpg'],
       },
       {
         id: 'b2',
@@ -118,7 +118,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 1,
-        image: '/images/offers/city1927719_640.jpg',
+        image: ['/images/offers/city1927719_640.jpg', '/images/offers/city407703_640.jpg', '/images/offers/city595121_640.jpg'],
       },
       {
         id: 'b3',
@@ -131,7 +131,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 1,
-        image: '/images/offers/city2614141_640.jpg',
+        image: ['/images/offers/city2614141_640.jpg', '/images/offers/city690364_640.jpg', '/images/offers/city930804_640.jpg'],
       },
       {
         id: 'b4',
@@ -144,7 +144,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 1,
-        image: '/images/offers/city3137416_640.jpg',
+        image: ['/images/offers/city3137416_640.jpg', '/images/offers/city5502975_640.jpg', '/images/offers/city5502970_640.jpg'],
       },
       {
         id: 'c1',
@@ -157,7 +157,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 2,
-        image: '/images/offers/mount54906_640.jpg',
+        image: ['/images/offers/mount54906_640.jpg', '/images/offers/mount828795_640.jpg', '/images/offers/mount1178278_640.jpg'],
       },
       {
         id: 'c2',
@@ -170,7 +170,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 1,
-        image: '/images/offers/mount726325_640.jpg',
+        image: ['/images/offers/mount726325_640.jpg', '/images/offers/mount1737168_640.jpg', '/images/offers/mount2804083_640.jpg'],
       },
       {
         id: 'c3',
@@ -183,7 +183,7 @@ export const initialState = {
         kitchen: 2,
         swimpool: 'private',
         balcony: 2,
-        image: '/images/offers/mount1626578_640.jpg',
+        image: ['/images/offers/mount1626578_640.jpg', '/images/offers/mount2930070_640.jpg', '/images/offers/mount3803443_640.jpg'] ,
       },
       {
         id: 'c4',
@@ -196,7 +196,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 1,
-        image: '/images/offers/mount2881296_640.jpg',
+        image: ['/images/offers/mount2881296_640.jpg', '/images/offers/mount4013531_640.jpg', '/images/offers/mount4676673_640.jpg'],
       },
       {
         id: 'c5',
@@ -209,7 +209,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 1,
-        image: '/images/offers/mount3178666_640.jpg',
+        image: ['/images/offers/mount3178666_640.jpg', '/images/offers/mount4704299_640.jpg', '/images/offers/mount5992184_640.jpg'],
       },
       {
         id: 'd1',
@@ -222,7 +222,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 1,
-        image: '/images/offers/country389264_640.jpg',
+        image: ['/images/offers/country389264_640.jpg', '/images/offers/country252178_640.jpg', '/images/offers/country356339_640.jpg'],
       },
       {
         id: 'd2',
@@ -235,7 +235,7 @@ export const initialState = {
         kitchen: 2,
         swimpool: 'private',
         balcony: 2,
-        image: '/images/offers/country1882178_640.jpg',
+        image: ['/images/offers/country1882178_640.jpg', '/images/offers/country806854_640.jpg', '/images/offers/country844269_640.jpg'],
       },
       {
         id: 'd3',
@@ -248,7 +248,7 @@ export const initialState = {
         kitchen: 1,
         swimpool: 'no',
         balcony: 2,
-        image: '/images/offers/country962240_640.jpg',
+        image: ['/images/offers/country962240_640.jpg', '/images/offers/country1477041_640.jpg', '/images/offers/country2006992_640.jpg'],
       },
     ],
     loading: {

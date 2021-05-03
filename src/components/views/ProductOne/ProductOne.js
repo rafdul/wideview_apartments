@@ -33,7 +33,7 @@ const Component = ({className, apartment}) => (
             <CardMedia
               className={styles.image}
               component="img"
-              image={apartment.image}
+              image={apartment.image[0]}
               title={apartment.name}
             />
           </section>
@@ -46,7 +46,7 @@ const Component = ({className, apartment}) => (
             <CardMedia
               className={styles.image}
               component="img"
-              image={apartment.image}
+              image={apartment.image[1]}
               title={apartment.name}
             />
           </section>
@@ -59,7 +59,7 @@ const Component = ({className, apartment}) => (
             <CardMedia
               className={styles.image}
               component="img"
-              image={apartment.image}
+              image={apartment.image[2]}
               title={apartment.name}
             />
           </section>

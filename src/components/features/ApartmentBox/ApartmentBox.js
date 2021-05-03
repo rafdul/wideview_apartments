@@ -28,7 +28,7 @@ const Component = ({ image, name, city, price, link }) => {
               <CardMedia
                 className={styles.image}
                 component="img"
-                image={image}
+                image={image[0]}
                 title={name}
               />
             </div>
