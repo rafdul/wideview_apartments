@@ -138,6 +138,11 @@
     .btnBook {
       text-align: center;
       margin-bottom: $main-spacing*3;
+
+      &:hover {
+        transform: scale(1.2, 1.2);
+        transition-duration: 400ms;
+      }
     }
   }
 }

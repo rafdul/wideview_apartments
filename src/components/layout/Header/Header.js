@@ -42,7 +42,7 @@ const Component = ({className}) => {
           </Navbar>
         </div>
         <div className={styles.container__cart}>
-          <Link to={'#'} className={styles.link}>
+          <Link to={'/cart'} className={styles.link}>
             <FontAwesomeIcon icon={faShoppingCart} className={styles.icon}/>
           </Link>
         </div>
