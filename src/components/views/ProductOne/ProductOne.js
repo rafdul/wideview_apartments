@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import { LocationPin } from '../../features/LocationPin/LocationPin';
 import { PlusMinusSwitcher } from '../../features/PlusMinusSwitcher/PlusMinusSwitcher';
@@ -27,6 +27,8 @@ import { getOneApartment } from '../../../redux/apartmentsRedux.js';
 
 const Component = ({className, apartment}) => {
 
+  const [nights, setNight] = useState(0);
+  const [people, setPeople] = useState(0);
 
 
   console.log('apartment', apartment);
@@ -158,7 +160,8 @@ const Component = ({className, apartment}) => {
                       </Typography>
                     </div>
                     <div className={styles.choose}>
-                      <PlusMinusSwitcher />
+                      <PlusMinusSwitcher setAmount={setNight} />
+                      {/* {console.log('nights', nights)} */}
                     </div>
                   </div>
                   <div className={styles.content__flex}>
@@ -170,7 +173,8 @@ const Component = ({className, apartment}) => {
                       </Tooltip>
                     </div>
                     <div className={styles.choose}>
-                      <PlusMinusSwitcher maxValue={`${apartment.bedrooms *2}`} />
+                      <PlusMinusSwitcher maxValue={`${apartment.bedrooms *2}`} setAmount={setPeople} />
+                      {/* {console.log('people', people)} */}
                     </div>
                   </div>
                   <div className={styles.content__flex}>
@@ -189,11 +193,15 @@ const Component = ({className, apartment}) => {
                   </div>
                   <div className={styles.content__flex}>
                     <div className={styles.name}>
-                      <Typography gutterBottom variant="body1" component="p" className={styles.text}>
+                      <Typography gutterBottom variant="h6" component="p" className={styles.text}>
                         Total price:
                       </Typography>
                     </div>
-                    <div className={styles.choose}></div>
+                    <div className={styles.choose}>
+                      <Typography gutterBottom variant="h6" component="p" className={styles.text}>
+                        ${nights * apartment.price}
+                      </Typography>
+                    </div>
                   </div>
                 </CardContent>
                 <div className={styles.btnBook}>

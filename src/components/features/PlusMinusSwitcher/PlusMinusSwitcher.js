@@ -11,7 +11,7 @@ import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './PlusMinusSwitcher.module.scss';
 
-const Component = ({maxValue}) => {
+const Component = ({maxValue, setAmount}) => {
 
   const [count, setCount] = useState(0);
 
@@ -28,6 +28,24 @@ const Component = ({maxValue}) => {
     }
   };
 
+  const handleOnChange = event => {
+    // event.preventDefault();
+
+    console.log('event', event);
+    setCount(event);
+    setAmount(event);
+  };
+
+  const handleMinus = () => {
+    setCount(Math.max(count - 1, 0));
+    setAmount(Math.max(count - 1, 0));
+  };
+
+  const handlePlus = () => {
+    setCount(parseInt(count) + 1);
+    setAmount(parseInt(count) + 1);
+  };
+
   return(
     <div className={styles.root}>
       <Button
@@ -36,7 +54,7 @@ const Component = ({maxValue}) => {
         disabled={parseInt(count) <= 0 ? true : false}
         aria-label="reduce"
         onClick={() => {
-          setCount(Math.max(count - 1, 0));
+          handleMinus();
         }}
       >
         <FontAwesomeIcon icon={faMinus} />
@@ -47,16 +65,16 @@ const Component = ({maxValue}) => {
         min='0'
         max={maxValue}
         value={finalAmount(count)}
-        onChange={event => setCount(event.target.value)}
+        onChange={event => handleOnChange(event.target.value)}
       />
-      {console.log('event', window.event)}
+      {console.log('window.event:', window.event)}
       <Button
         variant="outlined"
         className={styles.inputSwitcher}
         disabled={parseInt(count) >= maxValue ? true : false}
         aria-label="increase"
         onClick={() => {
-          setCount(parseInt(count) + 1);
+          handlePlus();
         }}
       >
         <FontAwesomeIcon icon={faPlus} />
@@ -67,6 +85,7 @@ const Component = ({maxValue}) => {
 
 Component.propTypes = {
   maxValue: PropTypes.string,
+  setAmount: PropTypes.func,
 };
 
 // const mapStateToProps = state => ({

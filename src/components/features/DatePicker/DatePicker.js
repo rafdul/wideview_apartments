@@ -12,7 +12,7 @@ import styles from './DatePicker.module.scss';
 
 const Component = () => {
 
-  const [selectedDate, setSelectedDate] = useState(new Date('2021-05-03T21:11:54'));
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleDateChange = (date) => {
     setSelectedDate(date);

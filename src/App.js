@@ -17,7 +17,7 @@ import { NotFound } from './components/views/NotFound/NotFound';
 
 const theme = createMuiTheme({
   palette: {
-    primary: { main: '#ffffff' },
+    primary: { main: '#858585' },
     secondary: { main: '#e1b12c' },
   },
 });
