@@ -13,7 +13,8 @@ import styles from './PlusMinusSwitcher.module.scss';
 
 const Component = ({maxValue, setAmount, defaultVal}) => {
 
-  const [count, setCount] = useState(0);
+
+  const [count, setCount] = useState(defaultVal || 0);
 
   const finalAmount = amount => {
     if (amount === undefined) {
@@ -65,7 +66,7 @@ const Component = ({maxValue, setAmount, defaultVal}) => {
         min='0'
         max={maxValue}
         value={finalAmount(count)}
-        defaultValue={defaultVal}
+        // defaultValue={defaultVal}
         onChange={event => handleOnChange(event.target.value)}
       />
       {/* {console.log('window.event:', window.event)} */}

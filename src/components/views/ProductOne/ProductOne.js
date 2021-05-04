@@ -35,14 +35,16 @@ class Component extends React.Component {
       nights: 0,
       from: '',
       people: 0,
+      priceFromNight: this.props.apartment.price,
       totalPrice: 0,
+      image: this.props.apartment.image[1],
     },
   }
 
   setNight = (nights) => {
     const {cart} = this.state;
     this.setState({cart: { ...cart, nights: parseInt(nights), totalPrice: this.props.apartment.price * parseInt(nights) }});
-    // console.log('nights', nights);
+    // console.log('nights in ProductOne', nights);
   }
 
   setPeople = (people) => {
