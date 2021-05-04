@@ -52,7 +52,7 @@ const Component = ({ image, name, city, price, link }) => {
 
 Component.propTypes = {
   name: PropTypes.string,
-  image: PropTypes.string,
+  image: PropTypes.array,
   city: PropTypes.string,
   price: PropTypes.number,
   link: PropTypes.string,

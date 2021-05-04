@@ -67,6 +67,37 @@
       }
     }
 
+    @media(max-width: 600px) {
+      .grid {
+        grid-template-columns: 1fr;
+
+        .small_image {
+          grid-column: 1;
+          grid-row: 3;
+        }
+
+        .small_text {
+          grid-column: 1;
+          grid-row: 4;
+        }
+
+        .big_image {
+          grid-column: 1;
+          grid-row: 1;
+        }
+
+        .big_text {
+          grid-column: 1;
+          grid-row: 2;
+        }
+
+        .medium_image {
+          grid-column: 1;
+          grid-row: 5;
+        }
+      }
+    }
+
     .cardbox {
       margin: $base-size/2;
     }

@@ -13,11 +13,27 @@
 
     .item {
       padding: $main-spacing;
+
+      &__text {
+        padding-right: $main-spacing;
+      }
     }
 
     .group {
       display: flex;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
+      flex-direction: column;
+      max-width: 250px;
+
+      &__input {
+        width: 100%;
+      }
+
+      &__btn {
+        width: 100%;
+        text-align: center;
+        margin: $main-spacing/2;
+      }
     }
 
     .socialmedia{

@@ -11,7 +11,7 @@ import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './PlusMinusSwitcher.module.scss';
 
-const Component = ({className}) => {
+const Component = ({maxValue}) => {
 
   const [count, setCount] = useState(0);
 
@@ -20,6 +20,9 @@ const Component = ({className}) => {
       return 0;
     } else if (amount < 0) {
       return 0;
+    } else if (amount > parseInt(maxValue)) {
+      setCount(maxValue);
+      return maxValue;
     } else {
       return amount;
     }
@@ -30,6 +33,7 @@ const Component = ({className}) => {
       <Button
         variant="outlined"
         className={styles.inputSwitcher}
+        disabled={parseInt(count) <= 0 ? true : false}
         aria-label="reduce"
         onClick={() => {
           setCount(Math.max(count - 1, 0));
@@ -41,6 +45,7 @@ const Component = ({className}) => {
         className={styles.inputNumber}
         type='text'
         min='0'
+        max={maxValue}
         value={finalAmount(count)}
         onChange={event => setCount(event.target.value)}
       />
@@ -48,6 +53,7 @@ const Component = ({className}) => {
       <Button
         variant="outlined"
         className={styles.inputSwitcher}
+        disabled={parseInt(count) >= maxValue ? true : false}
         aria-label="increase"
         onClick={() => {
           setCount(parseInt(count) + 1);
@@ -60,7 +66,7 @@ const Component = ({className}) => {
 };
 
 Component.propTypes = {
-  className: PropTypes.string,
+  maxValue: PropTypes.string,
 };
 
 // const mapStateToProps = state => ({

@@ -22,14 +22,14 @@ const Component = ({className}) => (
       <Grid container spacing={3} className={styles.container}>
         <Grid item xs={12} sm={8} className={styles.item}>
           <h5>WideView</h5>
-          <p>Suspendisse at magna. Cum sociis natoque penatibus et lacus iaculis odio et wisi accumsan augue mi, gravida at, velit. Mauris id elit tincidunt wisi nunc, vitae eros cursus dignissim id, semper orci, gravida ullamcorper mauris. Nunc velit sed justo.</p>
+          <p className={styles.item__text}>Suspendisse at magna. Cum sociis natoque penatibus et lacus iaculis odio et wisi accumsan augue mi, gravida at, velit. Mauris id elit tincidunt wisi nunc, vitae eros cursus dignissim id, semper orci, gravida ullamcorper mauris. Nunc velit sed justo.</p>
           <p><Link to={`/products/`}>All apartments</Link></p>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={3}>
           <h5>Newsletter</h5>
           <div className={styles.group}>
-            <input type="email" placeholder="email address" />
-            <div>
+            <input type="email" placeholder="email address" className={styles.group__input} />
+            <div className={styles.group__btn}>
               <Button variant="contained" color="secondary">
                 Sign up!
               </Button>

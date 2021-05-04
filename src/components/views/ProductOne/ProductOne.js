@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { LocationPin } from '../../features/LocationPin/LocationPin';
 import { PlusMinusSwitcher } from '../../features/PlusMinusSwitcher/PlusMinusSwitcher';
@@ -11,7 +11,10 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
+import Tooltip from '@material-ui/core/Tooltip';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 import GoogleMapReact from 'google-map-react';
 
@@ -95,7 +98,7 @@ const Component = ({className, apartment}) => {
                     {apartment.kitchen === 1 ? 'Kitchen' : 'Kitchens'}: {apartment.kitchen}
                   </Typography>
                   <Typography gutterBottom variant="body2" component="p" className={styles.text}>
-                    {apartment.balcony == 1 ? 'Balcony' : 'Balconies'}: {apartment.balcony}
+                    {apartment.balcony === 1 ? 'Balcony' : 'Balconies'}: {apartment.balcony}
                   </Typography>
                   <Typography gutterBottom variant="body2" component="p" className={styles.text}>
                     Swimpool: {apartment.swimpool}
@@ -160,23 +163,27 @@ const Component = ({className, apartment}) => {
                   </div>
                   <div className={styles.content__flex}>
                     <div className={styles.name}>
-                      <Typography gutterBottom variant="body1" component="p" className={styles.text}>
-                        People:
-                      </Typography>
+                      <Tooltip title={`max. ${apartment.bedrooms *2 } people`}>
+                        <Typography gutterBottom variant="body1" component="p" className={styles.text}>
+                          People <FontAwesomeIcon icon={faInfoCircle} /> :
+                        </Typography>
+                      </Tooltip>
                     </div>
                     <div className={styles.choose}>
-                      <PlusMinusSwitcher />
+                      <PlusMinusSwitcher maxValue={`${apartment.bedrooms *2}`} />
                     </div>
                   </div>
                   <div className={styles.content__flex}>
                     <div className={styles.name}>
-                      <Typography gutterBottom variant="body1" component="p" className={styles.text}>
-                        Price:
-                      </Typography>
+                      <Tooltip title='for 1 night, all suite'>
+                        <Typography gutterBottom variant="body1" component="p" className={styles.text}>
+                          Price <FontAwesomeIcon icon={faInfoCircle} /> :
+                        </Typography>
+                      </Tooltip>
                     </div>
                     <div className={styles.choose}>
                       <Typography gutterBottom variant="body1" component="p" className={styles.text}>
-                        ${apartment.price} / night
+                        ${apartment.price}
                       </Typography>
                     </div>
                   </div>
