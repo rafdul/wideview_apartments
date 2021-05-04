@@ -10,12 +10,13 @@ import {MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers'
 
 import styles from './DatePicker.module.scss';
 
-const Component = () => {
+const Component = ({setDate}) => {
 
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+    setDate(date);
   };
 
   return(
@@ -24,6 +25,7 @@ const Component = () => {
         <KeyboardDatePicker
           className={styles.datepicker}
           disableToolbar
+          disablePast
           variant="inline"
           format="MM/dd/yyyy"
           margin="normal"
@@ -41,7 +43,7 @@ const Component = () => {
 };
 
 Component.propTypes = {
-
+  setDate: PropTypes.func,
 };
 
 // const mapStateToProps = state => ({

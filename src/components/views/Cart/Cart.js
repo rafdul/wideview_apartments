@@ -12,19 +12,20 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 import clsx from 'clsx';
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { connect } from 'react-redux';
+import { getFromCart } from '../../../redux/apartmentsRedux';
 
 import styles from './Cart.module.scss';
 
-const Component = ({className}) => {
+const Component = ({className, apartmentFromCart}) => {
 
   const [nights, setNight] = useState(0);
+  console.log('apartmentFromCart', apartmentFromCart);
 
   return(
     <div className={clsx(className, styles.root)}>
       <div className={styles.container}>
-        <h2>Finish your reservation</h2>
+        <h2 className={styles.title}>Finish your reservation</h2>
         <Grid item xs={12} >
           <Paper elevation={3} >
             <Card >
@@ -33,16 +34,16 @@ const Component = ({className}) => {
                   <img src="https://placeimg.com/340/180/arch" alt="#"/>
                 </div>
                 <div className={styles.cart__namebox}>
-                  <div className={styles.cart__decoration}>Apartament zacisze w Szczyrku</div>
-                  <div>(rezerwujesz dla 4 osób)</div>
+                  <div className={styles.cart__decoration}>{apartmentFromCart.name} in {apartmentFromCart.city}</div>
+                  <div>(booking for {apartmentFromCart.people} people)</div>
                 </div>
                 <div className={styles.cart__nightsbox}>
                   <div>Nights:</div>
-                  <PlusMinusSwitcher setAmount={setNight}/>
+                  <PlusMinusSwitcher setAmount={setNight} defaultVal={apartmentFromCart.nights}/>
                 </div>
                 <div className={styles.cart__pricebox}>
                   <div>Price:</div>
-                  <div className={styles.cart__decoration}>$1600</div>
+                  <div className={styles.cart__decoration}>${apartmentFromCart.totalPrice}</div>
                 </div>
                 <div className={styles.cart__deletebox}>
                   <FontAwesomeIcon icon={faTrashAlt} />
@@ -76,20 +77,21 @@ const Component = ({className}) => {
 
 Component.propTypes = {
   className: PropTypes.string,
+  apartmentFromCart: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
+const mapStateToProps = state => ({
+  apartmentFromCart: getFromCart(state),
+});
 
 // const mapDispatchToProps = dispatch => ({
 //   someAction: arg => dispatch(reduxActionCreator(arg)),
 // });
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const Container = connect(mapStateToProps)(Component);
 
 export {
-  Component as Cart,
-  // Container as Cart,
+  // Component as Cart,
+  Container as Cart,
   Component as CartComponent,
 };

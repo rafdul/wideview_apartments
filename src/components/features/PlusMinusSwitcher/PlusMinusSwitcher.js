@@ -11,7 +11,7 @@ import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './PlusMinusSwitcher.module.scss';
 
-const Component = ({maxValue, setAmount}) => {
+const Component = ({maxValue, setAmount, defaultVal}) => {
 
   const [count, setCount] = useState(0);
 
@@ -31,7 +31,7 @@ const Component = ({maxValue, setAmount}) => {
   const handleOnChange = event => {
     // event.preventDefault();
 
-    console.log('event', event);
+    // console.log('event', event);
     setCount(event);
     setAmount(event);
   };
@@ -65,9 +65,10 @@ const Component = ({maxValue, setAmount}) => {
         min='0'
         max={maxValue}
         value={finalAmount(count)}
+        defaultValue={defaultVal}
         onChange={event => handleOnChange(event.target.value)}
       />
-      {console.log('window.event:', window.event)}
+      {/* {console.log('window.event:', window.event)} */}
       <Button
         variant="outlined"
         className={styles.inputSwitcher}
@@ -86,6 +87,7 @@ const Component = ({maxValue, setAmount}) => {
 Component.propTypes = {
   maxValue: PropTypes.string,
   setAmount: PropTypes.func,
+  defaultVal: PropTypes.number,
 };
 
 // const mapStateToProps = state => ({
