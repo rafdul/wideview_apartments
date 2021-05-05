@@ -272,20 +272,6 @@ export const initialState = {
       active: false,
       error: false,
     },
-    cart: [
-      {
-        id: '',
-        category: '',
-        name: '',
-        city: '',
-        nights: '',
-        from: '',
-        people: '',
-        priceFromNight: '',
-        totalPrice: '',
-        message: '',
-        image: '',
-      },
-    ],
+    cart: [],
   },
 };

@@ -1,102 +1,78 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PlusMinusSwitcher } from '../../features/PlusMinusSwitcher/PlusMinusSwitcher';
+import { CartItem } from '../../views/CartItem/CartItem';
 
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import Button from '@material-ui/core/Button';
 
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-import { getFromCart } from '../../../redux/apartmentsRedux';
+import { getFromCart, fetchAddToCart } from '../../../redux/apartmentsRedux';
 
 import styles from './Cart.module.scss';
 
 class Component extends React.Component {
 
   state = {
-    cart: {
-      id: this.props.apartmentFromCart.id,
-      category: this.props.apartmentFromCart.category,
-      name: this.props.apartmentFromCart.name,
-      city: this.props.apartmentFromCart.city,
-      nights: this.props.apartmentFromCart.nights,
-      from: this.props.apartmentFromCart.from,
-      people: this.props.apartmentFromCart.people,
-      priceFromNight: this.props.apartmentFromCart.priceFromNight,
-      totalPrice: this.props.apartmentFromCart.totalPrice,
-      image: this.props.apartmentFromCart.image,
-      message: '',
-    },
+    cart: this.props.apartmentFromCart,
   }
 
-  setNight = (nights) => {
-    const {cart} = this.state;
-    this.setState({ cart: { ...cart, nights: parseInt(nights), totalPrice: this.props.apartmentFromCart.priceFromNight * parseInt(nights) }});
-    console.log('nights in cart:', nights);
-    console.log('totalPrice in cart:', this.props.apartmentFromCart.priceFromNight * parseInt(nights));
+  changeState = (cart) => {
+    // const {cart} = this.state;
+    console.log('cart w koszyku', cart);
+
+    // this.setState({cart: })
   }
 
 
   render() {
     const {className, apartmentFromCart} = this.props;
     const {cart} = this.state;
+    console.log('cart w CART', cart);
 
-    console.log('apartmentFromCart:', apartmentFromCart);
-    console.log('cart po zmianach:', cart);
+    // let result = 0;
+    // const total = (cart) => {
+    //   if(cart.length > 0) {
+    //     const tab = cart.map(item => item.totalPrice);
+    //     result = tab.reduce((prev, curr) => prev + curr);
+    //     console.log('result', result);
+    //     return result;
+    //   }
+    // };
+
+
 
     return(
       <div className={clsx(className, styles.root)}>
         <div className={styles.container}>
           <h2 className={styles.title}>Finish your reservation</h2>
           <Grid item xs={12} >
-            <Paper elevation={3} >
-              <Card >
-                <div className={styles.cart}>
-                  <div className={styles.cart__imagebox}>
-                    <img src={apartmentFromCart.image} alt={apartmentFromCart.name}/>
-                  </div>
-                  <div className={styles.cart__namebox}>
-                    <div className={styles.cart__decoration}>{apartmentFromCart.name} in {apartmentFromCart.city}</div>
-                    <div>(booking for {apartmentFromCart.people} people)</div>
-                  </div>
-                  <div className={styles.cart__nightsbox}>
-                    <div>Nights:</div>
-                    <PlusMinusSwitcher setAmount={this.setNight} defaultVal={apartmentFromCart.nights}/>
-                  </div>
-                  <div className={styles.cart__pricebox}>
-                    <div>Price:</div>
-                    <div className={styles.cart__decoration}>${cart.totalPrice}</div>
-                  </div>
-                  <div className={styles.cart__deletebox}>
-                    <FontAwesomeIcon icon={faTrashAlt} />
-                  </div>
-                </div>
-                <div className={styles.infobox}>
-                  <TextField
-                    className={styles.textarea}
-                    id="outlined-multiline-static"
-                    label="Important for reservation"
-                    multiline
-                    rows={2}
-                    defaultValue="Default Value"
-                    variant="outlined"
-                  />
-                </div>
-              </Card>
-            </Paper>
+            {apartmentFromCart.map(apartment => (
+              <CartItem key={apartment.id} {...apartment} changeState={this.changeState}>
+                {console.log('apartment', apartment)}
+              </CartItem>
+
+            ))}
+
             <Paper elevation={3} >
               <Card className={styles.cart + ' ' + styles.total_price}>
                 <div className={styles.text}>Total price:</div>
-                <div className={styles.text}>$1000</div>
+                {/* <div className={styles.text}>${total(cart)}</div> */}
+                <div className={styles.btnBook}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={this.submitForm}
+                    className={styles.btn_custom}
+                  >
+                    Book it!
+                  </Button>
+                </div>
               </Card>
             </Paper>
-
           </Grid>
         </div>
       </div>
@@ -107,17 +83,18 @@ class Component extends React.Component {
 Component.propTypes = {
   className: PropTypes.string,
   apartmentFromCart: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  addToCart: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   apartmentFromCart: getFromCart(state),
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
+const mapDispatchToProps = dispatch => ({
+  addToCart: reservation => dispatch(fetchAddToCart(reservation)),
+});
 
-const Container = connect(mapStateToProps)(Component);
+const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   // Component as Cart,

@@ -63,9 +63,8 @@ class Component extends React.Component {
     const {cart} = this.state;
     const {addToCart} = this.props;
 
-    console.log('cart wysłany do redux', cart);
+    // console.log('cart wysłany do redux', cart);
     addToCart(cart);
-
   }
 
 
@@ -74,7 +73,7 @@ class Component extends React.Component {
     const {className, apartment} = this.props;
     const { cart } = this.state;
 
-    console.log('this.state.cart w render', this.state.cart);
+    // console.log('this.state.cart w render', this.state.cart);
 
     const location = {
       address: apartment.name,

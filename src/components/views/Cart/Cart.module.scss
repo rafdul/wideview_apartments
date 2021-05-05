@@ -20,52 +20,6 @@
       div:not(:first-child) {
         margin: $main-spacing;
       }
-
-      &__imagebox {
-        flex-basis: 20%;
-        min-width: 160px;
-
-        img {
-          width: 100%;
-          object-fit: cover;
-        }
-      }
-
-      &__namebox {
-        flex-basis: 30%;
-      }
-
-      &__nightsbox {
-        flex-basis: 25%;
-      }
-
-      &__pricebox {
-        flex-basis: 20%;
-      }
-
-      &__deletebox {
-        flex-basis: 5%;
-
-        &:hover {
-          cursor: pointer;
-          transform: scale(1.3, 1.3);
-          transition-duration: 400ms;
-        }
-      }
-
-      &__decoration {
-        font-weight: 700;
-      }
-    }
-
-    .infobox {
-      flex-basis: 90%;
-      margin: $main-spacing;
-      text-align: center;
-
-      .textarea {
-        width: 60%;
-      }
     }
 
     .total_price {
@@ -78,45 +32,29 @@
       div:nth-child(2) {
         margin-right: $main-spacing*4;
       }
+
+      .btnBook {
+        @include btnBook;
+
+        .btn_custom {
+          margin-right: $main-spacing*4;
+        }
+      }
+    }
+
+    @media(max-width: 500px) {
+      .total_price {
+        justify-content: center;
+
+        div:nth-child(1) {
+          margin-left: $main-spacing*2;
+        }
+      }
     }
 
     @media(max-width: 750px) {
       .cart {
         flex-wrap: wrap;
-
-        &__imagebox {
-          flex-basis: 100%;
-
-          img {
-            max-height: 150px;
-          }
-        }
-
-        &__namebox {
-          flex-basis: 100%;
-        }
-
-        &__nightsbox {
-          flex-basis: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          div {
-            justify-content: center;
-          }
-        }
-
-        &__pricebox {
-          flex-basis: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        &__deletebox {
-          flex-basis: 100%;
-        }
       }
     }
   }
