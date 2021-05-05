@@ -39,40 +39,33 @@ class Component extends React.Component {
   setNight = (nights) => {
     const {cart} = this.state;
     const priceForNight = cart.priceFromNight;
-    console.log('cart w setnight1:', cart);
-    console.log('priceForNight w setnight:', priceForNight);
-    console.log('nights in cart:', nights);
+    // console.log('cart w setnight1:', cart);
+    // console.log('nights in cart:', nights);
 
     this.setState({ cart: { ...cart, nights: parseInt(nights), totalPrice: priceForNight * parseInt(nights) }});
-    // console.log('cart w setnight2:', cart);
 
     const {editInCart} = this.props;
     editInCart({  ...cart, nights: parseInt(nights), totalPrice: priceForNight * parseInt(nights) });
-
-    this.props.changeState(cart);
   }
 
   handleChange = (event) => {
     const {cart} = this.state;
     this.setState({ cart: { ...cart, message: event.target.value }});
-    console.log('message:', event.target.value);
+    // console.log('message:', event.target.value);
 
     const {editInCart} = this.props;
     editInCart({  ...cart, message: event.target.value });
-
-    this.props.changeState(cart);
   };
 
 
   render() {
-    const {id, category, name, city, image, people, nights, totalPrice, from, priceFromNight, changeState} = this.props;
+    const {id, category, name, city, image, people, nights, totalPrice, from, priceFromNight } = this.props;
     const {cart} = this.state;
-    console.log('id:', id);
-    console.log('cart w render:', cart);
+    // console.log('cart w render:', cart);
 
 
     return(
-      <Paper elevation={3} >
+      <Paper elevation={3} className={styles.root}>
         <Card >
           <div className={styles.cart}>
             <div className={styles.cart__imagebox}>
@@ -89,7 +82,6 @@ class Component extends React.Component {
             <div className={styles.cart__pricebox}>
               <div>Price:</div>
               <div className={styles.cart__decoration}>${cart.totalPrice === undefined ? totalPrice : cart.totalPrice }</div>
-              {/* {console.log('cart.nights', cart.nights)} */}
             </div>
             <div className={styles.cart__deletebox}>
               <FontAwesomeIcon icon={faTrashAlt} />

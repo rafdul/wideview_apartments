@@ -20,29 +20,11 @@ class Component extends React.Component {
     cart: this.props.apartmentFromCart,
   }
 
-  changeState = (cart) => {
-    // const {cart} = this.state;
-    console.log('cart w koszyku', cart);
-
-    // this.setState({cart: })
-  }
-
 
   render() {
     const {className, apartmentFromCart} = this.props;
     const {cart} = this.state;
-    console.log('cart w CART', cart);
-
-    // let result = 0;
-    // const total = (cart) => {
-    //   if(cart.length > 0) {
-    //     const tab = cart.map(item => item.totalPrice);
-    //     result = tab.reduce((prev, curr) => prev + curr);
-    //     console.log('result', result);
-    //     return result;
-    //   }
-    // };
-
+    // console.log('cart w Cart', cart);
 
 
     return(
@@ -51,7 +33,7 @@ class Component extends React.Component {
           <h2 className={styles.title}>Finish your reservation</h2>
           <Grid item xs={12} >
             {apartmentFromCart.map(apartment => (
-              <CartItem key={apartment.id} {...apartment} changeState={this.changeState}>
+              <CartItem key={apartment.id} {...apartment} >
                 {console.log('apartment', apartment)}
               </CartItem>
 
@@ -61,6 +43,12 @@ class Component extends React.Component {
               <Card className={styles.cart + ' ' + styles.total_price}>
                 <div className={styles.text}>Total price:</div>
                 {/* <div className={styles.text}>${total(cart)}</div> */}
+                <div className={styles.text}>
+                  ${cart.length > 0
+                    ? apartmentFromCart.map(apartment => apartment.totalPrice).reduce((prev, curr) => prev + curr)
+                    : 0
+                  }
+                </div>
                 <div className={styles.btnBook}>
                   <Button
                     variant="contained"
