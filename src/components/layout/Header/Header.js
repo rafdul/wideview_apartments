@@ -6,22 +6,20 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import Badge from '@material-ui/core/Badge';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 import styles from './Header.module.scss';
 
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { connect } from 'react-redux';
+import { getFromCart } from '../../../redux/apartmentsRedux';
 
 
-const Component = ({className}) => {
-  // const [value, setValue] = React.useState(0);
+const Component = ({className, productsInCart}) => {
 
-  // const handleChange = (event, newValue) => {
-  //   setValue(newValue);
-  // };
 
   return(
     <div className={clsx(className, styles.root)}>
@@ -43,7 +41,9 @@ const Component = ({className}) => {
         </div>
         <div className={styles.container__cart}>
           <Link to={'/cart'} className={styles.link}>
-            <FontAwesomeIcon icon={faShoppingCart} className={styles.icon}/>
+            <Badge color="secondary" badgeContent={productsInCart.length}>
+              <FontAwesomeIcon icon={faShoppingCart} className={styles.icon}/>
+            </Badge>
           </Link>
         </div>
       </div>
@@ -53,20 +53,21 @@ const Component = ({className}) => {
 
 Component.propTypes = {
   className: PropTypes.string,
+  productsInCart: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
+const mapStateToProps = state => ({
+  productsInCart: getFromCart(state),
+});
 
 // const mapDispatchToProps = dispatch => ({
 //   someAction: arg => dispatch(reduxActionCreator(arg)),
 // });
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const Container = connect(mapStateToProps)(Component);
 
 export {
-  Component as Header,
-  // Container as Header,
+  // Component as Header,
+  Container as Header,
   Component as HeaderComponent,
 };
