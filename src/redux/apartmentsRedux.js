@@ -14,6 +14,7 @@ const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
 const FETCH_ADD_TO_CART = createActionName('FETCH_ADD_TO_CART');
 const FETCH_EDIT_IN_CART = createActionName('FETCH_EDIT_IN_CART');
+const FETCH_DELETE_FROM_CART = createActionName('FETCH_DELETE_FROM_CART');
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
@@ -21,6 +22,7 @@ export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const fetchAddToCart = payload => ({ payload, type: FETCH_ADD_TO_CART });
 export const fetchEditInCart = payload => ({ payload, type: FETCH_EDIT_IN_CART});
+export const fetchDeleteFromCart = payload => ({ payload, type: FETCH_DELETE_FROM_CART});
 
 
 /* thunk creators */
@@ -58,7 +60,7 @@ export const reducer = (statePart = [], action = {}) => {
     }
     case FETCH_ADD_TO_CART: {
       // console.log('...statePart:', ...statePart);
-      console.log('action.payload:', action.payload);
+      // console.log('action.payload:', action.payload);
       return {
         ...statePart,
         cart: [...statePart.cart, action.payload],
@@ -67,8 +69,17 @@ export const reducer = (statePart = [], action = {}) => {
     case FETCH_EDIT_IN_CART: {
       const statePartIndex = statePart.cart.findIndex(booking => booking.id === action.payload.id);
       statePart.cart.splice(statePartIndex, 1, action.payload);
-      console.log('action.payload', action.payload);
+      // console.log('action.payload', action.payload);
 
+      return {
+        ...statePart,
+        cart: [...statePart.cart],
+      };
+    }
+    case FETCH_DELETE_FROM_CART: {
+      const statePartIndex = statePart.cart.findIndex(booking => booking.id === action.payload.id);
+      statePart.cart.splice(statePartIndex, 1);
+      console.log('action.payload', action.payload);
       return {
         ...statePart,
         cart: [...statePart.cart],

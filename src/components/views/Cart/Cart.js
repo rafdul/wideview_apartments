@@ -42,9 +42,8 @@ class Component extends React.Component {
             <Paper elevation={3} >
               <Card className={styles.cart + ' ' + styles.total_price}>
                 <div className={styles.text}>Total price:</div>
-                {/* <div className={styles.text}>${total(cart)}</div> */}
                 <div className={styles.text}>
-                  ${cart.length > 0
+                  ${apartmentFromCart.length > 0
                     ? apartmentFromCart.map(apartment => apartment.totalPrice).reduce((prev, curr) => prev + curr)
                     : 0
                   }

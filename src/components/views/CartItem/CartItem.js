@@ -9,12 +9,13 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 
 import { connect } from 'react-redux';
-import { fetchEditInCart } from '../../../redux/apartmentsRedux';
+import { fetchEditInCart, fetchDeleteFromCart } from '../../../redux/apartmentsRedux';
 
 import styles from './CartItem.module.scss';
 
@@ -57,6 +58,14 @@ class Component extends React.Component {
     editInCart({  ...cart, message: event.target.value });
   };
 
+  deleteFromCart = (event) => {
+    // event.preventDefault();
+
+    const {cart} = this.state;
+    const {deleteReservation} = this.props;
+    deleteReservation(cart);
+  }
+
 
   render() {
     const {id, category, name, city, image, people, nights, totalPrice, from, priceFromNight } = this.props;
@@ -83,8 +92,10 @@ class Component extends React.Component {
               <div>Price:</div>
               <div className={styles.cart__decoration}>${cart.totalPrice === undefined ? totalPrice : cart.totalPrice }</div>
             </div>
-            <div className={styles.cart__deletebox}>
-              <FontAwesomeIcon icon={faTrashAlt} />
+            <div className={styles.cart__deletebox} >
+              <IconButton aria-label="delete" onClick={this.deleteFromCart}>
+                <FontAwesomeIcon icon={faTrashAlt} className={styles.deleteIcon}/>
+              </IconButton>
             </div>
           </div>
           <div className={styles.infobox}>
@@ -117,7 +128,6 @@ class Component extends React.Component {
 }
 
 Component.propTypes = {
-  changeState: PropTypes.func,
   id: PropTypes.string,
   name: PropTypes.string,
   city: PropTypes.string,
@@ -129,6 +139,7 @@ Component.propTypes = {
   from: PropTypes.string,
   priceFromNight: PropTypes.number,
   editInCart: PropTypes.func,
+  deleteReservation: PropTypes.func,
 };
 
 const mapStateToProps = (state, key) => ({
@@ -137,6 +148,7 @@ const mapStateToProps = (state, key) => ({
 
 const mapDispatchToProps = dispatch => ({
   editInCart: reservation => dispatch(fetchEditInCart(reservation)),
+  deleteReservation: reservation => dispatch(fetchDeleteFromCart(reservation)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
