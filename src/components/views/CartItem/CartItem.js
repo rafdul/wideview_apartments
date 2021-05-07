@@ -68,9 +68,10 @@ class Component extends React.Component {
 
 
   render() {
-    const {_id, category, name, city, image, people, nights, totalPrice, from, priceFromNight } = this.props;
+    const {_id, category, name, city, image, people, nights, totalPrice, from, priceFromNight} = this.props;
     const {cart} = this.state;
-    console.log('cart w render:', cart);
+    // console.log('cart w render:', cart);
+    console.log('_id, category, from, priceFromNight:', _id, category, from, priceFromNight);
 
 
     return(
@@ -140,6 +141,7 @@ Component.propTypes = {
   priceFromNight: PropTypes.number,
   editInCart: PropTypes.func,
   deleteReservation: PropTypes.func,
+  orderID: PropTypes.number,
 };
 
 const mapStateToProps = (state, key) => ({

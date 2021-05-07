@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CartItem } from '../../views/CartItem/CartItem';
+import { FormReservation } from '../../features/FormReservation/FormReservation';
 
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
@@ -18,13 +19,20 @@ class Component extends React.Component {
 
   state = {
     cart: this.props.apartmentFromCart,
+    open: false,
+  }
+
+  formOpen = () =>{
+    this.setState({open: true});
   }
 
 
   render() {
     const {className, apartmentFromCart} = this.props;
-    const {cart} = this.state;
+    const {cart, open} = this.state;
+    console.log('formularz w Cart', open);
     // console.log('cart w Cart', cart);
+
     console.log('apartmentFromCart', apartmentFromCart);
 
 
@@ -32,13 +40,25 @@ class Component extends React.Component {
       <div className={clsx(className, styles.root)}>
         <div className={styles.container}>
           <h2 className={styles.title}>Finish your reservation</h2>
-          <Grid item xs={12} >
+          <Grid item xs={12}>
             {apartmentFromCart.map(apartment => (
               <CartItem key={apartment._id} {...apartment} >
                 {console.log('apartment', apartment)}
               </CartItem>
 
             ))}
+
+            {open
+              ?
+              (
+                <Paper elevation={3} >
+                  <Card className={styles.cart + ' ' + styles.total_price}>
+                    <FormReservation />
+                  </Card>
+                </Paper>
+              )
+              : null
+            }
 
             <Paper elevation={3} >
               <Card className={styles.cart + ' ' + styles.total_price}>
@@ -50,14 +70,31 @@ class Component extends React.Component {
                   }
                 </div>
                 <div className={styles.btnBook}>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={this.submitForm}
-                    className={styles.btn_custom}
-                  >
-                    Book it!
-                  </Button>
+                  {open
+                    ?
+                    (
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={this.saveReservation}
+                        className={styles.btn_custom}
+                      >
+                        Send reservation
+                      </Button>
+                    )
+                    :
+                    (
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={this.formOpen}
+                        className={styles.btn_custom}
+                      >
+                        Book it!
+                      </Button>
+                    )
+                  }
+
                 </div>
               </Card>
             </Paper>

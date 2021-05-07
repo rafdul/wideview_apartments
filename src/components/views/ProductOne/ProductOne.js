@@ -24,7 +24,7 @@ import clsx from 'clsx';
 import styles from './ProductOne.module.scss';
 
 import { connect } from 'react-redux';
-import { getOneApartment, fetchAddToCart, fetchOnePublished, getOne, getLoading } from '../../../redux/apartmentsRedux.js';
+import { fetchAddToCart, fetchOnePublished, getOne, getLoading } from '../../../redux/apartmentsRedux.js';
 
 
 class Component extends React.Component {
@@ -277,7 +277,11 @@ class Component extends React.Component {
                       </div>
                     </CardContent>
                     <div className={styles.btnBook} >
-                      <Button variant="contained" color="secondary" onClick={this.submitForm}>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={this.submitForm}
+                      >
                         Book it!
                       </Button>
                     </div>
@@ -294,30 +298,13 @@ class Component extends React.Component {
 
 Component.propTypes = {
   className: PropTypes.string,
-  // apartment: PropTypes.object,
   addToCart: PropTypes.func,
   fetchOneApartment: PropTypes.func,
   getOne: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  // getOne: PropTypes.objectOf(
-  //   PropTypes.shape({
-  //     name: PropTypes.string,
-  //     category: PropTypes.string,
-  //     city: PropTypes.string,
-  //     description: PropTypes.string,
-  //     price: PropTypes.number,
-  //     image: PropTypes.array,
-  //     location: PropTypes.object,
-  //     bedrooms: PropTypes.number,
-  //     kitchen: PropTypes.number,
-  //     swimpool: PropTypes.string,
-  //     balcony: PropTypes.number,
-  //   })
-  // ),
   loading: PropTypes.object,
 };
 
 const mapStateToProps = (state, props) => ({
-  // apartment: getOneApartment(state, props.match.params.id),
   getOne: getOne(state),
   loading: getLoading(state),
 });
