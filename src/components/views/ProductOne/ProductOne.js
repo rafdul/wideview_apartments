@@ -22,28 +22,35 @@ import clsx from 'clsx';
 import styles from './ProductOne.module.scss';
 
 import { connect } from 'react-redux';
-import { getOneApartment, fetchAddToCart } from '../../../redux/apartmentsRedux.js';
+import { getOneApartment, fetchAddToCart, fetchOnePublished, getOne, getLoading } from '../../../redux/apartmentsRedux.js';
 
 
 class Component extends React.Component {
   state = {
     cart: {
-      id: this.props.apartment.id,
-      category: this.props.apartment.category,
-      name: this.props.apartment.name,
-      city: this.props.apartment.city,
+      // id: this.props.apartment.id,
+      category: this.props.getOne.category,
+      name: this.props.getOne.name,
+      city: this.props.getOne.city,
       nights: 0,
       from: '',
       people: 0,
-      priceFromNight: this.props.apartment.price,
+      priceFromNight: this.props.getOne.price,
       totalPrice: 0,
-      image: this.props.apartment.image[1],
+      image: this.props.getOne.image,
     },
+  }
+
+  componentDidMount() {
+    const { fetchOneApartment } = this.props;
+    fetchOneApartment();
+
+    console.log('fetchOneApartment', fetchOneApartment);
   }
 
   setNight = (nights) => {
     const {cart} = this.state;
-    this.setState({cart: { ...cart, nights: parseInt(nights), totalPrice: this.props.apartment.price * parseInt(nights) }});
+    this.setState({cart: { ...cart, nights: parseInt(nights), totalPrice: this.props.getOne.price * parseInt(nights) }});
     // console.log('nights in ProductOne', nights);
   }
 
@@ -70,207 +77,250 @@ class Component extends React.Component {
 
 
   render() {
-    const {className, apartment} = this.props;
+    const {className, getOne, loading} = this.props;
     const { cart } = this.state;
 
-    // console.log('this.state.cart w render', this.state.cart);
+    console.log('this.state.cart w render', this.state.cart);
+    console.log('getOne:', getOne);
+    console.log('loading:', loading);
+
 
     const location = {
-      address: apartment.name,
-      lat: apartment.location.lat,
-      lng: apartment.location.lng,
+      address: getOne.name,
+      lat: getOne.location === undefined ? 0 : getOne.location.lat,
+      lng: getOne.location === undefined ? 0 : getOne.location.lng,
     };
+    console.log('location:', location);
 
-    return(
-      <div className={clsx(className, styles.root)}>
-        <div className={styles.container}>
-          <h3 className={styles.title}>{apartment.name}</h3>
-          <h5 className={styles.subtitle}>{apartment.city}</h5>
-          <p className={styles.subtitle}>{apartment.description}</p>
-          <Grid container>
-            <div className={styles.grid}>
-              <section className={styles.big_image}>
-                <CardMedia
-                  className={styles.image}
-                  component="img"
-                  image={apartment.image[0]}
-                  title={apartment.name}
-                />
-              </section>
-              <section className={styles.big_text}>
-                <span className={styles.marketing_box}>
-                  <h3 className={styles.marketing}>Exclusive relax from ${apartment.price}</h3>
-                </span>
-              </section>
-              <section className={styles.small_image}>
-                <CardMedia
-                  className={styles.image}
-                  component="img"
-                  image={apartment.image[1]}
-                  title={apartment.name}
-                />
-              </section>
-              <section className={styles.small_text}>
-                <span className={styles.marketing_box}>
-                  <h3 className={styles.marketing}>We are waiting for you</h3>
-                </span>
-              </section>
-              <section className={styles.medium_image}>
-                <CardMedia
-                  className={styles.image}
-                  component="img"
-                  image={apartment.image[2]}
-                  title={apartment.name}
-                />
-              </section>
+    if(loading && loading.active === true) {
+      return(
+        <h2>trwa ładowanie strony</h2>
+      );
+    }
+    else {
+      return(
+        <div className={clsx(className, styles.root)}>
+          <div className={styles.container}>
+            <h3 className={styles.title}>{getOne.name}</h3>
+            <h5 className={styles.subtitle}>{getOne.city}</h5>
+            <p className={styles.subtitle}>{getOne.description}</p>
+            <Grid container>
+              <Card className={styles.grid}>
+                <section className={styles.big_image}>
+                  <CardMedia
+                    className={styles.image[0]}
+                    component="img"
+                    image={getOne.image === undefined ? 'https://placeimg.com/640/480/any' : getOne.image[0]}
+                    title={`${getOne.name}_1`}
+                  />
+                </section>
+                <section className={styles.big_text}>
+                  <span className={styles.marketing_box}>
+                    <h3 className={styles.marketing}>Exclusive relax from ${getOne.price}</h3>
+                  </span>
+                </section>
+                <section className={styles.small_image}>
+                  <CardMedia
+                    className={styles.image}
+                    component="img"
+                    image={getOne.image === undefined ? 'https://placeimg.com/640/480/any' : getOne.image[1]}
+                    title={`${getOne.name}_2`}
+                  />
+                </section>
+                <section className={styles.small_text}>
+                  <span className={styles.marketing_box}>
+                    <h3 className={styles.marketing}>We are waiting for you</h3>
+                  </span>
+                </section>
+                <section className={styles.medium_image}>
+                  <CardMedia
+                    className={styles.image}
+                    component="img"
+                    image={getOne.image === undefined ? 'https://placeimg.com/640/480/any' : getOne.image[2]}
+                    title={`${getOne.name}_3`}
+                  />
+                </section>
 
-            </div>
-          </Grid>
-
-          <Grid container>
-            <Grid item xs={12} sm={6}>
-              <Paper elevation={3} className={styles.cardbox}>
-                <Card >
-                  <CardContent>
-                    <Typography gutterBottom variant="h6" component="h6" className={styles.text}>
-                      Amenities
-                    </Typography>
-                    <Typography gutterBottom variant="body2" component="p" className={styles.text}>
-                      {apartment.bedrooms === 1 ? 'Bedroom' : 'Bedrooms'}: {apartment.bedrooms}
-                    </Typography>
-                    <Typography gutterBottom variant="body2" component="p" className={styles.text}>
-                      {apartment.kitchen === 1 ? 'Kitchen' : 'Kitchens'}: {apartment.kitchen}
-                    </Typography>
-                    <Typography gutterBottom variant="body2" component="p" className={styles.text}>
-                      {apartment.balcony === 1 ? 'Balcony' : 'Balconies'}: {apartment.balcony}
-                    </Typography>
-                    <Typography gutterBottom variant="body2" component="p" className={styles.text}>
-                      Swimpool: {apartment.swimpool}
-                    </Typography>
-                  </CardContent>
-                  <CardContent>
-                    <Typography gutterBottom variant="h6" component="h6" className={styles.text}>
-                      Location
-                    </Typography>
-                    <Typography gutterBottom variant="body1" component="p" className={styles.text}>
-                      {apartment.city}
-                    </Typography>
-                    <Paper variant="outlined">
-                      <div className={styles.map}>
-                        <GoogleMapReact
-                          // bootstrapURLKeys={{ key: '' }}
-                          defaultCenter={location}
-                          defaultZoom={15}
-                        >
-                          <LocationPin
-                            lat={location.lat}
-                            lng={location.lng}
-                            text={location.address}
-                          />
-                        </GoogleMapReact>
-                      </div>
-                    </Paper>
-                  </CardContent>
-                </Card>
-              </Paper>
+              </Card>
             </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <Paper elevation={3} className={styles.cardbox}>
-                <Card >
-                  <CardContent className={styles.content}>
-                    <Typography gutterBottom variant="h6" component="h6" className={styles.text}>
-                      Make a booking!
-                    </Typography>
-                    <Typography gutterBottom variant="body1" component="p" className={styles.text}>
-                      {apartment.name} in {apartment.city}
-                    </Typography>
-                    <div className={styles.content__flex}>
-                      <div className={styles.name + ' ' + styles.date}>
-                        <Typography gutterBottom variant="body1" component="p" className={styles.text}>
-                          From:
-                        </Typography>
-                      </div>
-                      <div className={styles.choose}>
-                        <DatePicker setDate={this.setDate} />
-                      </div>
-                    </div>
-                    <div className={styles.content__flex}>
-                      <div className={styles.name}>
-                        <Typography gutterBottom variant="body1" component="p" className={styles.text}>
-                          Nights:
-                        </Typography>
-                      </div>
-                      <div className={styles.choose}>
-                        <PlusMinusSwitcher setAmount={this.setNight} />
-                      </div>
-                    </div>
-                    <div className={styles.content__flex}>
-                      <div className={styles.name}>
-                        <Tooltip title={`max. ${apartment.bedrooms *2 } people`}>
+            <Grid container>
+              <Grid item xs={12} sm={6}>
+                <Paper elevation={3} className={styles.cardbox}>
+                  <Card >
+                    <CardContent>
+                      <Typography gutterBottom variant="h6" component="h6" className={styles.text}>
+                        Amenities
+                      </Typography>
+                      <Typography gutterBottom variant="body2" component="p" className={styles.text}>
+                        {getOne.bedrooms === 1 ? 'Bedroom' : 'Bedrooms'}: {getOne.bedrooms}
+                      </Typography>
+                      <Typography gutterBottom variant="body2" component="p" className={styles.text}>
+                        {getOne.kitchen === 1 ? 'Kitchen' : 'Kitchens'}: {getOne.kitchen}
+                      </Typography>
+                      <Typography gutterBottom variant="body2" component="p" className={styles.text}>
+                        {getOne.balcony === 1 ? 'Balcony' : 'Balconies'}: {getOne.balcony}
+                      </Typography>
+                      <Typography gutterBottom variant="body2" component="p" className={styles.text}>
+                        Swimpool: {getOne.swimpool}
+                      </Typography>
+                    </CardContent>
+                    <CardContent>
+                      <Typography gutterBottom variant="h6" component="h6" className={styles.text}>
+                        Location
+                      </Typography>
+                      <Typography gutterBottom variant="body1" component="p" className={styles.text}>
+                        {getOne.city}
+                      </Typography>
+                      <Paper variant="outlined">
+                        <div className={styles.map}>
+                          <GoogleMapReact
+                            defaultCenter={location}
+                            defaultZoom={15}
+                          >
+                            <LocationPin
+                              lat={location.lat}
+                              lng={location.lng}
+                              text={location.address}
+                            />
+                          </GoogleMapReact>
+
+                          {/* <GoogleMapReact
+                            defaultCenter={getOne.location.lat, getOne.location.lng, getOne.location.address}
+                            defaultZoom={15}
+                          >
+                            <LocationPin
+                              lat={getOne.location.lat}
+                              lng={getOne.location.lng}
+                              text={getOne.location.address}
+                            />
+                          </GoogleMapReact> */}
+
+                        </div>
+                      </Paper>
+                    </CardContent>
+                  </Card>
+                </Paper>
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <Paper elevation={3} className={styles.cardbox}>
+                  <Card >
+                    <CardContent className={styles.content}>
+                      <Typography gutterBottom variant="h6" component="h6" className={styles.text}>
+                        Make a booking!
+                      </Typography>
+                      <Typography gutterBottom variant="body1" component="p" className={styles.text}>
+                        {getOne.name} in {getOne.city}
+                      </Typography>
+                      <div className={styles.content__flex}>
+                        <div className={styles.name + ' ' + styles.date}>
                           <Typography gutterBottom variant="body1" component="p" className={styles.text}>
-                            People <FontAwesomeIcon icon={faInfoCircle} className={styles.fontIcon}/> :
+                            From:
                           </Typography>
-                        </Tooltip>
+                        </div>
+                        <div className={styles.choose}>
+                          <DatePicker setDate={this.setDate} />
+                        </div>
                       </div>
-                      <div className={styles.choose}>
-                        <PlusMinusSwitcher maxValue={`${apartment.bedrooms *2}`} setAmount={this.setPeople} />
-                      </div>
-                    </div>
-                    <div className={styles.content__flex}>
-                      <div className={styles.name}>
-                        <Tooltip title='for 1 night, all suite'>
+                      <div className={styles.content__flex}>
+                        <div className={styles.name}>
                           <Typography gutterBottom variant="body1" component="p" className={styles.text}>
-                            Price <FontAwesomeIcon icon={faInfoCircle} className={styles.fontIcon}/> :
+                            Nights:
                           </Typography>
-                        </Tooltip>
+                        </div>
+                        <div className={styles.choose}>
+                          <PlusMinusSwitcher setAmount={this.setNight} />
+                        </div>
                       </div>
-                      <div className={styles.choose}>
-                        <Typography gutterBottom variant="body1" component="p" className={styles.text}>
-                          ${apartment.price}
-                        </Typography>
+                      <div className={styles.content__flex}>
+                        <div className={styles.name}>
+                          <Tooltip title={`max. ${getOne.bedrooms *2 } people`}>
+                            <Typography gutterBottom variant="body1" component="p" className={styles.text}>
+                              People <FontAwesomeIcon icon={faInfoCircle} className={styles.fontIcon}/> :
+                            </Typography>
+                          </Tooltip>
+                        </div>
+                        <div className={styles.choose}>
+                          <PlusMinusSwitcher maxValue={`${getOne.bedrooms *2}`} setAmount={this.setPeople} />
+                        </div>
                       </div>
+                      <div className={styles.content__flex}>
+                        <div className={styles.name}>
+                          <Tooltip title='for 1 night, all suite'>
+                            <Typography gutterBottom variant="body1" component="p" className={styles.text}>
+                              Price <FontAwesomeIcon icon={faInfoCircle} className={styles.fontIcon}/> :
+                            </Typography>
+                          </Tooltip>
+                        </div>
+                        <div className={styles.choose}>
+                          <Typography gutterBottom variant="body1" component="p" className={styles.text}>
+                            ${getOne.price}
+                          </Typography>
+                        </div>
+                      </div>
+                      <div className={styles.content__flex}>
+                        <div className={styles.name}>
+                          <Typography gutterBottom variant="h6" component="p" className={styles.text}>
+                            Total price:
+                          </Typography>
+                        </div>
+                        <div className={styles.choose}>
+                          <Typography gutterBottom variant="h6" component="p" className={styles.text}>
+                            ${cart.totalPrice}
+                          </Typography>
+                        </div>
+                      </div>
+                    </CardContent>
+                    <div className={styles.btnBook} >
+                      <Button variant="contained" color="secondary" onClick={this.submitForm}>
+                        Book it!
+                      </Button>
                     </div>
-                    <div className={styles.content__flex}>
-                      <div className={styles.name}>
-                        <Typography gutterBottom variant="h6" component="p" className={styles.text}>
-                          Total price:
-                        </Typography>
-                      </div>
-                      <div className={styles.choose}>
-                        <Typography gutterBottom variant="h6" component="p" className={styles.text}>
-                          ${cart.totalPrice}
-                        </Typography>
-                      </div>
-                    </div>
-                  </CardContent>
-                  <div className={styles.btnBook} >
-                    <Button variant="contained" color="secondary" onClick={this.submitForm}>
-                      Book it!
-                    </Button>
-                  </div>
-                </Card>
-              </Paper>
+                  </Card>
+                </Paper>
+              </Grid>
             </Grid>
-          </Grid>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
 Component.propTypes = {
   className: PropTypes.string,
-  apartment: PropTypes.object,
+  // apartment: PropTypes.object,
   addToCart: PropTypes.func,
+  fetchOneApartment: PropTypes.func,
+  getOne: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  // getOne: PropTypes.objectOf(
+  //   PropTypes.shape({
+  //     name: PropTypes.string,
+  //     category: PropTypes.string,
+  //     city: PropTypes.string,
+  //     description: PropTypes.string,
+  //     price: PropTypes.number,
+  //     image: PropTypes.array,
+  //     location: PropTypes.object,
+  //     bedrooms: PropTypes.number,
+  //     kitchen: PropTypes.number,
+  //     swimpool: PropTypes.string,
+  //     balcony: PropTypes.number,
+  //   })
+  // ),
+  loading: PropTypes.object,
 };
 
 const mapStateToProps = (state, props) => ({
-  apartment: getOneApartment(state, props.match.params.id),
+  // apartment: getOneApartment(state, props.match.params.id),
+  getOne: getOne(state),
+  loading: getLoading(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, props) => ({
   addToCart: reservation => dispatch(fetchAddToCart(reservation)),
+  fetchOneApartment: () => dispatch(fetchOnePublished(props.match.params.id)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

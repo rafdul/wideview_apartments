@@ -7,13 +7,19 @@ import styles from './ProductsAll.module.scss';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-import { getAllApartments } from '../../../redux/apartmentsRedux.js';
+import { getAllApartments, fetchAllPublished } from '../../../redux/apartmentsRedux.js';
 
 
 class Component extends React.Component {
 
+  componentDidMount() {
+    const { fetchAllApartments } = this.props;
+    fetchAllApartments();
+  }
+
   render() {
     const { className, apartments } = this.props;
+    console.log('apartments', apartments);
 
     return(
       <div className={clsx(className, styles.root)}>
@@ -24,9 +30,9 @@ class Component extends React.Component {
             {apartments.map(apartment => (
 
               <ApartmentBox
-                key={apartment.id}
-                link={`/products/${apartment.category}/${apartment.id}`}
-                image={apartment.image}
+                key={apartment._id}
+                link={`/products/${apartment.category}/${apartment._id}`}
+                image={apartment.image[0]}
                 name={apartment.name}
                 city={apartment.city}
                 price={apartment.price}
@@ -44,17 +50,18 @@ class Component extends React.Component {
 Component.propTypes = {
   className: PropTypes.string,
   apartments: PropTypes.array,
+  fetchAllApartments: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   apartments: getAllApartments(state),
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
+const mapDispatchToProps = dispatch => ({
+  fetchAllApartments: arg => dispatch(fetchAllPublished(arg)),
+});
 
-const Container = connect(mapStateToProps)(Component);
+const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   // Component as ProductsAll,
