@@ -25,6 +25,7 @@ class Component extends React.Component {
     const {className, apartmentFromCart} = this.props;
     const {cart} = this.state;
     // console.log('cart w Cart', cart);
+    console.log('apartmentFromCart', apartmentFromCart);
 
 
     return(
@@ -33,7 +34,7 @@ class Component extends React.Component {
           <h2 className={styles.title}>Finish your reservation</h2>
           <Grid item xs={12} >
             {apartmentFromCart.map(apartment => (
-              <CartItem key={apartment.id} {...apartment} >
+              <CartItem key={apartment._id} {...apartment} >
                 {console.log('apartment', apartment)}
               </CartItem>
 

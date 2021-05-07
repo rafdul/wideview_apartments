@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { LocationPin } from '../../features/LocationPin/LocationPin';
 import { PlusMinusSwitcher } from '../../features/PlusMinusSwitcher/PlusMinusSwitcher';
 import { DatePicker } from '../../features/DatePicker/DatePicker';
+import { Loading } from '../../common/Loading/Loading';
+import { Error } from '../../common/Error/Error';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -45,19 +47,21 @@ class Component extends React.Component {
     const { fetchOneApartment } = this.props;
     fetchOneApartment();
 
-    console.log('fetchOneApartment', fetchOneApartment);
+    // console.log('fetchOneApartment', fetchOneApartment);
   }
 
   setNight = (nights) => {
     const {cart} = this.state;
     this.setState({cart: { ...cart, nights: parseInt(nights), totalPrice: this.props.getOne.price * parseInt(nights) }});
     // console.log('nights in ProductOne', nights);
+    // console.log('cart w setNight', cart);
   }
 
   setPeople = (people) => {
     const {cart} = this.state;
     this.setState({cart: { ...cart, people: people }});
     // console.log('people', people);
+    // console.log('cart w setPeople', cart);
   }
 
   setDate = (date) => {
@@ -70,6 +74,13 @@ class Component extends React.Component {
     const {cart} = this.state;
     const {addToCart} = this.props;
 
+    cart._id = this.props.getOne._id;
+    cart.category = this.props.getOne.category;
+    cart.name = this.props.getOne.name;
+    cart.city = this.props.getOne.city;
+    cart.priceFromNight = this.props.getOne.price;
+    cart.image = this.props.getOne.image[0];
+
     // console.log('cart wysłany do redux', cart);
     addToCart(cart);
   }
@@ -80,9 +91,9 @@ class Component extends React.Component {
     const {className, getOne, loading} = this.props;
     const { cart } = this.state;
 
-    console.log('this.state.cart w render', this.state.cart);
-    console.log('getOne:', getOne);
-    console.log('loading:', loading);
+    // console.log('this.state.cart w render', this.state.cart);
+    // console.log('getOne:', getOne);
+    // console.log('loading:', loading);
 
 
     const location = {
@@ -90,11 +101,16 @@ class Component extends React.Component {
       lat: getOne.location === undefined ? 0 : getOne.location.lat,
       lng: getOne.location === undefined ? 0 : getOne.location.lng,
     };
-    console.log('location:', location);
+    // console.log('location:', location);
 
     if(loading && loading.active === true) {
       return(
-        <h2>trwa ładowanie strony</h2>
+        <Loading />
+      );
+    }
+    else if(loading && loading.error === true) {
+      return(
+        <Error />
       );
     }
     else {
@@ -110,7 +126,7 @@ class Component extends React.Component {
                   <CardMedia
                     className={styles.image[0]}
                     component="img"
-                    image={getOne.image === undefined ? 'https://placeimg.com/640/480/any' : getOne.image[0]}
+                    image={getOne.image === undefined ? '/images/offers/photo_test.jpg' : getOne.image[0]}
                     title={`${getOne.name}_1`}
                   />
                 </section>
@@ -184,18 +200,6 @@ class Component extends React.Component {
                               text={location.address}
                             />
                           </GoogleMapReact>
-
-                          {/* <GoogleMapReact
-                            defaultCenter={getOne.location.lat, getOne.location.lng, getOne.location.address}
-                            defaultZoom={15}
-                          >
-                            <LocationPin
-                              lat={getOne.location.lat}
-                              lng={getOne.location.lng}
-                              text={getOne.location.address}
-                            />
-                          </GoogleMapReact> */}
-
                         </div>
                       </Paper>
                     </CardContent>

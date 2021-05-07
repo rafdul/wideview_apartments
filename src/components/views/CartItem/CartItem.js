@@ -23,7 +23,7 @@ class Component extends React.Component {
 
   state = {
     cart: {
-      id: this.props.id,
+      _id: this.props._id,
       category: this.props.category,
       name: this.props.name,
       city: this.props.city,
@@ -68,9 +68,9 @@ class Component extends React.Component {
 
 
   render() {
-    const {id, category, name, city, image, people, nights, totalPrice, from, priceFromNight } = this.props;
+    const {_id, category, name, city, image, people, nights, totalPrice, from, priceFromNight } = this.props;
     const {cart} = this.state;
-    // console.log('cart w render:', cart);
+    console.log('cart w render:', cart);
 
 
     return(
@@ -128,11 +128,11 @@ class Component extends React.Component {
 }
 
 Component.propTypes = {
-  id: PropTypes.string,
+  _id: PropTypes.string,
   name: PropTypes.string,
   city: PropTypes.string,
   image: PropTypes.string,
-  people: PropTypes.number,
+  people: PropTypes.oneOfType([PropTypes.number,PropTypes.string]),
   nights: PropTypes.number,
   totalPrice: PropTypes.number,
   category: PropTypes.string,

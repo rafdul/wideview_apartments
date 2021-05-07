@@ -2,6 +2,7 @@ import Axios from 'axios';
 
 /* selectors */
 export const getAllApartments = ({apartments}) => apartments.data;
+export const getCategoryApartments = ({apartments}, name) => apartments.data.map(item => item.category === name);
 export const getOneApartment = ({apartments}, id) => apartments.data.find(item => item.id === id);
 export const getFromCart = ({apartments}) => apartments.cart;
 export const getOneFromCart = ({apartments}, id) => apartments.cart.find(item => item.id === id);
@@ -18,6 +19,7 @@ const FETCH_START = createActionName('FETCH_START');
 const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
 const FETCH_ONE = createActionName('FETCH_ONE');
+const FETCH_CATEGORY = createActionName('FETCH_CATEGORY');
 const FETCH_ADD_TO_CART = createActionName('FETCH_ADD_TO_CART');
 const FETCH_EDIT_IN_CART = createActionName('FETCH_EDIT_IN_CART');
 const FETCH_DELETE_FROM_CART = createActionName('FETCH_DELETE_FROM_CART');
@@ -27,6 +29,7 @@ export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const fetchOne = payload => ({ payload, type: FETCH_ONE });
+export const fetchCategory = payload => ({ payload, type: FETCH_CATEGORY });
 export const fetchAddToCart = payload => ({ payload, type: FETCH_ADD_TO_CART });
 export const fetchEditInCart = payload => ({ payload, type: FETCH_EDIT_IN_CART});
 export const fetchDeleteFromCart = payload => ({ payload, type: FETCH_DELETE_FROM_CART});
@@ -38,7 +41,7 @@ export const fetchAllPublished = () => {
     const { apartments } = getState();
     console.log('apartments', apartments);
 
-    if(apartments.data.length === 0 || apartments.loading.active === false) {
+    if(apartments.data.length === 0 && apartments.loading.active === false) {
       dispatch(fetchStarted());
 
       Axios
@@ -61,6 +64,21 @@ export const fetchOnePublished = (id) => {
       .get(`http://localhost:8000/api/apartments/${id}`)
       .then(res => {
         dispatch(fetchOne(res.data));
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
+export const fetchCategoryPublished = (category) => {
+  return(dispatch, getState) => {
+    dispatch(fetchStarted());
+
+    Axios
+      .get(`http://localhost:8000/api//apartments/category/${category}`)
+      .then(res => {
+        dispatch(fetchCategory(res.data));
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
@@ -111,6 +129,18 @@ export const reducer = (statePart = [], action = {}) => {
         oneApartment: action.payload,
       };
     }
+    case FETCH_CATEGORY: {
+      console.log('...statePart:', ...statePart);
+      console.log('action.payload:', action.payload);
+      return {
+        ...statePart,
+        loading: {
+          active: false,
+          error: false,
+        },
+        data: [...statePart.data, action.payload],
+      };
+    }
     case FETCH_ADD_TO_CART: {
       // console.log('...statePart:', ...statePart);
       // console.log('action.payload:', action.payload);
@@ -124,9 +154,11 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_EDIT_IN_CART: {
-      const statePartIndex = statePart.cart.findIndex(booking => booking.id === action.payload.id);
+      // console.log('statePart edit:', statePart.cart);
+      // console.log('action.payload edit:', action.payload);
+      const statePartIndex = statePart.cart.findIndex(booking => booking._id === action.payload._id);
       statePart.cart.splice(statePartIndex, 1, action.payload);
-      // console.log('action.payload', action.payload);
+
 
       return {
         ...statePart,
@@ -138,9 +170,11 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_DELETE_FROM_CART: {
-      const statePartIndex = statePart.cart.findIndex(booking => booking.id === action.payload.id);
+      // console.log('statePart delete:', statePart.cart);
+      // console.log('action.payload delete:', action.payload);
+      const statePartIndex = statePart.cart.findIndex(booking => booking._id === action.payload._id);
       statePart.cart.splice(statePartIndex, 1);
-      console.log('action.payload', action.payload);
+
       return {
         ...statePart,
         loading: {
