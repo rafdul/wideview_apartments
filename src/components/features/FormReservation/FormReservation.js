@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
+import uniqid from 'uniqid';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
@@ -19,50 +20,38 @@ class Component extends React.Component {
 
   state = {
     order: {
-      apartments: this.props.priceApartment,
-      dataOrder: '',
-      firstName: '',
-      surname: '',
-      email: '',
-      phone: '',
-      status: '',
+      apartments: this.props.bookedApartment,
     },
   }
 
-  // handleAlert = (event) => {
-  //   // event.preventDefault();
-  //   console.log('test');
-  //   alert('hejkaaaaaaaaaa');
-  // }
 
   handleSumbit = (values) => {
-    alert('hej');
-    values.apartments = this.props.priceApartment;
+    const {saveReservation} = this.props;
+
+    // alert('submit');
+    values.apartments = this.props.bookedApartment;
     values.status = 'submited';
     values.dataOrder = new Date().toISOString();
-    console.log(values);
+    values.idOrder = uniqid('order-');
+    saveReservation(values);
+    console.log('złożone zamówieie', values);
   }
 
   render() {
-    const {className, priceApartment, saveReservation} = this.props;
+    const {className, bookedApartment} = this.props;
     const {order} = this.state;
     console.log('order from state in Form:', order);
-    console.log('priceApartment in Form', priceApartment);
-
+    console.log('bookedApartment in Form', bookedApartment);
 
     return(
       <div className={clsx(className, styles.root)}>
         <h5 className={styles.form_title}>Fill it form in one minute!</h5>
-        {/* <button type="submit" onClick={event => this.handleAlert(event)}>Submit</button> */}
         <Formik
           initialValues={{
-            apartments: this.props.priceApartment,
             firstName: '',
             surname: '',
             phone: '',
             email: '',
-            status: 'inProgress',
-            dataOrder: '',
           }}
           onSubmit={values => this.handleSumbit(values)}
 
@@ -150,13 +139,12 @@ class Component extends React.Component {
                     error={errors.phone && touched.phone ? true : false}
                   />
                 </Grid>
-                {/* <button type="submit" >Submit</button> */}
               </Grid>
               <div className={styles.cart + ' ' + styles.total_price}>
                 <div className={styles.text}>Total price:</div>
                 <div className={styles.text}>
-                  ${priceApartment.length > 0
-                    ? priceApartment.map(apartment => apartment.totalPrice).reduce((prev, curr) => prev + curr)
+                  ${bookedApartment.length > 0
+                    ? bookedApartment.map(apartment => apartment.totalPrice).reduce((prev, curr) => prev + curr)
                     : 0
                   }
                 </div>
@@ -168,7 +156,7 @@ class Component extends React.Component {
                     className={styles.btn_custom}
                     disabled={isSubmitting}
                   >
-                    Send reservation
+                    {!isSubmitting ? 'Save reservation' : 'Well done!'}
                   </Button>
                 </div>
               </div>
@@ -182,7 +170,7 @@ class Component extends React.Component {
 
 Component.propTypes = {
   className: PropTypes.string,
-  priceApartment: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  bookedApartment: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   saveReservation: PropTypes.func,
 };
 

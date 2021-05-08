@@ -55,7 +55,7 @@ class Component extends React.Component {
                 {open
                   ?
                   (
-                    <FormReservation priceApartment={apartmentFromCart}/>
+                    <FormReservation bookedApartment={apartmentFromCart}/>
                   )
                   :
                   (

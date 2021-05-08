@@ -59,7 +59,7 @@ export const reducer = (statePart = [], action = {}) => {
         ...statePart,
         loading: {
           active: false,
-          error: action.payload,
+          error: false,
         },
         data: [...statePart.data, action.payload],
       };
