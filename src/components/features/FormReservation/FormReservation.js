@@ -12,7 +12,7 @@ import uniqid from 'uniqid';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-import { fetchOrdersSave } from '../../../redux/ordersRedux';
+import { fetchAddNewOrder } from '../../../redux/ordersRedux';
 
 import styles from './FormReservation.module.scss';
 
@@ -54,25 +54,6 @@ class Component extends React.Component {
             email: '',
           }}
           onSubmit={values => this.handleSumbit(values)}
-
-
-          // onSubmit={values => {
-          //   alert('hej');
-          //   values.status = 'submited';
-          //   values.dataOrder = new Date().toISOString();
-          //   console.log(values);
-          //   saveReservation(values);
-
-
-          //   // values.updated = new Date().toISOString();
-          //   // const formData = new FormData();
-          //   // for (let key of ['_id', 'title', 'text', 'price', 'photo', 'author', 'location', 'phone', 'status', 'created', 'updated']) {
-          //   //   formData.append(key, values[key]);
-          //   // }
-          //   // formData.append('file', values.file);
-          //   // editPost(formData);
-          // }}
-
           validationSchema={Yup.object().shape({
             firstName: Yup.string().required('First name is required'),
             surname: Yup.string().required('Surname is required'),
@@ -129,12 +110,13 @@ class Component extends React.Component {
                 <Grid item xs={12} sm={9} className={styles.formContainer__item}>
                   <TextField
                     variant="outlined"
-                    type="phone"
+                    type="tel"
                     name="phone"
                     id="phone"
                     label="Phone number"
                     value={values.phone}
                     fullWidth
+                    inputProps={{minLength: 6, maxLength: 12}}
                     onChange={handleChange}
                     error={errors.phone && touched.phone ? true : false}
                   />
@@ -179,7 +161,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  saveReservation: reservation => dispatch(fetchOrdersSave(reservation)),
+  saveReservation: reservation => dispatch(fetchAddNewOrder(reservation)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

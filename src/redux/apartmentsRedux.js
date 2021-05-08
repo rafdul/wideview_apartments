@@ -149,6 +149,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
+          sentToCart: true,
         },
         cart: [...statePart.cart, action.payload],
       };

@@ -281,6 +281,7 @@ class Component extends React.Component {
                         variant="contained"
                         color="secondary"
                         onClick={this.submitForm}
+                        disabled={loading.sentToCart ? true : false}
                       >
                         Book it!
                       </Button>

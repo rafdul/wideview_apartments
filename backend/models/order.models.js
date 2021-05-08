@@ -6,8 +6,9 @@ const postSchema = new mongoose.Schema({
   firstName: { type: String  },
   surname: { type: String  },
   email: { type: String },
-  phone: { type: Number },
+  phone: { type: String },
   status: { type: String },
+  idOrder: { type: String },
 });
 
 module.exports = mongoose.model('Order', postSchema);
