@@ -11,35 +11,11 @@
     }
 
     .cart {
-      margin: $main-spacing*2 auto;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      text-align: center;
-
-      div:not(:first-child) {
-        margin: $main-spacing;
-      }
+      @include cart-box;
     }
 
     .total_price {
-      justify-content: flex-end;
-
-      .text {
-        font-size: $base-size*2;
-      }
-
-      div:nth-child(2) {
-        margin-right: $main-spacing*4;
-      }
-
-      .btnBook {
-        @include btnBook;
-
-        .btn_custom {
-          margin-right: $main-spacing*4;
-        }
-      }
+      @include total_price;
     }
 
     @media(max-width: 500px) {

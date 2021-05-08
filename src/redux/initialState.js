@@ -275,4 +275,22 @@ export const initialState = {
     oneApartment: {},
     cart: [],
   },
+
+  orders: {
+    data: [
+      // {
+      //   apartments: [],
+      //   dataOrder: '',
+      //   firstName: '',
+      //   surname: '',
+      //   email: '',
+      //   phone: '',
+      //   status: '',
+      // },
+    ],
+    loading: {
+      active: false,
+      error: false,
+    },
+  },
 };

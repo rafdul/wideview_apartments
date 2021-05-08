@@ -19,8 +19,8 @@ const Component = ({ className, apartments, match, fetchApartments, loading }) =
     fetchApartments();
   });
 
-  console.log('props:', match.params.categoryId);
-  console.log('apartments:', apartments);
+  // console.log('props:', match.params.categoryId);
+  // console.log('apartments:', apartments);
   // console.log('fetchApartments', fetchApartments);
 
 

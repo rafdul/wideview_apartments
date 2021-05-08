@@ -22,15 +22,17 @@ class Component extends React.Component {
     open: false,
   }
 
-  formOpen = () =>{
+  formOpen = (event) =>{
+    event.preventDefault();
     this.setState({open: true});
   }
 
 
+
   render() {
     const {className, apartmentFromCart} = this.props;
-    const {cart, open} = this.state;
-    console.log('formularz w Cart', open);
+    const {open} = this.state;
+    // console.log('formularz w Cart', open);
     // console.log('cart w Cart', cart);
 
     console.log('apartmentFromCart', apartmentFromCart);
@@ -43,59 +45,43 @@ class Component extends React.Component {
           <Grid item xs={12}>
             {apartmentFromCart.map(apartment => (
               <CartItem key={apartment._id} {...apartment} >
-                {console.log('apartment', apartment)}
+                {/* {console.log('apartment', apartment)} */}
               </CartItem>
 
             ))}
 
-            {open
-              ?
-              (
-                <Paper elevation={3} >
-                  <Card className={styles.cart + ' ' + styles.total_price}>
-                    <FormReservation />
-                  </Card>
-                </Paper>
-              )
-              : null
-            }
-
             <Paper elevation={3} >
-              <Card className={styles.cart + ' ' + styles.total_price}>
-                <div className={styles.text}>Total price:</div>
-                <div className={styles.text}>
-                  ${apartmentFromCart.length > 0
-                    ? apartmentFromCart.map(apartment => apartment.totalPrice).reduce((prev, curr) => prev + curr)
-                    : 0
-                  }
-                </div>
-                <div className={styles.btnBook}>
-                  {open
-                    ?
-                    (
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={this.saveReservation}
-                        className={styles.btn_custom}
-                      >
-                        Send reservation
-                      </Button>
-                    )
-                    :
-                    (
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={this.formOpen}
-                        className={styles.btn_custom}
-                      >
-                        Book it!
-                      </Button>
-                    )
-                  }
+              <Card>
+                {open
+                  ?
+                  (
+                    <FormReservation priceApartment={apartmentFromCart}/>
+                  )
+                  :
+                  (
+                    <div className={styles.cart + ' ' + styles.total_price}>
+                      <div className={styles.text}>Total price:</div>
+                      <div className={styles.text}>
+                        ${apartmentFromCart.length > 0
+                          ? apartmentFromCart.map(apartment => apartment.totalPrice).reduce((prev, curr) => prev + curr)
+                          : 0
+                        }
+                      </div>
+                      <div className={styles.btnBook}>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={event => this.formOpen(event)}
+                          className={styles.btn_custom}
+                        >
+                          Book it!
+                        </Button>
 
-                </div>
+                      </div>
+                    </div>
+                  )
+                }
+
               </Card>
             </Paper>
           </Grid>

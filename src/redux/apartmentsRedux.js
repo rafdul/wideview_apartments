@@ -39,7 +39,7 @@ export const fetchDeleteFromCart = payload => ({ payload, type: FETCH_DELETE_FRO
 export const fetchAllPublished = () => {
   return(dispatch, getState) => {
     const { apartments } = getState();
-    console.log('apartments', apartments);
+    // console.log('apartments', apartments);
 
     if(apartments.data.length === 0 && apartments.loading.active === false) {
       dispatch(fetchStarted());
@@ -130,8 +130,8 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_CATEGORY: {
-      console.log('...statePart:', ...statePart);
-      console.log('action.payload:', action.payload);
+      // console.log('...statePart:', ...statePart);
+      // console.log('action.payload:', action.payload);
       return {
         ...statePart,
         loading: {
