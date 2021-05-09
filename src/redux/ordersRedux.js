@@ -2,6 +2,7 @@ import Axios from 'axios';
 
 /* selectors */
 export const getAllOrders = ({orders}) => orders.data;
+export const getLoading = ({orders}) => orders.loading;
 
 /* action name creator */
 const reducerName = 'orders';
@@ -77,6 +78,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
+          done: true,
         },
         data: [...statePart.data, action.payload],
       };

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -12,7 +13,8 @@ import uniqid from 'uniqid';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-import { fetchAddNewOrder } from '../../../redux/ordersRedux';
+import { fetchAddNewOrder, getLoading } from '../../../redux/ordersRedux';
+import { fetchDeleteAllFromCart } from '../../../redux/apartmentsRedux';
 
 import styles from './FormReservation.module.scss';
 
@@ -22,11 +24,12 @@ class Component extends React.Component {
     order: {
       apartments: this.props.bookedApartment,
     },
+    open: true,
   }
 
 
   handleSumbit = (values) => {
-    const {saveReservation} = this.props;
+    const {saveReservation, deleteAllFromCart} = this.props;
 
     // alert('submit');
     values.apartments = this.props.bookedApartment;
@@ -34,18 +37,24 @@ class Component extends React.Component {
     values.dataOrder = new Date().toISOString();
     values.idOrder = uniqid('order-');
     saveReservation(values);
+    deleteAllFromCart();
     console.log('złożone zamówieie', values);
   }
 
+  handleClose = () => {
+    this.setState({open: false});
+  };
+
   render() {
-    const {className, bookedApartment} = this.props;
-    const {order} = this.state;
-    console.log('order from state in Form:', order);
-    console.log('bookedApartment in Form', bookedApartment);
+    const {className, bookedApartment, loading} = this.props;
+    const {order, open} = this.state;
+    // console.log('order from state in Form:', order);
+    // console.log('bookedApartment in Form', bookedApartment);
 
     return(
       <div className={clsx(className, styles.root)}>
         <h5 className={styles.form_title}>Fill it form in one minute!</h5>
+        {console.log('loading', loading)}
         <Formik
           initialValues={{
             firstName: '',
@@ -66,7 +75,6 @@ class Component extends React.Component {
           })}
         >
           {({handleChange, errors, touched, values, isSubmitting }) => (
-
             <Form>
               <Grid container justify="center" alignItems="center" className={styles.formContainer}>
                 <Grid item xs={12} sm={9} className={styles.formContainer__item}>
@@ -145,6 +153,17 @@ class Component extends React.Component {
             </Form>
           )}
         </Formik>
+
+        {(loading && loading.error) &&
+          <Snackbar
+            open={open}
+            autoHideDuration={6000}
+            onClose={this.handleClose}
+            message="Something went wrong"
+            className={styles.snackbarr__error}
+          />
+        }
+
       </div>
     );
   }
@@ -154,14 +173,17 @@ Component.propTypes = {
   className: PropTypes.string,
   bookedApartment: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   saveReservation: PropTypes.func,
+  loading: PropTypes.object,
+  deleteAllFromCart: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
-  // someProp: reduxSelector(state),
+  loading: getLoading(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   saveReservation: reservation => dispatch(fetchAddNewOrder(reservation)),
+  deleteAllFromCart: reservations => dispatch(fetchDeleteAllFromCart(reservations)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

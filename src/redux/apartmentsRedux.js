@@ -23,6 +23,7 @@ const FETCH_CATEGORY = createActionName('FETCH_CATEGORY');
 const FETCH_ADD_TO_CART = createActionName('FETCH_ADD_TO_CART');
 const FETCH_EDIT_IN_CART = createActionName('FETCH_EDIT_IN_CART');
 const FETCH_DELETE_FROM_CART = createActionName('FETCH_DELETE_FROM_CART');
+const FETCH_DELETE_ALL_FROM_CART = createActionName('FETCH_DELETE_ALL_FROM_CART');
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
@@ -33,7 +34,7 @@ export const fetchCategory = payload => ({ payload, type: FETCH_CATEGORY });
 export const fetchAddToCart = payload => ({ payload, type: FETCH_ADD_TO_CART });
 export const fetchEditInCart = payload => ({ payload, type: FETCH_EDIT_IN_CART});
 export const fetchDeleteFromCart = payload => ({ payload, type: FETCH_DELETE_FROM_CART});
-
+export const fetchDeleteAllFromCart = payload => ({ payload, type: FETCH_DELETE_ALL_FROM_CART});
 
 /* thunk creators */
 export const fetchAllPublished = () => {
@@ -183,6 +184,16 @@ export const reducer = (statePart = [], action = {}) => {
           error: false,
         },
         cart: [...statePart.cart],
+      };
+    }
+    case FETCH_DELETE_ALL_FROM_CART: {
+      return {
+        ...statePart,
+        loading: {
+          active: false,
+          error: false,
+        },
+        cart: [],
       };
     }
     default:

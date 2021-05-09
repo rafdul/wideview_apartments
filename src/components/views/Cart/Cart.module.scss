@@ -16,6 +16,10 @@
       text-align: center;
     }
 
+    // .background_success {
+    //   background-color: $color-background-green;
+    // }
+
     .cart {
       @include cart-box;
     }
@@ -38,6 +42,24 @@
       .cart {
         flex-wrap: wrap;
       }
+    }
+  }
+
+  .container__success {
+    @include container;
+    margin: $main-spacing*10 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .titleSuccess {
+      text-align: center;
+    }
+
+    .iconSuccess {
+      margin-right: $main-spacing;
+      color: $color-text-success;
+      font-size: $base-size*5;
     }
   }
 }

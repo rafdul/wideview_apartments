@@ -291,6 +291,7 @@ export const initialState = {
     loading: {
       active: false,
       error: false,
+      done: false,
     },
   },
 };

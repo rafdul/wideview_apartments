@@ -5,6 +5,11 @@
   .form_title {
     margin: $main-spacing*2;
     text-align: center;
+
+    &__success {
+      color: $color-text-success;
+      text-shadow: 2px 4px 10px $color-background-green;
+    }
   }
 
   .formContainer {
