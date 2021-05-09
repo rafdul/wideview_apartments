@@ -23,7 +23,9 @@ const Component = ({className}) => (
         <Grid item xs={12} sm={8} className={styles.item}>
           <h5>WideView</h5>
           <p className={styles.item__text}>Suspendisse at magna. Cum sociis natoque penatibus et lacus iaculis odio et wisi accumsan augue mi, gravida at, velit. Mauris id elit tincidunt wisi nunc, vitae eros cursus dignissim id, semper orci, gravida ullamcorper mauris. Nunc velit sed justo.</p>
-          <p><Link to={`/products/`}>All apartments</Link></p>
+          <p className={styles.item__links}><Link to={`/products/`}>All apartments</Link></p>
+          <p className={styles.item__links}><Link to={`#`}>Contact us</Link></p>
+          <p className={styles.item__links}><Link to={`#`}>GDPR &#38; Regulations</Link></p>
         </Grid>
         <Grid item xs={12} sm={3}>
           <h5>Newsletter</h5>

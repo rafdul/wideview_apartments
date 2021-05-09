@@ -14,6 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Tooltip from '@material-ui/core/Tooltip';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
@@ -41,6 +42,12 @@ class Component extends React.Component {
       totalPrice: 0,
       image: this.props.getOne.image,
     },
+    status: {
+      nights: false,
+      people: false,
+      date: false,
+    },
+    open: true,
   }
 
   componentDidMount() {
@@ -71,7 +78,7 @@ class Component extends React.Component {
 
   submitForm = (event) => {
     // event.preventDefault();
-    const {cart} = this.state;
+    const {cart, status} = this.state;
     const {addToCart} = this.props;
 
     cart._id = this.props.getOne._id;
@@ -81,15 +88,28 @@ class Component extends React.Component {
     cart.priceFromNight = this.props.getOne.price;
     cart.image = this.props.getOne.image[0];
 
-    // console.log('cart wysłany do redux', cart);
-    addToCart(cart);
+    if(cart.nights < 1) {
+      this.setState({status: {...status, nights: true}});
+      console.log('status', status);
+    } else if(cart.people < 1) {
+      this.setState({status: {...status, people: true}});
+      console.log('status', status);
+    } else if(!cart.from) {
+      this.setState({status: {...status, date: true}});
+      console.log('status', status);
+    } else {
+      this.setState({status: {...status, nights: false, people: false, date: false}});
+      addToCart(cart);
+    }
   }
 
-
+  handleClose = () => {
+    this.setState({open: false});
+  };
 
   render() {
     const {className, getOne, loading} = this.props;
-    const { cart } = this.state;
+    const { cart, status, open } = this.state;
 
     // console.log('this.state.cart w render', this.state.cart);
     // console.log('getOne:', getOne);
@@ -226,6 +246,10 @@ class Component extends React.Component {
                         <div className={styles.choose}>
                           <DatePicker setDate={this.setDate} />
                         </div>
+                        {status.date && !cart.from
+                          ? <span className={styles.content__alert + ' ' + styles.content__alert_date}>You have to choose date from</span>
+                          : null
+                        }
                       </div>
                       <div className={styles.content__flex}>
                         <div className={styles.name}>
@@ -236,6 +260,10 @@ class Component extends React.Component {
                         <div className={styles.choose}>
                           <PlusMinusSwitcher setAmount={this.setNight} />
                         </div>
+                        {status.nights  && cart.nights === 0
+                          ? <span className={styles.content__alert}>You have to choose amount of nights</span>
+                          : null
+                        }
                       </div>
                       <div className={styles.content__flex}>
                         <div className={styles.name}>
@@ -248,6 +276,10 @@ class Component extends React.Component {
                         <div className={styles.choose}>
                           <PlusMinusSwitcher maxValue={`${getOne.bedrooms *2}`} setAmount={this.setPeople} />
                         </div>
+                        {status.people && cart.people === 0
+                          ? <span className={styles.content__alert}>You have to choose amount of people</span>
+                          : null
+                        }
                       </div>
                       <div className={styles.content__flex}>
                         <div className={styles.name}>
@@ -283,11 +315,31 @@ class Component extends React.Component {
                         onClick={this.submitForm}
                         disabled={loading.sentToCart ? true : false}
                       >
-                        Book it!
+                        {loading.sentToCart ? <span className={styles.btnBook__success}>Your booking was added to the cart</span> : 'Book it!'}
                       </Button>
                     </div>
                   </Card>
                 </Paper>
+
+                {(loading && loading.sentToCart) &&
+                  <Snackbar
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={this.handleClose}
+                    message="Well done! Finish your booking in the cart!"
+                    className={styles.snackbarr__success}
+                  />
+                }
+                {(loading && loading.error) &&
+                  <Snackbar
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={this.handleClose}
+                    message="Something went wrong"
+                    className={styles.snackbarr__error}
+                  />
+                }
+
               </Grid>
             </Grid>
           </div>

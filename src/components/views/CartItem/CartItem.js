@@ -83,7 +83,7 @@ class Component extends React.Component {
             </div>
             <div className={styles.cart__namebox}>
               <div className={styles.cart__decoration}>{name} in {city}</div>
-              <div>(booking for {people} people)</div>
+              <div>(booking for {people} people from {from})</div>
             </div>
             <div className={styles.cart__nightsbox} >
               <div>Nights:</div>

@@ -17,6 +17,14 @@
       &__text {
         padding-right: $main-spacing;
       }
+
+      &__links {
+        margin-bottom: $main-spacing/2;
+
+        a {
+          color: $color-text-light;
+        }
+      }
     }
 
     .group {

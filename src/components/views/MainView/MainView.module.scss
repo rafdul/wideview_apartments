@@ -3,12 +3,17 @@
 
 .root {
   .subtitle {
+    font-family: $font-text-alternative;
     text-align: center;
     margin: $base-size*3;
     letter-spacing: 2px;
+    text-shadow: 2px 2px 8px #808080a9;
 
     &__first {
       margin-bottom: $base-size*2;
+      letter-spacing: 3px;
+      font-weight: 700;
+
     }
   }
 

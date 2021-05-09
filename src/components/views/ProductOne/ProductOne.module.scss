@@ -137,10 +137,40 @@
           color: $color-text;
         }
       }
+
+      &__alert {
+        color: $color-text-alert;
+        font-size: $base-size;
+      }
+
+      &__alert_date {
+        width: 100%;
+        text-align: center;
+      }
     }
 
     .btnBook {
       @include btnBook;
+
+      &__success {
+        color: $color-text-success;
+      }
+    }
+  }
+
+  .snackbarr__success {
+    bottom: 40vh;
+
+    div:nth-child(1){
+      background-color: $color-text-success;
+    }
+  }
+
+  .snackbarr__error {
+    bottom: 40vh;
+
+    div:nth-child(1){
+      background-color: $color-text-error;
     }
   }
 }

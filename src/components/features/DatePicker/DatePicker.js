@@ -24,7 +24,7 @@ const Component = ({setDate}) => {
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDatePicker
           className={styles.datepicker}
-          disableToolbar
+          // disableToolbar
           disablePast
           variant="inline"
           format="MM/dd/yyyy"
@@ -32,6 +32,7 @@ const Component = ({setDate}) => {
           id="date-picker-inline"
           // label="Date picker inline"
           value={selectedDate}
+          // defaultValue='Choose date'
           onChange={handleDateChange}
           KeyboardButtonProps={{
             'aria-label': 'change date',
