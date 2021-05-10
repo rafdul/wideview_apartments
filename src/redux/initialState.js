@@ -1,31 +1,38 @@
 export const initialState = {
-  category: [
-    {
-      id: 1,
-      name: 'seaside',
-      title: 'Sunny seaside',
-      image: '/images/categories/seaside_640.jpg',
-    },
-    {
-      id: 2,
-      name: 'cities',
-      title: 'Vibrant cities',
-      image: '/images/categories/city_640.jpg',
-    },
-    {
-      id: 3,
-      name: 'mountains',
-      title: 'Secret mountains',
-      image: '/images/categories/mountains_640.jpg',
-    },
-    {
-      id: 4,
-      name: 'countryside',
-      title: 'Secluded countryside',
-      image: '/images/categories/countryside_640.jpg',
-    },
-  ],
+  // categories: [
+  //   {
+  //     id: 1,
+  //     name: 'seaside',
+  //     title: 'Sunny seaside',
+  //     image: '/images/categories/seaside_640.jpg',
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'cities',
+  //     title: 'Vibrant cities',
+  //     image: '/images/categories/city_640.jpg',
+  //   },
+  //   {
+  //     id: 3,
+  //     name: 'mountains',
+  //     title: 'Secret mountains',
+  //     image: '/images/categories/mountains_640.jpg',
+  //   },
+  //   {
+  //     id: 4,
+  //     name: 'countryside',
+  //     title: 'Secluded countryside',
+  //     image: '/images/categories/countryside_640.jpg',
+  //   },
+  // ],
 
+  categories: {
+    data: [],
+    loading: {
+      active: false,
+      error: false,
+    },
+  },
 
   apartments: {
     data: [
