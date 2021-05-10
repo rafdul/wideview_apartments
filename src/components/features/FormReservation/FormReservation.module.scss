@@ -32,4 +32,12 @@
   .total_price {
     @include total_price;
   }
+
+  .snackbarr__success {
+    @include snackbarr__success;
+  }
+
+  .snackbarr__error {
+    @include snackbarr__error;
+  }
 }

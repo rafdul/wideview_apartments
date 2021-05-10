@@ -64,4 +64,20 @@
   }
 }
 
+@mixin snackbarr__success {
+  bottom: 40vh;
+
+  div:nth-child(1){
+    background-color: $color-text-success;
+  }
+}
+
+@mixin snackbarr__error {
+  bottom: 40vh;
+
+  div:nth-child(1){
+    background-color: $color-text-error;
+  }
+}
+
 

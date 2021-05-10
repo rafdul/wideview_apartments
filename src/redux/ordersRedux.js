@@ -2,7 +2,7 @@ import Axios from 'axios';
 
 /* selectors */
 export const getAllOrders = ({orders}) => orders.data;
-export const getLoading = ({orders}) => orders.loading;
+export const getLoadingOrders = ({orders}) => orders.loading;
 
 /* action name creator */
 const reducerName = 'orders';
@@ -13,12 +13,14 @@ const FETCH_ORDERS_START = createActionName('FETCH_ORDERS_START');
 const FETCH_ORDERS_SUCCESS = createActionName('FETCH_ORDERS_SUCCESS');
 const FETCH_ORDERS_ERROR = createActionName('FETCH_ORDERS_ERROR');
 const FETCH_ORDERS_SAVE = createActionName('FETCH_ORDERS_SAVE');
+const FETCH_ORDERS_CLEAN = createActionName('FETCH_ORDERS_CLEAN');
 
 /* action creators */
 export const fetchOrdersStarted = payload => ({ payload, type: FETCH_ORDERS_START });
 export const fetchOrdersSuccess = payload => ({ payload, type: FETCH_ORDERS_SUCCESS });
 export const fetchOrdersError = payload => ({ payload, type: FETCH_ORDERS_ERROR });
 export const fetchOrdersSave = payload => ({ payload, type: FETCH_ORDERS_SAVE });
+export const fetchOrdersClean = payload => ({ payload, type: FETCH_ORDERS_CLEAN });
 
 /* thunk creators */
 export const fetchAddNewOrder = (order) => {
@@ -48,6 +50,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: true,
           error: false,
+          done: false,
         },
       };
     }
@@ -57,6 +60,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
+          done: false,
         },
         data: action.payload,
       };
@@ -67,12 +71,13 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: action.payload,
+          done: false,
         },
       };
     }
     case FETCH_ORDERS_SAVE: {
-      console.log('action.payload w fetch orders save:', action.payload);
-      console.log('statePart w fetch orders save:', statePart);
+      // console.log('action.payload w fetch orders save:', action.payload);
+      // console.log('statePart w fetch orders save:', statePart);
       return {
         ...statePart,
         loading: {
@@ -81,6 +86,19 @@ export const reducer = (statePart = [], action = {}) => {
           done: true,
         },
         data: [...statePart.data, action.payload],
+      };
+    }
+    case FETCH_ORDERS_CLEAN: {
+      // console.log('action.payload w fetch orders save:', action.payload);
+      // console.log('statePart w fetch orders save:', statePart);
+      return {
+        ...statePart,
+        loading: {
+          active: false,
+          error: false,
+          done: false,
+        },
+        data: [],
       };
     }
     default:

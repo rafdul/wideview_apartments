@@ -159,18 +159,10 @@
   }
 
   .snackbarr__success {
-    bottom: 40vh;
-
-    div:nth-child(1){
-      background-color: $color-text-success;
-    }
+    @include snackbarr__success;
   }
 
   .snackbarr__error {
-    bottom: 40vh;
-
-    div:nth-child(1){
-      background-color: $color-text-error;
-    }
+    @include snackbarr__error;
   }
 }

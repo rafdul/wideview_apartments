@@ -96,6 +96,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: true,
           error: false,
+          sentToCart: false,
         },
       };
     }
@@ -105,6 +106,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
+          sentToCart: false,
         },
         data: action.payload,
       };
@@ -115,6 +117,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: action.payload,
+          sentToCart: false,
         },
       };
     }
@@ -126,6 +129,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
+          sentToCart: false,
         },
         oneApartment: action.payload,
       };
@@ -138,6 +142,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
+          sentToCart: false,
         },
         data: [...statePart.data, action.payload],
       };
@@ -167,6 +172,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
+          sentToCart: false,
         },
         cart: [...statePart.cart],
       };
@@ -182,6 +188,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
+          sentToCart: false,
         },
         cart: [...statePart.cart],
       };
@@ -192,6 +199,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
+          sentToCart: false,
         },
         cart: [],
       };

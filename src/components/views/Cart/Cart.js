@@ -15,7 +15,7 @@ import clsx from 'clsx';
 
 import { connect } from 'react-redux';
 import { getFromCart, fetchAddToCart } from '../../../redux/apartmentsRedux';
-import { getLoading } from '../../../redux/ordersRedux';
+import { getLoadingOrders } from '../../../redux/ordersRedux';
 
 import styles from './Cart.module.scss';
 
@@ -31,83 +31,81 @@ class Component extends React.Component {
     this.setState({open: true});
   }
 
-
-
   render() {
-    const {className, apartmentFromCart, loading} = this.props;
+    const {className, apartmentFromCart, loadingOrders} = this.props;
     const {open} = this.state;
     // console.log('formularz w Cart', open);
     // console.log('cart w Cart', cart);
-
-    console.log('apartmentFromCart', apartmentFromCart);
-
+    // console.log('apartmentFromCart', apartmentFromCart);
 
     return(
       <div className={clsx(className, styles.root)}>
-        {console.log('loading w Cart', loading)}
-        {!loading.done
-          ?
-          <div className={styles.container}>
+
+        <div className={styles.container}>
+
+          {!loadingOrders.done
+            ?
             <h2 className={apartmentFromCart.length < 1 ? styles.title__empty : styles.title}>
               {apartmentFromCart.length < 1
                 ? 'Your cart is empty'
                 : 'Finish your reservation'
               }
             </h2>
-            <Grid item xs={12}>
+            :
+            <div className={styles.container__success}>
+              <FontAwesomeIcon icon={faCheckCircle} className={styles.iconSuccess} />
+              <h2 className={styles.titleSuccess}>Thanks for your booking!</h2>
+            </div>
+          }
 
-              {apartmentFromCart.map(apartment => (
-                <CartItem key={apartment._id} {...apartment} >
-                  {/* {console.log('apartment', apartment)} */}
-                </CartItem>
-              ))}
+          <Grid item xs={12}>
+            {apartmentFromCart.map(apartment => (
+              <CartItem key={apartment._id} {...apartment} >
+                {/* {console.log('apartment', apartment)} */}
+              </CartItem>
+            ))}
 
-              {apartmentFromCart.length > 0
-                ?
-                (<Paper elevation={3} >
-                  <Card>
-                    {open
-                      ?
-                      (
-                        <FormReservation bookedApartment={apartmentFromCart}/>
-                      )
-                      :
-                      (
-                        <div className={styles.cart + ' ' + styles.total_price}>
-                          <div className={styles.text}>Total price:</div>
-                          <div className={styles.text}>
-                            ${apartmentFromCart.length > 0
-                              ? apartmentFromCart.map(apartment => apartment.totalPrice).reduce((prev, curr) => prev + curr)
-                              : 0
-                            }
-                          </div>
-                          <div className={styles.btnBook}>
-                            <Button
-                              variant="contained"
-                              color="secondary"
-                              onClick={event => this.formOpen(event)}
-                              className={styles.btn_custom}
-                            >
-                              Book it!
-                            </Button>
-
-                          </div>
+            {apartmentFromCart.length > 0
+              ?
+              (<Paper elevation={3} >
+                <Card>
+                  {open
+                    ?
+                    (
+                      <FormReservation bookedApartment={apartmentFromCart}/>
+                    )
+                    :
+                    (
+                      <div className={styles.cart + ' ' + styles.total_price}>
+                        <div className={styles.text}>Total price:</div>
+                        <div className={styles.text}>
+                          ${apartmentFromCart.length > 0
+                            ? apartmentFromCart.map(apartment => apartment.totalPrice).reduce((prev, curr) => prev + curr)
+                            : 0
+                          }
                         </div>
-                      )
-                    }
-                  </Card>
-                </Paper>)
-                :
-                null
-              }
-            </Grid>
-          </div>
-          :
-          <div className={styles.container__success}>
-            <FontAwesomeIcon icon={faCheckCircle} className={styles.iconSuccess}/>
-            <h2 className={styles.titleSuccess}>Thanks for your booking!</h2>
-          </div>
-        }
+                        <div className={styles.btnBook}>
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={event => this.formOpen(event)}
+                            className={styles.btn_custom}
+                          >
+                            Book it!
+                          </Button>
+
+                        </div>
+                      </div>
+                    )
+                  }
+                </Card>
+              </Paper>)
+              :
+              null
+            }
+          </Grid>
+        </div>
+
       </div>
     );
   }
@@ -117,12 +115,12 @@ Component.propTypes = {
   className: PropTypes.string,
   apartmentFromCart: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   addToCart: PropTypes.func,
-  loading: PropTypes.object,
+  loadingOrders: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
   apartmentFromCart: getFromCart(state),
-  loading: getLoading(state),
+  loadingOrders: getLoadingOrders(state),
 });
 
 const mapDispatchToProps = dispatch => ({

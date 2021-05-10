@@ -26,6 +26,7 @@ import styles from './ProductOne.module.scss';
 
 import { connect } from 'react-redux';
 import { fetchAddToCart, fetchOnePublished, getOne, getLoading } from '../../../redux/apartmentsRedux.js';
+import { fetchOrdersClean } from '../../../redux/ordersRedux';
 
 
 class Component extends React.Component {
@@ -79,7 +80,7 @@ class Component extends React.Component {
   submitForm = (event) => {
     // event.preventDefault();
     const {cart, status} = this.state;
-    const {addToCart} = this.props;
+    const {addToCart, ordersClean} = this.props;
 
     cart._id = this.props.getOne._id;
     cart.category = this.props.getOne.category;
@@ -100,6 +101,7 @@ class Component extends React.Component {
     } else {
       this.setState({status: {...status, nights: false, people: false, date: false}});
       addToCart(cart);
+      ordersClean();
     }
   }
 
@@ -355,6 +357,7 @@ Component.propTypes = {
   fetchOneApartment: PropTypes.func,
   getOne: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   loading: PropTypes.object,
+  ordersClean: PropTypes.func,
 };
 
 const mapStateToProps = (state, props) => ({
@@ -365,6 +368,7 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = (dispatch, props) => ({
   addToCart: reservation => dispatch(fetchAddToCart(reservation)),
   fetchOneApartment: () => dispatch(fetchOnePublished(props.match.params.id)),
+  ordersClean: () => dispatch(fetchOrdersClean()),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

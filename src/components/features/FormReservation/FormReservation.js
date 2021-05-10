@@ -13,7 +13,7 @@ import uniqid from 'uniqid';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-import { fetchAddNewOrder, getLoading } from '../../../redux/ordersRedux';
+import { fetchAddNewOrder, getLoadingOrders } from '../../../redux/ordersRedux';
 import { fetchDeleteAllFromCart } from '../../../redux/apartmentsRedux';
 
 import styles from './FormReservation.module.scss';
@@ -46,8 +46,8 @@ class Component extends React.Component {
   };
 
   render() {
-    const {className, bookedApartment, loading} = this.props;
-    const {order, open} = this.state;
+    const { className, bookedApartment, loading } = this.props;
+    const { open } = this.state;
     // console.log('order from state in Form:', order);
     // console.log('bookedApartment in Form', bookedApartment);
 
@@ -71,7 +71,8 @@ class Component extends React.Component {
               .required('Enter valid email'),
             phone: Yup.number()
               .positive()
-              .integer(),
+              .integer()
+              .required(),
           })}
         >
           {({handleChange, errors, touched, values, isSubmitting }) => (
@@ -178,7 +179,7 @@ Component.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  loading: getLoading(state),
+  loading: getLoadingOrders(state),
 });
 
 const mapDispatchToProps = dispatch => ({
