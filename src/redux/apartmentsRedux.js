@@ -96,7 +96,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: true,
           error: false,
-          sentToCart: false,
+          loaded: false,
         },
       };
     }
@@ -106,7 +106,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
-          sentToCart: false,
+          loaded: true,
         },
         data: action.payload,
       };
@@ -117,7 +117,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: action.payload,
-          sentToCart: false,
+          loaded: false,
         },
       };
     }
@@ -129,7 +129,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
-          sentToCart: false,
+          loaded: true,
         },
         oneApartment: action.payload,
       };
@@ -142,7 +142,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
-          sentToCart: false,
+          loaded: true,
         },
         data: [...statePart.data, action.payload],
       };
@@ -155,7 +155,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
-          sentToCart: true,
+          loaded: false,
         },
         cart: [...statePart.cart, action.payload],
       };
@@ -172,7 +172,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
-          sentToCart: false,
+          loaded: false,
         },
         cart: [...statePart.cart],
       };
@@ -188,7 +188,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
-          sentToCart: false,
+          loaded: false,
         },
         cart: [...statePart.cart],
       };
@@ -199,7 +199,7 @@ export const reducer = (statePart = [], action = {}) => {
         loading: {
           active: false,
           error: false,
-          sentToCart: false,
+          loaded: false,
         },
         cart: [],
       };

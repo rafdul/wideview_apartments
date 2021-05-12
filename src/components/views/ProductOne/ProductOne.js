@@ -21,87 +21,115 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 import GoogleMapReact from 'google-map-react';
 
+import uniqid from 'uniqid';
 import clsx from 'clsx';
 import styles from './ProductOne.module.scss';
 
 import { connect } from 'react-redux';
-import { fetchAddToCart, fetchOnePublished, getOne, getLoading } from '../../../redux/apartmentsRedux.js';
-import { fetchOrdersClean } from '../../../redux/ordersRedux';
+import { fetchAddToCart, fetchOnePublished, getOne } from '../../../redux/apartmentsRedux.js';
+import { fetchOrdersToCart, getLoadingOrders } from '../../../redux/ordersRedux';
 
 
 class Component extends React.Component {
   state = {
-    cart: {
-      // id: this.props.apartment.id,
-      category: this.props.getOne.category,
-      name: this.props.getOne.name,
-      city: this.props.getOne.city,
-      nights: 0,
-      from: '',
-      people: 0,
-      priceFromNight: this.props.getOne.price,
-      totalPrice: 0,
-      image: this.props.getOne.image,
+    order: {
+      apartments: {},
     },
-    status: {
+    statusProduct: {
       nights: false,
       people: false,
       date: false,
     },
-    open: true,
+    open: false,
+    btnActive: false,
   }
 
   componentDidMount() {
     const { fetchOneApartment } = this.props;
     fetchOneApartment();
-
-    // console.log('fetchOneApartment', fetchOneApartment);
   }
 
   setNight = (nights) => {
-    const {cart} = this.state;
-    this.setState({cart: { ...cart, nights: parseInt(nights), totalPrice: this.props.getOne.price * parseInt(nights) }});
-    // console.log('nights in ProductOne', nights);
-    // console.log('cart w setNight', cart);
+    const {order} = this.state;
+
+    this.setState(
+      {order:
+        {
+          apartments:
+          {
+            ...order.apartments,
+            nights: parseInt(nights),
+            totalPrice: this.props.getOne.price * parseInt(nights),
+          },
+        },
+      },
+    );
+    this.setState({btnActive: true});
+    // console.log('order w setNight', order);
   }
 
   setPeople = (people) => {
-    const {cart} = this.state;
-    this.setState({cart: { ...cart, people: people }});
-    // console.log('people', people);
-    // console.log('cart w setPeople', cart);
+    const {order} = this.state;
+
+    this.setState(
+      {order:
+        {
+          apartments:
+          {
+            ...order.apartments,
+            people: people,
+          },
+        },
+      },
+    );
+    this.setState({btnActive: true});
   }
 
   setDate = (date) => {
-    const {cart} = this.state;
-    this.setState({cart: {...cart, from: date.toLocaleDateString('en-US') }});
+    const {order} = this.state;
+
+    this.setState(
+      {order:
+        {
+          apartments:
+          {
+            ...order.apartments,
+            from: date.toLocaleDateString('en-US'),
+          },
+        },
+      },
+    );
   }
 
   submitForm = (event) => {
     // event.preventDefault();
-    const {cart, status} = this.state;
-    const {addToCart, ordersClean} = this.props;
+    const {order, statusProduct} = this.state;
+    const {saveReservation, getOne} = this.props;
 
-    cart._id = this.props.getOne._id;
-    cart.category = this.props.getOne.category;
-    cart.name = this.props.getOne.name;
-    cart.city = this.props.getOne.city;
-    cart.priceFromNight = this.props.getOne.price;
-    cart.image = this.props.getOne.image[0];
+    order.apartments._id = getOne._id;
+    order.apartments.category = getOne.category;
+    order.apartments.name = getOne.name;
+    order.apartments.city = getOne.city;
+    order.apartments.priceFromNight = getOne.price;
+    order.apartments.image = getOne.image[0];
+    order.apartments.name = getOne.name;
+    order.apartments.status = 'addToCart';
+    order.apartments.dataOrder = new Date().toISOString();
+    order.apartments.idOrder = uniqid('order-');
 
-    if(cart.nights < 1) {
-      this.setState({status: {...status, nights: true}});
-      console.log('status', status);
-    } else if(cart.people < 1) {
-      this.setState({status: {...status, people: true}});
-      console.log('status', status);
-    } else if(!cart.from) {
-      this.setState({status: {...status, date: true}});
-      console.log('status', status);
+    if(order.apartments.nights < 1) {
+      this.setState({statusProduct: {...statusProduct, nights: true}});
+    } else if(order.apartments.people < 1) {
+      this.setState({statusProduct: {...statusProduct, people: true}});
+    } else if(!order.apartments.from) {
+      this.setState({statusProduct: {...statusProduct, date: true}});
     } else {
-      this.setState({status: {...status, nights: false, people: false, date: false}});
-      addToCart(cart);
-      ordersClean();
+      this.setState({statusProduct: {...statusProduct, nights: false, people: false, date: false}});
+
+      saveReservation(order);
+      // console.log('order w saveReservation:', order);
+      this.setState({btnActive: false});
+      this.setState({open: true});
     }
   }
 
@@ -110,13 +138,10 @@ class Component extends React.Component {
   };
 
   render() {
-    const {className, getOne, loading} = this.props;
-    const { cart, status, open } = this.state;
-
-    // console.log('this.state.cart w render', this.state.cart);
+    const {className, getOne, loadingOrders } = this.props;
+    const { order, statusProduct, open, btnActive } = this.state;
+    // console.log('this.state.order w render', order);
     // console.log('getOne:', getOne);
-    // console.log('loading:', loading);
-
 
     const location = {
       address: getOne.name,
@@ -125,12 +150,12 @@ class Component extends React.Component {
     };
     // console.log('location:', location);
 
-    if(loading && loading.active === true) {
+    if(loadingOrders && loadingOrders.active === true) {
       return(
         <Loading />
       );
     }
-    else if(loading && loading.error === true) {
+    else if(loadingOrders && loadingOrders.error === true) {
       return(
         <Error />
       );
@@ -211,18 +236,23 @@ class Component extends React.Component {
                         {getOne.city}
                       </Typography>
                       <Paper variant="outlined">
-                        <div className={styles.map}>
-                          <GoogleMapReact
-                            defaultCenter={location}
-                            defaultZoom={15}
-                          >
-                            <LocationPin
-                              lat={location.lat}
-                              lng={location.lng}
-                              text={location.address}
-                            />
-                          </GoogleMapReact>
-                        </div>
+                        {location.address !== undefined
+                          ?
+                          <div className={styles.map}>
+                            <GoogleMapReact
+                              defaultCenter={location}
+                              defaultZoom={15}
+                            >
+                              <LocationPin
+                                lat={location.lat}
+                                lng={location.lng}
+                                text={location.address}
+                              />
+                            </GoogleMapReact>
+                          </div>
+                          :
+                          null
+                        }
                       </Paper>
                     </CardContent>
                   </Card>
@@ -248,7 +278,7 @@ class Component extends React.Component {
                         <div className={styles.choose}>
                           <DatePicker setDate={this.setDate} />
                         </div>
-                        {status.date && !cart.from
+                        {statusProduct.date && !order.apartments.from
                           ? <span className={styles.content__alert + ' ' + styles.content__alert_date}>You have to choose date from</span>
                           : null
                         }
@@ -262,7 +292,7 @@ class Component extends React.Component {
                         <div className={styles.choose}>
                           <PlusMinusSwitcher setAmount={this.setNight} />
                         </div>
-                        {status.nights  && cart.nights === 0
+                        {statusProduct.nights  && order.apartments.nights === 0
                           ? <span className={styles.content__alert}>You have to choose amount of nights</span>
                           : null
                         }
@@ -278,7 +308,7 @@ class Component extends React.Component {
                         <div className={styles.choose}>
                           <PlusMinusSwitcher maxValue={`${getOne.bedrooms *2}`} setAmount={this.setPeople} />
                         </div>
-                        {status.people && cart.people === 0
+                        {statusProduct.people && order.apartments.people === 0
                           ? <span className={styles.content__alert}>You have to choose amount of people</span>
                           : null
                         }
@@ -305,7 +335,7 @@ class Component extends React.Component {
                         </div>
                         <div className={styles.choose}>
                           <Typography gutterBottom variant="h6" component="p" className={styles.text}>
-                            ${cart.totalPrice}
+                            ${order.apartments.totalPrice}
                           </Typography>
                         </div>
                       </div>
@@ -315,15 +345,15 @@ class Component extends React.Component {
                         variant="contained"
                         color="secondary"
                         onClick={this.submitForm}
-                        disabled={loading.sentToCart ? true : false}
+                        disabled={!btnActive ? true : false}
                       >
-                        {loading.sentToCart ? <span className={styles.btnBook__success}>Your booking was added to the cart</span> : 'Book it!'}
+                        Book it!
                       </Button>
                     </div>
                   </Card>
                 </Paper>
 
-                {(loading && loading.sentToCart) &&
+                {(loadingOrders && loadingOrders.added ) &&
                   <Snackbar
                     open={open}
                     autoHideDuration={6000}
@@ -332,7 +362,7 @@ class Component extends React.Component {
                     className={styles.snackbarr__success}
                   />
                 }
-                {(loading && loading.error) &&
+                {(loadingOrders && loadingOrders.error) &&
                   <Snackbar
                     open={open}
                     autoHideDuration={6000}
@@ -356,19 +386,19 @@ Component.propTypes = {
   addToCart: PropTypes.func,
   fetchOneApartment: PropTypes.func,
   getOne: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  loading: PropTypes.object,
-  ordersClean: PropTypes.func,
+  loadingOrders: PropTypes.object,
+  saveReservation: PropTypes.func,
 };
 
 const mapStateToProps = (state, props) => ({
   getOne: getOne(state),
-  loading: getLoading(state),
+  loadingOrders: getLoadingOrders(state),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
   addToCart: reservation => dispatch(fetchAddToCart(reservation)),
   fetchOneApartment: () => dispatch(fetchOnePublished(props.match.params.id)),
-  ordersClean: () => dispatch(fetchOrdersClean()),
+  saveReservation: reservation => dispatch(fetchOrdersToCart(reservation)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

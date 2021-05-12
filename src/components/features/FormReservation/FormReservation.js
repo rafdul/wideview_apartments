@@ -13,8 +13,7 @@ import uniqid from 'uniqid';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-import { fetchAddNewOrder, getLoadingOrders } from '../../../redux/ordersRedux';
-import { fetchDeleteAllFromCart } from '../../../redux/apartmentsRedux';
+import { fetchSaveNewOrder, getLoadingOrders, getAllOrders } from '../../../redux/ordersRedux';
 
 import styles from './FormReservation.module.scss';
 
@@ -23,22 +22,31 @@ class Component extends React.Component {
   state = {
     order: {
       apartments: this.props.bookedApartment,
+      dataforOrder: {},
     },
     open: true,
   }
 
 
   handleSumbit = (values) => {
-    const {saveReservation, deleteAllFromCart} = this.props;
+    const {saveReservation, allFromCart} = this.props;
 
-    // alert('submit');
-    values.apartments = this.props.bookedApartment;
-    values.status = 'submited';
-    values.dataOrder = new Date().toISOString();
-    values.idOrder = uniqid('order-');
-    saveReservation(values);
-    deleteAllFromCart();
-    console.log('złożone zamówieie', values);
+    values.statusSubmited = 'submited';
+    values.dataSubmited = new Date().toISOString();
+    values.idSubmited = uniqid('submit-');
+    // console.log('values w handlesubmit:', values);
+
+    function addProperties(a,b) {
+      a.status = b;
+      return a;
+    }
+
+    const submited = allFromCart.map(item => addProperties(item, 'submited'));
+    submited.map(item => item.dataSubmit = values);
+    // console.log('submited:', submited);
+
+    saveReservation(submited);
+    // console.log('allFromCart', allFromCart);
   }
 
   handleClose = () => {
@@ -48,13 +56,11 @@ class Component extends React.Component {
   render() {
     const { className, bookedApartment, loading } = this.props;
     const { open } = this.state;
-    // console.log('order from state in Form:', order);
     // console.log('bookedApartment in Form', bookedApartment);
 
     return(
       <div className={clsx(className, styles.root)}>
         <h5 className={styles.form_title}>Fill it form in one minute!</h5>
-        {console.log('loading', loading)}
         <Formik
           initialValues={{
             firstName: '',
@@ -135,7 +141,7 @@ class Component extends React.Component {
                 <div className={styles.text}>Total price:</div>
                 <div className={styles.text}>
                   ${bookedApartment.length > 0
-                    ? bookedApartment.map(apartment => apartment.totalPrice).reduce((prev, curr) => prev + curr)
+                    ? bookedApartment.map(item => item.apartments.totalPrice).reduce((prev, curr) => prev + curr)
                     : 0
                   }
                 </div>
@@ -175,16 +181,16 @@ Component.propTypes = {
   bookedApartment: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   saveReservation: PropTypes.func,
   loading: PropTypes.object,
-  deleteAllFromCart: PropTypes.func,
+  allFromCart: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
 
 const mapStateToProps = state => ({
+  allFromCart: getAllOrders(state),
   loading: getLoadingOrders(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-  saveReservation: reservation => dispatch(fetchAddNewOrder(reservation)),
-  deleteAllFromCart: reservations => dispatch(fetchDeleteAllFromCart(reservations)),
+  saveReservation: reservation => dispatch(fetchSaveNewOrder(reservation)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

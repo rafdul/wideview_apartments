@@ -14,15 +14,15 @@ import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-import { getFromCart, fetchAddToCart } from '../../../redux/apartmentsRedux';
-import { getLoadingOrders } from '../../../redux/ordersRedux';
+// import { } from '../../../redux/apartmentsRedux';
+import { getAllOrders, getLoadingOrders  } from '../../../redux/ordersRedux';
 
 import styles from './Cart.module.scss';
 
 class Component extends React.Component {
 
   state = {
-    cart: this.props.apartmentFromCart,
+    order: this.props.ordersFromCart,
     open: false,
   }
 
@@ -32,21 +32,20 @@ class Component extends React.Component {
   }
 
   render() {
-    const {className, apartmentFromCart, loadingOrders} = this.props;
-    const {open} = this.state;
+    const { className, ordersFromCart, loadingOrders } = this.props;
+    const { open } = this.state;
     // console.log('formularz w Cart', open);
-    // console.log('cart w Cart', cart);
-    // console.log('apartmentFromCart', apartmentFromCart);
+    console.log('ordersFromCart:', ordersFromCart);
+
 
     return(
       <div className={clsx(className, styles.root)}>
-
         <div className={styles.container}>
 
           {!loadingOrders.done
             ?
-            <h2 className={apartmentFromCart.length < 1 ? styles.title__empty : styles.title}>
-              {apartmentFromCart.length < 1
+            <h2 className={ordersFromCart.length < 1 ? styles.title__empty : styles.title}>
+              {ordersFromCart.length < 1
                 ? 'Your cart is empty'
                 : 'Finish your reservation'
               }
@@ -59,28 +58,28 @@ class Component extends React.Component {
           }
 
           <Grid item xs={12}>
-            {apartmentFromCart.map(apartment => (
-              <CartItem key={apartment._id} {...apartment} >
-                {/* {console.log('apartment', apartment)} */}
+            {ordersFromCart.map(item => (
+              <CartItem key={item.apartments._id} {...item} >
+                {console.log('apartment', item)}
               </CartItem>
             ))}
 
-            {apartmentFromCart.length > 0
+            {ordersFromCart.length > 0
               ?
               (<Paper elevation={3} >
                 <Card>
                   {open
                     ?
                     (
-                      <FormReservation bookedApartment={apartmentFromCart}/>
+                      <FormReservation bookedApartment={ordersFromCart}/>
                     )
                     :
                     (
                       <div className={styles.cart + ' ' + styles.total_price}>
                         <div className={styles.text}>Total price:</div>
                         <div className={styles.text}>
-                          ${apartmentFromCart.length > 0
-                            ? apartmentFromCart.map(apartment => apartment.totalPrice).reduce((prev, curr) => prev + curr)
+                          ${ordersFromCart.length > 0
+                            ? ordersFromCart.map(item => item.apartments.totalPrice).reduce((prev, curr) => prev + curr)
                             : 0
                           }
                         </div>
@@ -113,18 +112,17 @@ class Component extends React.Component {
 
 Component.propTypes = {
   className: PropTypes.string,
-  apartmentFromCart: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  addToCart: PropTypes.func,
   loadingOrders: PropTypes.object,
+  ordersFromCart: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
 
 const mapStateToProps = state => ({
-  apartmentFromCart: getFromCart(state),
+  ordersFromCart: getAllOrders(state),
   loadingOrders: getLoadingOrders(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-  addToCart: reservation => dispatch(fetchAddToCart(reservation)),
+
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

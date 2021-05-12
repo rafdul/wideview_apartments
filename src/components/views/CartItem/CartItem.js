@@ -15,63 +15,101 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 
 import { connect } from 'react-redux';
-import { fetchEditInCart, fetchDeleteFromCart } from '../../../redux/apartmentsRedux';
+// import { } from '../../../redux/apartmentsRedux';
+import { fetchOrdersEdit, fetchOrdersDeleteOne } from '../../../redux/ordersRedux';
 
 import styles from './CartItem.module.scss';
 
 class Component extends React.Component {
 
   state = {
-    cart: {
-      _id: this.props._id,
-      category: this.props.category,
-      name: this.props.name,
-      city: this.props.city,
-      nights: this.props.nights,
-      from: this.props.from,
-      people: this.props.people,
-      priceFromNight: this.props.priceFromNight,
-      totalPrice: this.props.totalPrice,
-      image: this.props.image,
+    apartments: {
+      _id: this.props.apartments._id,
+      category: this.props.apartments.category,
+      name: this.props.apartments.name,
+      city: this.props.apartments.city,
+      nights: this.props.apartments.nights,
+      from: this.props.apartments.from,
+      people: this.props.apartments.people,
+      priceFromNight: this.props.apartments.priceFromNight,
+      totalPrice: this.props.apartments.totalPrice,
+      image: this.props.apartments.image,
       message: '',
+      dataOrder: this.props.dataOrder,
+      idOrder: this.props.idOrder,
+      status: this.props.status,
     },
   }
 
   setNight = (nights) => {
-    const {cart} = this.state;
-    const priceForNight = cart.priceFromNight;
-    // console.log('cart w setnight1:', cart);
-    // console.log('nights in cart:', nights);
+    const {apartments} = this.state;
+    const priceForNight = apartments.priceFromNight;
+    console.log('apartments w setnight1:', apartments);
+    // console.log('nights in order:', nights);
 
-    this.setState({ cart: { ...cart, nights: parseInt(nights), totalPrice: priceForNight * parseInt(nights) }});
+    this.setState(
+      {
+        apartments: {
+          ...apartments,
+          nights: parseInt(nights),
+          totalPrice: priceForNight * parseInt(nights),
+          status: 'edited',
+        },
+      },
+    );
 
     const {editInCart} = this.props;
-    editInCart({  ...cart, nights: parseInt(nights), totalPrice: priceForNight * parseInt(nights) });
+    editInCart(
+      {
+        apartments: {
+          ...apartments,
+          nights: parseInt(nights),
+          totalPrice: priceForNight * parseInt(nights),
+          status: 'edited',
+        },
+
+      },
+    );
   }
 
   handleChange = (event) => {
-    const {cart} = this.state;
-    this.setState({ cart: { ...cart, message: event.target.value }});
-    // console.log('message:', event.target.value);
+    const {apartments} = this.state;
+
+    this.setState(
+      {
+        apartments: {
+          ...apartments,
+          message: event.target.value,
+          status: 'edited',
+        },
+      },
+    );
 
     const {editInCart} = this.props;
-    editInCart({  ...cart, message: event.target.value });
+    editInCart(
+      {
+        apartments: {
+          ...apartments,
+          message: event.target.value,
+          status: 'edited',
+        },
+      },
+    );
   };
 
   deleteFromCart = (event) => {
     // event.preventDefault();
 
-    const {cart} = this.state;
+    const {apartments} = this.state;
     const {deleteReservation} = this.props;
-    deleteReservation(cart);
+    deleteReservation(apartments);
   }
 
 
   render() {
-    const {_id, category, name, city, image, people, nights, totalPrice, from, priceFromNight} = this.props;
-    const {cart} = this.state;
-    // console.log('cart w render:', cart);
-    console.log('_id, category, from, priceFromNight:', _id, category, from, priceFromNight);
+    const { apartments } = this.props;
+    // const {apartments} = this.state;
+    // console.log('this.props w cartitem:', this.props);
 
 
     return(
@@ -79,19 +117,19 @@ class Component extends React.Component {
         <Card >
           <div className={styles.cart}>
             <div className={styles.cart__imagebox}>
-              <img src={image} alt={name}/>
+              <img src={apartments.image} alt={apartments.name}/>
             </div>
             <div className={styles.cart__namebox}>
-              <div className={styles.cart__decoration}>{name} in {city}</div>
-              <div>(booking for {people} people from {from})</div>
+              <div className={styles.cart__decoration}>{apartments.name} in {apartments.city}</div>
+              <div>(booking for {apartments.people} people from {apartments.from})</div>
             </div>
             <div className={styles.cart__nightsbox} >
               <div>Nights:</div>
-              <PlusMinusSwitcher setAmount={this.setNight} defaultVal={nights} />
+              <PlusMinusSwitcher setAmount={this.setNight} defaultVal={apartments.nights} />
             </div>
             <div className={styles.cart__pricebox}>
               <div>Price:</div>
-              <div className={styles.cart__decoration}>${cart.totalPrice === undefined ? totalPrice : cart.totalPrice }</div>
+              <div className={styles.cart__decoration}>${this.state.apartments.totalPrice === undefined ? apartments.totalPrice : this.state.apartments.totalPrice }</div>
             </div>
             <div className={styles.cart__deletebox} >
               <IconButton aria-label="delete" onClick={this.deleteFromCart}>
@@ -129,28 +167,21 @@ class Component extends React.Component {
 }
 
 Component.propTypes = {
-  _id: PropTypes.string,
-  name: PropTypes.string,
-  city: PropTypes.string,
-  image: PropTypes.string,
-  people: PropTypes.oneOfType([PropTypes.number,PropTypes.string]),
-  nights: PropTypes.number,
-  totalPrice: PropTypes.number,
-  category: PropTypes.string,
-  from: PropTypes.string,
-  priceFromNight: PropTypes.number,
+  status: PropTypes.string,
   editInCart: PropTypes.func,
   deleteReservation: PropTypes.func,
-  orderID: PropTypes.number,
+  apartments: PropTypes.object,
+  dataOrder: PropTypes.string,
+  idOrder: PropTypes.string,
 };
 
 const mapStateToProps = (state, key) => ({
-  // oneFromCart: getOneFromCart(state, key),
+
 });
 
 const mapDispatchToProps = dispatch => ({
-  editInCart: reservation => dispatch(fetchEditInCart(reservation)),
-  deleteReservation: reservation => dispatch(fetchDeleteFromCart(reservation)),
+  deleteReservation: reservation => dispatch(fetchOrdersDeleteOne(reservation)),
+  editInCart: reservation => dispatch(fetchOrdersEdit(reservation)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

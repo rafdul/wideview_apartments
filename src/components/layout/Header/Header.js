@@ -15,7 +15,7 @@ import styles from './Header.module.scss';
 
 
 import { connect } from 'react-redux';
-import { getFromCart } from '../../../redux/apartmentsRedux';
+import { getAllOrders } from '../../../redux/ordersRedux';
 
 
 const Component = ({className, productsInCart}) => {
@@ -57,7 +57,7 @@ Component.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  productsInCart: getFromCart(state),
+  productsInCart: getAllOrders(state),
 });
 
 // const mapDispatchToProps = dispatch => ({

@@ -284,20 +284,11 @@ export const initialState = {
   },
 
   orders: {
-    data: [
-      // {
-      //   apartments: [],
-      //   dataOrder: '',
-      //   firstName: '',
-      //   surname: '',
-      //   email: '',
-      //   phone: '',
-      //   status: '',
-      // },
-    ],
+    data: [],
     loading: {
       active: false,
       error: false,
+      added: false,
       done: false,
     },
   },
