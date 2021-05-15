@@ -280,7 +280,6 @@ export const initialState = {
       error: false,
     },
     oneApartment: {},
-    cart: [],
   },
 
   orders: {

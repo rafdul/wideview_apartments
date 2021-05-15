@@ -26,8 +26,8 @@ import clsx from 'clsx';
 import styles from './ProductOne.module.scss';
 
 import { connect } from 'react-redux';
-import { fetchAddToCart, fetchOnePublished, getOne } from '../../../redux/apartmentsRedux.js';
-import { fetchOrdersToCart, getLoadingOrders } from '../../../redux/ordersRedux';
+import { fetchOnePublished, getOne } from '../../../redux/apartmentsRedux.js';
+import { fetchOrdersToCart, getLoadingOrders, fetchSaveNewOrder } from '../../../redux/ordersRedux';
 
 
 class Component extends React.Component {
@@ -112,7 +112,6 @@ class Component extends React.Component {
     order.apartments.city = getOne.city;
     order.apartments.priceFromNight = getOne.price;
     order.apartments.image = getOne.image[0];
-    order.apartments.name = getOne.name;
     order.apartments.status = 'addToCart';
     order.apartments.dataOrder = new Date().toISOString();
     order.apartments.idOrder = uniqid('order-');
@@ -127,9 +126,54 @@ class Component extends React.Component {
       this.setState({statusProduct: {...statusProduct, nights: false, people: false, date: false}});
 
       saveReservation(order);
-      // console.log('order w saveReservation:', order);
       this.setState({btnActive: false});
       this.setState({open: true});
+
+      console.log('order w ProductOne', order);
+
+      // const bookingId = [order.apartments.idOrder];
+      // if(localStorage.getItem('bookingId') !== null) {
+      //   // const storage = localStorage.getItem('bookingId');
+      //   // console.log('storage', storage);
+      //   const fromStorage = JSON.parse(localStorage.getItem('bookingId'));
+      //   console.log('fromStorage', fromStorage);
+      //   fromStorage.push(bookingId[0]);
+      //   localStorage.setItem('bookingId', JSON.stringify(fromStorage));
+      // } else {
+      //   localStorage.setItem('bookingId', JSON.stringify(bookingId));
+      // }
+
+      const booking = [
+        {
+          _id: getOne._id,
+          category: getOne.category,
+          name: getOne.name,
+          city: getOne.city,
+          priceFromNight: getOne.price,
+          image: getOne.image[0],
+          status: 'addToCart',
+          dataOrder: new Date().toISOString(),
+          idOrder: uniqid('order-'),
+          nights: order.apartments.nights,
+          totalPrice: order.apartments.totalPrice,
+          people: order.apartments.people,
+          from: order.apartments.from,
+        },
+      ];
+      console.log('booking do localstorage', booking);
+
+      if(localStorage.getItem('booking') !== null) {
+        // const storage = localStorage.getItem('booking');
+        // console.log('storage', storage);
+        const fromStorage = JSON.parse(localStorage.getItem('booking'));
+        // console.log('fromStorage', fromStorage);
+        fromStorage.push(booking[0]);
+        localStorage.setItem('booking', JSON.stringify(fromStorage));
+      } else {
+        localStorage.setItem('booking', JSON.stringify(booking));
+      }
+
+
     }
   }
 
@@ -240,7 +284,8 @@ class Component extends React.Component {
                           ?
                           <div className={styles.map}>
                             <GoogleMapReact
-                              defaultCenter={location}
+                              // defaultCenter={location}
+                              center={location}
                               defaultZoom={15}
                             >
                               <LocationPin
@@ -335,7 +380,7 @@ class Component extends React.Component {
                         </div>
                         <div className={styles.choose}>
                           <Typography gutterBottom variant="h6" component="p" className={styles.text}>
-                            ${order.apartments.totalPrice}
+                            {order.apartments.totalPrice !== undefined ? ('$' + order.apartments.totalPrice) : null}
                           </Typography>
                         </div>
                       </div>
@@ -383,7 +428,6 @@ class Component extends React.Component {
 
 Component.propTypes = {
   className: PropTypes.string,
-  addToCart: PropTypes.func,
   fetchOneApartment: PropTypes.func,
   getOne: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   loadingOrders: PropTypes.object,
@@ -396,9 +440,9 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
-  addToCart: reservation => dispatch(fetchAddToCart(reservation)),
   fetchOneApartment: () => dispatch(fetchOnePublished(props.match.params.id)),
   saveReservation: reservation => dispatch(fetchOrdersToCart(reservation)),
+  // saveReservation: reservation => dispatch(fetchSaveNewOrder(reservation)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

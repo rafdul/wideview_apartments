@@ -12,6 +12,20 @@ const postSchema = new mongoose.Schema({
   dataOrder: { type: String },
   status: { type: String },
   idOrder: { type: String },
+
+
+  // nights: { type: Number },
+  // totalPrice: { type: Number },
+  // people: { type: Number },
+  // priceFromNights:  { type: Number },
+  // from:{ type: String },
+  // category: { type: String },
+  // name: { type: String },
+  // city: { type: String },
+  // image: { type: String },
+  // status: { type: String },
+  // dataOrder: { type: String },
+  // idOrder: { type: String },
 });
 
 module.exports = mongoose.model('Order', postSchema);

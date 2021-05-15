@@ -24,16 +24,16 @@ class Component extends React.Component {
 
   state = {
     apartments: {
-      _id: this.props.apartments._id,
-      category: this.props.apartments.category,
-      name: this.props.apartments.name,
-      city: this.props.apartments.city,
-      nights: this.props.apartments.nights,
-      from: this.props.apartments.from,
-      people: this.props.apartments.people,
-      priceFromNight: this.props.apartments.priceFromNight,
-      totalPrice: this.props.apartments.totalPrice,
-      image: this.props.apartments.image,
+      // _id: this.props._id,
+      category: this.props.category,
+      name: this.props.name,
+      city: this.props.city,
+      nights: this.props.nights,
+      from: this.props.from,
+      people: this.props.people,
+      priceFromNight: this.props.priceFromNight,
+      totalPrice: this.props.totalPrice,
+      image: this.props.image,
       message: '',
       dataOrder: this.props.dataOrder,
       idOrder: this.props.idOrder,
@@ -70,10 +70,29 @@ class Component extends React.Component {
 
       },
     );
+
+    const ordersFromStorage = JSON.parse(localStorage.getItem('booking'));
+    console.log('ordersFromStorage:', ordersFromStorage);
+    const findedOrderFromStorage = ordersFromStorage.find(el => el.idOrder === this.props.idOrder);
+    console.log('findedOrderFromStorage:', findedOrderFromStorage);
+    const findedOrderIndex = ordersFromStorage.indexOf(findedOrderFromStorage);
+    console.log('findedOrderIndex:', findedOrderIndex);
+    findedOrderFromStorage.nights = parseInt(nights);
+    findedOrderFromStorage.totalPrice = findedOrderFromStorage.priceFromNight * parseInt(nights);
+    findedOrderFromStorage.status = 'edited';
+    console.log('ordersFromStorage2:', ordersFromStorage);
+    ordersFromStorage.splice(findedOrderIndex, 1, findedOrderFromStorage);
+    console.log('newOrdersFromStorage:', ordersFromStorage);
+    localStorage.setItem('booking', JSON.stringify(ordersFromStorage));
   }
 
   handleChange = (event) => {
     const {apartments} = this.state;
+
+    if (localStorage.getItem('message') !== null) {
+      localStorage.getItem('message');
+    }
+    localStorage.setItem('message', event.target.value);
 
     this.setState(
       {
@@ -107,29 +126,29 @@ class Component extends React.Component {
 
 
   render() {
-    const { apartments } = this.props;
+    const { nights, totalPrice, people, from, name, city, image } = this.props;
     // const {apartments} = this.state;
-    // console.log('this.props w cartitem:', this.props);
-
+    // console.log('this.state.apartments:', this.state.apartments);
+    // console.log('totalPrice', totalPrice);
 
     return(
       <Paper elevation={3} className={styles.root}>
         <Card >
           <div className={styles.cart}>
             <div className={styles.cart__imagebox}>
-              <img src={apartments.image} alt={apartments.name}/>
+              <img src={image} alt={name}/>
             </div>
             <div className={styles.cart__namebox}>
-              <div className={styles.cart__decoration}>{apartments.name} in {apartments.city}</div>
-              <div>(booking for {apartments.people} people from {apartments.from})</div>
+              <div className={styles.cart__decoration}>{name} in {city}</div>
+              <div>(booking for {people} people from {from})</div>
             </div>
             <div className={styles.cart__nightsbox} >
               <div>Nights:</div>
-              <PlusMinusSwitcher setAmount={this.setNight} defaultVal={apartments.nights} />
+              <PlusMinusSwitcher setAmount={this.setNight} defaultVal={nights} />
             </div>
             <div className={styles.cart__pricebox}>
               <div>Price:</div>
-              <div className={styles.cart__decoration}>${this.state.apartments.totalPrice === undefined ? apartments.totalPrice : this.state.apartments.totalPrice }</div>
+              <div className={styles.cart__decoration}>${this.state.apartments.totalPrice === undefined ? totalPrice : this.state.apartments.totalPrice }</div>
             </div>
             <div className={styles.cart__deletebox} >
               <IconButton aria-label="delete" onClick={this.deleteFromCart}>
@@ -156,6 +175,7 @@ class Component extends React.Component {
                   variant="outlined"
                   onChange={this.handleChange}
                   inputProps={{ maxLength: 60 }}
+                  value={localStorage.getItem('message')}
                 />
               </AccordionDetails>
             </Accordion>
@@ -170,9 +190,19 @@ Component.propTypes = {
   status: PropTypes.string,
   editInCart: PropTypes.func,
   deleteReservation: PropTypes.func,
-  apartments: PropTypes.object,
+  // apartments: PropTypes.object,
   dataOrder: PropTypes.string,
   idOrder: PropTypes.string,
+
+  nights: PropTypes.number,
+  totalPrice: PropTypes.number,
+  people: PropTypes.number,
+  from: PropTypes.string,
+  category: PropTypes.string,
+  name: PropTypes.string,
+  city: PropTypes.string,
+  priceFromNight: PropTypes.number,
+  image: PropTypes.string,
 };
 
 const mapStateToProps = (state, key) => ({

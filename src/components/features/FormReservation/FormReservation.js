@@ -47,6 +47,10 @@ class Component extends React.Component {
 
     saveReservation(submited);
     // console.log('allFromCart', allFromCart);
+
+    if(localStorage.getItem('booking')) {
+      localStorage.removeItem('booking');
+    }
   }
 
   handleClose = () => {

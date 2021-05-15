@@ -35,8 +35,10 @@ class Component extends React.Component {
     const { className, ordersFromCart, loadingOrders } = this.props;
     const { open } = this.state;
     // console.log('formularz w Cart', open);
-    console.log('ordersFromCart:', ordersFromCart);
+    // console.log('ordersFromCart:', ordersFromCart);
 
+    const cartContent = JSON.parse(localStorage.getItem('booking'));
+    // console.log('cartContent:', cartContent);
 
     return(
       <div className={clsx(className, styles.root)}>
@@ -58,28 +60,35 @@ class Component extends React.Component {
           }
 
           <Grid item xs={12}>
-            {ordersFromCart.map(item => (
+            {/* {ordersFromCart.map(item => (
               <CartItem key={item.apartments._id} {...item} >
                 {console.log('apartment', item)}
               </CartItem>
+            ))} */}
+
+            {cartContent.map(item => (
+              <CartItem key={item._id} {...item} >
+                {console.log('item w cartContent', item)}
+              </CartItem>
             ))}
 
-            {ordersFromCart.length > 0
+
+            {cartContent.length > 0
               ?
               (<Paper elevation={3} >
                 <Card>
                   {open
                     ?
                     (
-                      <FormReservation bookedApartment={ordersFromCart}/>
+                      <FormReservation bookedApartment={cartContent}/>
                     )
                     :
                     (
                       <div className={styles.cart + ' ' + styles.total_price}>
                         <div className={styles.text}>Total price:</div>
                         <div className={styles.text}>
-                          ${ordersFromCart.length > 0
-                            ? ordersFromCart.map(item => item.apartments.totalPrice).reduce((prev, curr) => prev + curr)
+                          ${cartContent.length > 0
+                            ? cartContent.map(item => item.totalPrice).reduce((prev, curr) => prev + curr)
                             : 0
                           }
                         </div>

@@ -27,6 +27,7 @@ router.get('/cart/:id', async (req, res) => {
   }
 });
 
+// router.post dla ProductOne, który nie wysyła zamówienia do stanu aplikacji (zapisuje tylko w stanie komponentu); bez localStorage
 router.post('/cart', async (req, res) => {
   try {
     console.log('req.body', req.body);
@@ -54,5 +55,22 @@ router.post('/cart', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+// wersja dla ProductOne, który zapisuje zamówienie w stanie aplikacji (potrzebne dla opcji z localStorage)
+// router.post('/cart', async (req, res) => {
+//   try {
+//     console.log('req.body', req.body);
+//     const {nights, totalPrice, people, from, _id, category, name, city, priceFromNight, image, status, dataOrder, idOrder} = req.body.apartments;
+
+
+//     const newOrder = new Order({ nights, totalPrice, people, from, _id, category, name, city, priceFromNight, image, status, dataOrder, idOrder });
+//     await newOrder.save();
+//     console.log('newOrder', newOrder);
+//     res.json(newOrder);
+//   }
+//   catch(err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 module.exports = router;
