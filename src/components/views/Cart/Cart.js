@@ -46,10 +46,18 @@ class Component extends React.Component {
 
           {!loadingOrders.done
             ?
-            <h2 className={cartContent === null ? styles.title__empty : styles.title}>
+            <h2 className={
+              cartContent === null
+                ? styles.title__empty
+                : (cartContent.length < 1)
+                  ? styles.title__empty
+                  : styles.title
+            }>
               {(cartContent === null)
                 ? 'Your cart is empty'
-                : 'Finish your reservation'
+                : (cartContent.length < 1)
+                  ? 'Your cart is empty'
+                  : 'Finish your reservation'
               }
             </h2>
             :
