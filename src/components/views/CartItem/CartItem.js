@@ -24,7 +24,6 @@ class Component extends React.Component {
 
   state = {
     apartments: {
-      // _id: this.props._id,
       category: this.props.category,
       name: this.props.name,
       city: this.props.city,
@@ -44,7 +43,7 @@ class Component extends React.Component {
   setNight = (nights) => {
     const {apartments} = this.state;
     const priceForNight = apartments.priceFromNight;
-    console.log('apartments w setnight1:', apartments);
+    // console.log('apartments w setnight1:', apartments);
     // console.log('nights in order:', nights);
 
     this.setState(
@@ -73,17 +72,14 @@ class Component extends React.Component {
 
     //z wykorzystanie localStorage
     const ordersFromStorage = JSON.parse(localStorage.getItem('booking'));
-    // console.log('ordersFromStorage:', ordersFromStorage);
     const findedOrderFromStorage = ordersFromStorage.find(el => el.idOrder === this.props.idOrder);
-    // console.log('findedOrderFromStorage:', findedOrderFromStorage);
     const findedOrderIndex = ordersFromStorage.indexOf(findedOrderFromStorage);
-    // console.log('findedOrderIndex:', findedOrderIndex);
+
     findedOrderFromStorage.nights = parseInt(nights);
     findedOrderFromStorage.totalPrice = findedOrderFromStorage.priceFromNight * parseInt(nights);
     findedOrderFromStorage.status = 'edited';
-    // console.log('ordersFromStorage2:', ordersFromStorage);
     ordersFromStorage.splice(findedOrderIndex, 1, findedOrderFromStorage);
-    // console.log('newOrdersFromStorage:', ordersFromStorage);
+
     localStorage.setItem('booking', JSON.stringify(ordersFromStorage));
   }
 
@@ -112,15 +108,12 @@ class Component extends React.Component {
     );
 
     const ordersFromStorage = JSON.parse(localStorage.getItem('booking'));
-    console.log('ordersFromStorage:', ordersFromStorage);
     const findedOrderFromStorage = ordersFromStorage.find(el => el.idOrder === this.props.idOrder);
-    console.log('findedOrderFromStorage:', findedOrderFromStorage);
     const findedOrderIndex = ordersFromStorage.indexOf(findedOrderFromStorage);
-    console.log('findedOrderIndex:', findedOrderIndex);
+
     findedOrderFromStorage.message = event.target.value;
-    console.log('ordersFromStorage2:', ordersFromStorage);
     ordersFromStorage.splice(findedOrderIndex, 1, findedOrderFromStorage);
-    console.log('newOrdersFromStorage:', ordersFromStorage);
+
     localStorage.setItem('booking', JSON.stringify(ordersFromStorage));
 
   };
@@ -134,14 +127,12 @@ class Component extends React.Component {
 
     //z wykorzystaniem localStorage
     const ordersFromStorage = JSON.parse(localStorage.getItem('booking'));
-    // console.log('ordersFromStorage delete:', ordersFromStorage);
     const findedOrderIndex = ordersFromStorage.findIndex(el => el.idOrder === this.props.idOrder);
-    // console.log('findedOrderIndex delete:', findedOrderIndex);
+
     ordersFromStorage.splice(findedOrderIndex, 1);
-    // console.log('newOrdersFromStorage delete:', ordersFromStorage);
+
     localStorage.setItem('booking', JSON.stringify(ordersFromStorage));
   }
-
 
   render() {
     const { nights, totalPrice, people, from, name, city, image } = this.props;
@@ -150,7 +141,7 @@ class Component extends React.Component {
     // console.log('totalPrice', totalPrice);
 
     const ordersFromStorage = JSON.parse(localStorage.getItem('booking'));
-    console.log('ordersFromStorage:', ordersFromStorage);
+    // console.log('ordersFromStorage:', ordersFromStorage);
     const findedOrderFromStorage = ordersFromStorage.find(el => el.idOrder === this.props.idOrder);
 
     return(

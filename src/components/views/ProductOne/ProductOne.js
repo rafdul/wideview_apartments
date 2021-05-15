@@ -27,7 +27,7 @@ import styles from './ProductOne.module.scss';
 
 import { connect } from 'react-redux';
 import { fetchOnePublished, getOne } from '../../../redux/apartmentsRedux.js';
-import { fetchOrdersToCart, getLoadingOrders, fetchSaveNewOrder } from '../../../redux/ordersRedux';
+import { fetchOrdersToCart, getLoadingOrders } from '../../../redux/ordersRedux';
 
 
 class Component extends React.Component {

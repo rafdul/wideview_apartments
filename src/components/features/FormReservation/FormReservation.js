@@ -29,24 +29,15 @@ class Component extends React.Component {
 
 
   handleSumbit = (values) => {
-    const {saveReservation, allFromCart} = this.props;
+    const {saveReservation} = this.props;
 
     values.statusSubmited = 'submited';
     values.dataSubmited = new Date().toISOString();
     values.idSubmited = uniqid('submit-');
     // console.log('values w handlesubmit:', values);
 
-    // function addProperties(a,b) {
-    //   a.status = b;
-    //   return a;
-    // }
-
-    // const submited = allFromCart.map(item => addProperties(item, 'submited'));
-    // submited.map(item => item.dataSubmit = values);
-    // console.log('submited:', submited);
-
     const submited = JSON.parse(localStorage.getItem('booking'));
-    console.log('submited w handleSubmit:', submited);
+    // console.log('submited w handleSubmit:', submited);
 
 
     saveReservation({apartments: submited, dataSubmit: values});
@@ -64,7 +55,7 @@ class Component extends React.Component {
   render() {
     const { className, bookedApartment, loading } = this.props;
     const { open } = this.state;
-    console.log('bookedApartment in Form', bookedApartment);
+    // console.log('bookedApartment in Form', bookedApartment);
 
     return(
       <div className={clsx(className, styles.root)}>

@@ -32,13 +32,13 @@ class Component extends React.Component {
   }
 
   render() {
-    const { className, ordersFromCart, loadingOrders } = this.props;
+    const { className, loadingOrders } = this.props;
     const { open } = this.state;
     // console.log('formularz w Cart', open);
     // console.log('ordersFromCart:', ordersFromCart);
 
     const cartContent = JSON.parse(localStorage.getItem('booking'));
-    console.log('cartContent:', cartContent);
+    // console.log('cartContent:', cartContent);
 
     return(
       <div className={clsx(className, styles.root)}>

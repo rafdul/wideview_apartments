@@ -30,28 +30,7 @@ router.get('/cart/:id', async (req, res) => {
 router.post('/cart', async (req, res) => {
   try {
     console.log('req.body', req.body);
-    // const {apartments} = req.body.apartments;
     const { firstName, surname, email, phone, statusSubmited, idSubmited, dataSubmited } = req.body.dataSubmit;
-    console.log('apartments', req.body.apartments);
-    console.log('req.body.dataSubmit', req.body.dataSubmit);
-
-
-    // const bodyOnlyApartments = req.body.map(item => item.apartments);
-    // console.log('bodyOnlyApartments', bodyOnlyApartments);
-
-    // const bodyOnlyDataSubmit= req.body.map(item => item.dataSubmit);
-    // console.log('bodyOnlyDataSubmit', bodyOnlyDataSubmit);
-
-    // const newOrder = new Order({
-    //   apartments: bodyOnlyApartments,
-    //   firstName: bodyOnlyDataSubmit.firstName,
-    //   surname: bodyOnlyDataSubmit.surname,
-    //   email: bodyOnlyDataSubmit.email,
-    //   phone: bodyOnlyDataSubmit.phone,
-    //   statusSubmited: bodyOnlyDataSubmit.statusSubmited,
-    //   idSubmited: bodyOnlyDataSubmit.idSubmited,
-    //   dataSubmited : bodyOnlyDataSubmit.dataSubmited,
-    // });
 
     const newOrder = new Order({
       apartments: req.body.apartments,
