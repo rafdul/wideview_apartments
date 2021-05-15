@@ -20,6 +20,8 @@ import { getAllOrders } from '../../../redux/ordersRedux';
 
 const Component = ({className, productsInCart}) => {
 
+  const amountInCart = JSON.parse(localStorage.getItem('booking'));
+
 
   return(
     <div className={clsx(className, styles.root)}>
@@ -41,7 +43,7 @@ const Component = ({className, productsInCart}) => {
         </div>
         <div className={styles.container__cart}>
           <Link to={'/cart'} className={styles.link}>
-            <Badge color="secondary" badgeContent={productsInCart.length}>
+            <Badge color="secondary" badgeContent={amountInCart === null ? null : amountInCart.length}>
               <FontAwesomeIcon icon={faShoppingCart} className={styles.icon}/>
             </Badge>
           </Link>

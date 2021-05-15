@@ -38,7 +38,7 @@ class Component extends React.Component {
     // console.log('ordersFromCart:', ordersFromCart);
 
     const cartContent = JSON.parse(localStorage.getItem('booking'));
-    // console.log('cartContent:', cartContent);
+    console.log('cartContent:', cartContent);
 
     return(
       <div className={clsx(className, styles.root)}>
@@ -46,8 +46,8 @@ class Component extends React.Component {
 
           {!loadingOrders.done
             ?
-            <h2 className={ordersFromCart.length < 1 ? styles.title__empty : styles.title}>
-              {ordersFromCart.length < 1
+            <h2 className={cartContent === null ? styles.title__empty : styles.title}>
+              {(cartContent === null)
                 ? 'Your cart is empty'
                 : 'Finish your reservation'
               }
@@ -60,20 +60,23 @@ class Component extends React.Component {
           }
 
           <Grid item xs={12}>
+
+            {/* wersja bez localStorage*/}
             {/* {ordersFromCart.map(item => (
               <CartItem key={item.apartments._id} {...item} >
                 {console.log('apartment', item)}
               </CartItem>
             ))} */}
 
-            {cartContent.map(item => (
+            {/* wersja z localStorage*/}
+            {cartContent === null ? null : cartContent.map(item => (
               <CartItem key={item._id} {...item} >
                 {console.log('item w cartContent', item)}
               </CartItem>
             ))}
 
 
-            {cartContent.length > 0
+            {cartContent === null ? null : cartContent.length > 0
               ?
               (<Paper elevation={3} >
                 <Card>

@@ -22,7 +22,7 @@ class Component extends React.Component {
   state = {
     order: {
       apartments: this.props.bookedApartment,
-      dataforOrder: {},
+      // dataforOrder: {},
     },
     open: true,
   }
@@ -36,16 +36,20 @@ class Component extends React.Component {
     values.idSubmited = uniqid('submit-');
     // console.log('values w handlesubmit:', values);
 
-    function addProperties(a,b) {
-      a.status = b;
-      return a;
-    }
+    // function addProperties(a,b) {
+    //   a.status = b;
+    //   return a;
+    // }
 
-    const submited = allFromCart.map(item => addProperties(item, 'submited'));
-    submited.map(item => item.dataSubmit = values);
+    // const submited = allFromCart.map(item => addProperties(item, 'submited'));
+    // submited.map(item => item.dataSubmit = values);
     // console.log('submited:', submited);
 
-    saveReservation(submited);
+    const submited = JSON.parse(localStorage.getItem('booking'));
+    console.log('submited w handleSubmit:', submited);
+
+
+    saveReservation({apartments: submited, dataSubmit: values});
     // console.log('allFromCart', allFromCart);
 
     if(localStorage.getItem('booking')) {
@@ -60,7 +64,7 @@ class Component extends React.Component {
   render() {
     const { className, bookedApartment, loading } = this.props;
     const { open } = this.state;
-    // console.log('bookedApartment in Form', bookedApartment);
+    console.log('bookedApartment in Form', bookedApartment);
 
     return(
       <div className={clsx(className, styles.root)}>
@@ -145,7 +149,7 @@ class Component extends React.Component {
                 <div className={styles.text}>Total price:</div>
                 <div className={styles.text}>
                   ${bookedApartment.length > 0
-                    ? bookedApartment.map(item => item.apartments.totalPrice).reduce((prev, curr) => prev + curr)
+                    ? bookedApartment.map(item => item.totalPrice).reduce((prev, curr) => prev + curr)
                     : 0
                   }
                 </div>

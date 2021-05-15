@@ -71,28 +71,24 @@ class Component extends React.Component {
       },
     );
 
+    //z wykorzystanie localStorage
     const ordersFromStorage = JSON.parse(localStorage.getItem('booking'));
-    console.log('ordersFromStorage:', ordersFromStorage);
+    // console.log('ordersFromStorage:', ordersFromStorage);
     const findedOrderFromStorage = ordersFromStorage.find(el => el.idOrder === this.props.idOrder);
-    console.log('findedOrderFromStorage:', findedOrderFromStorage);
+    // console.log('findedOrderFromStorage:', findedOrderFromStorage);
     const findedOrderIndex = ordersFromStorage.indexOf(findedOrderFromStorage);
-    console.log('findedOrderIndex:', findedOrderIndex);
+    // console.log('findedOrderIndex:', findedOrderIndex);
     findedOrderFromStorage.nights = parseInt(nights);
     findedOrderFromStorage.totalPrice = findedOrderFromStorage.priceFromNight * parseInt(nights);
     findedOrderFromStorage.status = 'edited';
-    console.log('ordersFromStorage2:', ordersFromStorage);
+    // console.log('ordersFromStorage2:', ordersFromStorage);
     ordersFromStorage.splice(findedOrderIndex, 1, findedOrderFromStorage);
-    console.log('newOrdersFromStorage:', ordersFromStorage);
+    // console.log('newOrdersFromStorage:', ordersFromStorage);
     localStorage.setItem('booking', JSON.stringify(ordersFromStorage));
   }
 
   handleChange = (event) => {
     const {apartments} = this.state;
-
-    if (localStorage.getItem('message') !== null) {
-      localStorage.getItem('message');
-    }
-    localStorage.setItem('message', event.target.value);
 
     this.setState(
       {
@@ -114,6 +110,19 @@ class Component extends React.Component {
         },
       },
     );
+
+    const ordersFromStorage = JSON.parse(localStorage.getItem('booking'));
+    console.log('ordersFromStorage:', ordersFromStorage);
+    const findedOrderFromStorage = ordersFromStorage.find(el => el.idOrder === this.props.idOrder);
+    console.log('findedOrderFromStorage:', findedOrderFromStorage);
+    const findedOrderIndex = ordersFromStorage.indexOf(findedOrderFromStorage);
+    console.log('findedOrderIndex:', findedOrderIndex);
+    findedOrderFromStorage.message = event.target.value;
+    console.log('ordersFromStorage2:', ordersFromStorage);
+    ordersFromStorage.splice(findedOrderIndex, 1, findedOrderFromStorage);
+    console.log('newOrdersFromStorage:', ordersFromStorage);
+    localStorage.setItem('booking', JSON.stringify(ordersFromStorage));
+
   };
 
   deleteFromCart = (event) => {
@@ -122,6 +131,15 @@ class Component extends React.Component {
     const {apartments} = this.state;
     const {deleteReservation} = this.props;
     deleteReservation(apartments);
+
+    //z wykorzystaniem localStorage
+    const ordersFromStorage = JSON.parse(localStorage.getItem('booking'));
+    // console.log('ordersFromStorage delete:', ordersFromStorage);
+    const findedOrderIndex = ordersFromStorage.findIndex(el => el.idOrder === this.props.idOrder);
+    // console.log('findedOrderIndex delete:', findedOrderIndex);
+    ordersFromStorage.splice(findedOrderIndex, 1);
+    // console.log('newOrdersFromStorage delete:', ordersFromStorage);
+    localStorage.setItem('booking', JSON.stringify(ordersFromStorage));
   }
 
 
@@ -130,6 +148,10 @@ class Component extends React.Component {
     // const {apartments} = this.state;
     // console.log('this.state.apartments:', this.state.apartments);
     // console.log('totalPrice', totalPrice);
+
+    const ordersFromStorage = JSON.parse(localStorage.getItem('booking'));
+    console.log('ordersFromStorage:', ordersFromStorage);
+    const findedOrderFromStorage = ordersFromStorage.find(el => el.idOrder === this.props.idOrder);
 
     return(
       <Paper elevation={3} className={styles.root}>
@@ -175,7 +197,7 @@ class Component extends React.Component {
                   variant="outlined"
                   onChange={this.handleChange}
                   inputProps={{ maxLength: 60 }}
-                  value={localStorage.getItem('message')}
+                  value={findedOrderFromStorage.message}
                 />
               </AccordionDetails>
             </Accordion>
@@ -190,7 +212,6 @@ Component.propTypes = {
   status: PropTypes.string,
   editInCart: PropTypes.func,
   deleteReservation: PropTypes.func,
-  // apartments: PropTypes.object,
   dataOrder: PropTypes.string,
   idOrder: PropTypes.string,
 
@@ -203,6 +224,7 @@ Component.propTypes = {
   city: PropTypes.string,
   priceFromNight: PropTypes.number,
   image: PropTypes.string,
+  message: PropTypes.string,
 };
 
 const mapStateToProps = (state, key) => ({

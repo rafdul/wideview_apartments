@@ -27,26 +27,37 @@ router.get('/cart/:id', async (req, res) => {
   }
 });
 
-// router.post dla ProductOne, który nie wysyła zamówienia do stanu aplikacji (zapisuje tylko w stanie komponentu); bez localStorage
 router.post('/cart', async (req, res) => {
   try {
     console.log('req.body', req.body);
+    // const {apartments} = req.body.apartments;
+    const { firstName, surname, email, phone, statusSubmited, idSubmited, dataSubmited } = req.body.dataSubmit;
+    console.log('apartments', req.body.apartments);
+    console.log('req.body.dataSubmit', req.body.dataSubmit);
 
-    const bodyOnlyApartments = req.body.map(item => item.apartments);
+
+    // const bodyOnlyApartments = req.body.map(item => item.apartments);
     // console.log('bodyOnlyApartments', bodyOnlyApartments);
 
-    const bodyOnlyDataSubmit= req.body.map(item => item.dataSubmit);
+    // const bodyOnlyDataSubmit= req.body.map(item => item.dataSubmit);
+    // console.log('bodyOnlyDataSubmit', bodyOnlyDataSubmit);
+
+    // const newOrder = new Order({
+    //   apartments: bodyOnlyApartments,
+    //   firstName: bodyOnlyDataSubmit.firstName,
+    //   surname: bodyOnlyDataSubmit.surname,
+    //   email: bodyOnlyDataSubmit.email,
+    //   phone: bodyOnlyDataSubmit.phone,
+    //   statusSubmited: bodyOnlyDataSubmit.statusSubmited,
+    //   idSubmited: bodyOnlyDataSubmit.idSubmited,
+    //   dataSubmited : bodyOnlyDataSubmit.dataSubmited,
+    // });
 
     const newOrder = new Order({
-      apartments: bodyOnlyApartments,
-      firstName: bodyOnlyDataSubmit[0].firstName,
-      surname: bodyOnlyDataSubmit[0].surname,
-      email: bodyOnlyDataSubmit[0].email,
-      phone: bodyOnlyDataSubmit[0].phone,
-      statusSubmited: bodyOnlyDataSubmit[0].statusSubmited,
-      idSubmited: bodyOnlyDataSubmit[0].idSubmited,
-      dataSubmited : bodyOnlyDataSubmit[0].dataSubmited,
+      apartments: req.body.apartments,
+      firstName, surname, email, phone, statusSubmited, idSubmited, dataSubmited,
     });
+
     await newOrder.save();
     console.log('newOrder', newOrder);
     res.json(newOrder);
@@ -56,21 +67,5 @@ router.post('/cart', async (req, res) => {
   }
 });
 
-// wersja dla ProductOne, który zapisuje zamówienie w stanie aplikacji (potrzebne dla opcji z localStorage)
-// router.post('/cart', async (req, res) => {
-//   try {
-//     console.log('req.body', req.body);
-//     const {nights, totalPrice, people, from, _id, category, name, city, priceFromNight, image, status, dataOrder, idOrder} = req.body.apartments;
-
-
-//     const newOrder = new Order({ nights, totalPrice, people, from, _id, category, name, city, priceFromNight, image, status, dataOrder, idOrder });
-//     await newOrder.save();
-//     console.log('newOrder', newOrder);
-//     res.json(newOrder);
-//   }
-//   catch(err) {
-//     res.status(500).json(err);
-//   }
-// });
 
 module.exports = router;

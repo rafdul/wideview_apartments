@@ -131,18 +131,7 @@ class Component extends React.Component {
 
       console.log('order w ProductOne', order);
 
-      // const bookingId = [order.apartments.idOrder];
-      // if(localStorage.getItem('bookingId') !== null) {
-      //   // const storage = localStorage.getItem('bookingId');
-      //   // console.log('storage', storage);
-      //   const fromStorage = JSON.parse(localStorage.getItem('bookingId'));
-      //   console.log('fromStorage', fromStorage);
-      //   fromStorage.push(bookingId[0]);
-      //   localStorage.setItem('bookingId', JSON.stringify(fromStorage));
-      // } else {
-      //   localStorage.setItem('bookingId', JSON.stringify(bookingId));
-      // }
-
+      // wykorzystanie localStorage
       const booking = [
         {
           _id: getOne._id,

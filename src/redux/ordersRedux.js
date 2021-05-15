@@ -120,8 +120,8 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_ORDERS_SAVE: {
-      // console.log('action.payload w fetch orders save:', action.payload);
-      // console.log('statePart w fetch orders tsave:', statePart);
+      console.log('action.payload w fetch orders save:', action.payload);
+      console.log('statePart w fetch orders tsave:', statePart);
       return {
         ...statePart,
         loading: {
@@ -151,7 +151,7 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case FETCH_ORDERS_CLEAN: {
-      // console.log('action.payload w fetch orders delete:', action.payload);
+      console.log('action.payload w fetch orders delete:', action.payload);
       console.log('statePart w fetch orders delete:', statePart);
 
       return {
