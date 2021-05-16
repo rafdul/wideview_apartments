@@ -12,7 +12,7 @@ import styles from './Loading.module.scss';
 
 const Component = ({className}) => (
   <div className={clsx(className, styles.root)}>
-    <div className={styles.loading}>
+    <div className={styles.loading + ' ' + styles.container}>
       <LinearProgress />
       <h2>Loading...</h2>
     </div>

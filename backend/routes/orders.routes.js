@@ -32,6 +32,16 @@ router.post('/cart', async (req, res) => {
     console.log('req.body', req.body);
     const { firstName, surname, email, phone, statusSubmited, idSubmited, dataSubmited } = req.body.dataSubmit;
 
+    // var environment = process.env.NODE_ENV;
+    // console.log('environment:', environment);
+    // var isDevelopment = environment === 'development';
+    // console.log('isDevelopment:', isDevelopment);
+    // if(isDevelopment) {
+    //   console.log('wersja developerska');
+    // } else {
+    //   console.log('wersja produkcyjna');
+    // }
+
     const emailPattern = new RegExp('^[a-zA-Z0-9][a-zA-Z0-9_.-]+@[a-zA-Z0-9][a-zA-Z0-9_.-]+\.{1,3}[a-zA-Z]{2,4}');
     const phonePattern = new RegExp('[0-9]{6,13}');
     const emailMatched = (email.match(emailPattern) || []).join('');

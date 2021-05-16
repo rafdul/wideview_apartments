@@ -10,7 +10,7 @@ import styles from './Error.module.scss';
 
 const Component = ({className}) => (
   <div className={clsx(className, styles.root)}>
-    <div className={styles.error}>
+    <div className={styles.error + ' ' + styles.container}>
       <h2>Try again</h2>
     </div>
   </div>
