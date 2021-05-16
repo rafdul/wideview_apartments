@@ -32,14 +32,27 @@ router.post('/cart', async (req, res) => {
     console.log('req.body', req.body);
     const { firstName, surname, email, phone, statusSubmited, idSubmited, dataSubmited } = req.body.dataSubmit;
 
-    const newOrder = new Order({
-      apartments: req.body.apartments,
-      firstName, surname, email, phone, statusSubmited, idSubmited, dataSubmited,
-    });
+    const emailPattern = new RegExp('^[a-zA-Z0-9][a-zA-Z0-9_.-]+@[a-zA-Z0-9][a-zA-Z0-9_.-]+\.{1,3}[a-zA-Z]{2,4}');
+    const phonePattern = new RegExp('[0-9]{6,13}');
+    const emailMatched = (email.match(emailPattern) || []).join('');
+    const phoneMatched = (phone.match(phonePattern) || []).join('');
 
-    await newOrder.save();
-    console.log('newOrder', newOrder);
-    res.json(newOrder);
+    if((emailMatched.length < email.length) || (phoneMatched.length < phone.length)) {
+      throw new Error('Wrong characters used!');
+    }
+
+    if((emailMatched.length == email.length) && (phoneMatched.length == phone.length) && firstName.length >=2 && surname.length >=2) {
+      const newOrder = new Order({
+        apartments: req.body.apartments,
+        firstName, surname, email, phone, statusSubmited, idSubmited, dataSubmited,
+      });
+
+      await newOrder.save();
+      console.log('newOrder', newOrder);
+      res.json(newOrder);
+    } else {
+      throw new Error('Wrong input!');
+    }
   }
   catch(err) {
     res.status(500).json(err);
