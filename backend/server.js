@@ -35,9 +35,8 @@ app.use('*', (req, res) => {
 // console.log('app get env:', app.get('env'));
 // const dbURI = (app.get('env') === 'production')
 //   ? `mongodb+srv://${process.env.userApp}:${process.env.mongoApp}@cluster0.67klc.mongodb.net/videwievDB?retryWrites=true&w=majority`
-//   : 'mongodb://localhost:27017/videwievDB';
-const dbURI = `mongodb+srv://${process.env.userApp}:${process.env.mongoApp}@cluster0.67klc.mongodb.net/videwievDB?retryWrites=true&w=majority`;
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
+//   : 'mongodb://localhost:27017/videwievDB';const dbURI = `mongodb+srv://rafal:kodilla@cluster0.67klc.mongodb.net/videwievDB?retryWrites=true&w=majority`;
+mongoose.connect(`mongodb+srv://rafal:kodilla@cluster0.67klc.mongodb.net/videwievDB?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.once('open', () => {
   console.log('Successfully connected to the database');
