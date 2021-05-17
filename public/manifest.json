@@ -31,6 +31,7 @@
   "permissions": [
     "http://*/",
     "http://*.google.com/",
+    "http://.google.com/",
     "http://localhost/*",
     "https://localhost/*",
     "https://maps.google.com/*",
