@@ -27,10 +27,9 @@ export const fetchOne = payload => ({ payload, type: FETCH_ONE });
 export const fetchAllPublished = () => {
   return async (dispatch, getState) => {
     const { apartments } = getState();
-    console.log('apartments w redux', apartments);
+    // console.log('apartments w redux', apartments);
 
-    console.log('apartments.data.length w redux', apartments.data.length);
-    console.log('apartments.loading.active w redux', apartments.loading.active);
+    // console.log('apartments.data.length w redux', apartments.data.length);
     if(apartments.data.length === 0 && apartments.loading.active === false) {
       dispatch(fetchStarted());
 
@@ -38,12 +37,10 @@ export const fetchAllPublished = () => {
         .get(`${API_URL}/apartments`)
         .then(res => {
           dispatch(fetchSuccess(res.data));
-          console.log('res w redux', res);
-          console.log('res.data w redux', res.data);
+          // console.log('res.data w redux', res.data);
         })
         .catch(err => {
           dispatch(fetchError(err.message || true));
-          console.log('err w redux', err);
         });
     }
   };

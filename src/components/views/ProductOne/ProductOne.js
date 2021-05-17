@@ -174,9 +174,10 @@ class Component extends React.Component {
     // console.log('this.state.order w render', order);
     // console.log('getOne:', getOne);
 
+    // fotki "zaślepkowe", gdy brakuje zdjęcia w bazie danych
     const plugImageFirst = '/images/offers/photo_test.jpg';
-    const plugImageSecond = 'https://placeimg.com/640/480/any';
-    const plugImageThird = 'https://placeimg.com/640/480/any';
+    const plugImageSecond = '/images/offers/photo_test2.jpg';
+    const plugImageThird = '/images/offers/photo_test3.jpg';
 
 
     const location = {

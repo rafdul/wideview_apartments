@@ -24,7 +24,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#FFF",
   "theme_color": "#363535",
@@ -36,5 +36,5 @@
     "https://maps.google.com/*",
     "https://maps.googleapis.com/*"
   ],
-  "content_security_policy": "default-src 'none'; style-src 'self'; script-src 'self'; connect-src https://maps.googleapis.com; img-src https://maps.google.com"
+  "content_security_policy": "default-src 'none'; style-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; connect-src https://maps.googleapis.com; img-src https://maps.google.com"
 }
