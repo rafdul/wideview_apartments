@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { LocationPin } from '../../features/LocationPin/LocationPin';
+// import { LocationPin } from '../../features/LocationPin/LocationPin';
 import { PlusMinusSwitcher } from '../../features/PlusMinusSwitcher/PlusMinusSwitcher';
 import { DatePicker } from '../../features/DatePicker/DatePicker';
 import { Loading } from '../../common/Loading/Loading';
@@ -19,7 +19,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
-import GoogleMapReact from 'google-map-react';
+// import GoogleMapReact from 'google-map-react';
 
 import uniqid from 'uniqid';
 import clsx from 'clsx';
@@ -180,12 +180,11 @@ class Component extends React.Component {
     const plugImageThird = '/images/offers/photo_test3.jpg';
 
 
-    const location = {
-      address: getOne.name,
-      lat: getOne.location === undefined ? 0 : getOne.location.lat,
-      lng: getOne.location === undefined ? 0 : getOne.location.lng,
-    };
-    // console.log('location:', location);
+    // const location = {
+    //   address: getOne.name,
+    //   lat: getOne.location === undefined ? 0 : getOne.location.lat,
+    //   lng: getOne.location === undefined ? 0 : getOne.location.lng,
+    // };
 
     if(loadingOrders && loadingOrders.active === true) {
       return(
@@ -273,7 +272,7 @@ class Component extends React.Component {
                         {getOne.city}
                       </Typography>
                       <Paper variant="outlined">
-                        {location.address !== undefined
+                        {/* {location.address !== undefined
                           ?
                           <div className={styles.map}>
                             <GoogleMapReact
@@ -290,7 +289,10 @@ class Component extends React.Component {
                           </div>
                           :
                           null
-                        }
+                        } */}
+                        <div className={styles.map}>
+                          <iframe src={getOne.map} title={getOne.name + '-' + getOne.city} className={styles.map__item}/>
+                        </div>
                       </Paper>
                     </CardContent>
                   </Card>
