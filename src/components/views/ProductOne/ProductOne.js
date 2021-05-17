@@ -161,8 +161,6 @@ class Component extends React.Component {
       } else {
         localStorage.setItem('booking', JSON.stringify(booking));
       }
-
-
     }
   }
 
@@ -175,6 +173,11 @@ class Component extends React.Component {
     const { order, statusProduct, open, btnActive } = this.state;
     // console.log('this.state.order w render', order);
     // console.log('getOne:', getOne);
+
+    const plugImageFirst = '/images/offers/photo_test.jpg';
+    const plugImageSecond = 'https://placeimg.com/640/480/any';
+    const plugImageThird = 'https://placeimg.com/640/480/any';
+
 
     const location = {
       address: getOne.name,
@@ -206,7 +209,7 @@ class Component extends React.Component {
                   <CardMedia
                     className={styles.image[0]}
                     component="img"
-                    image={getOne.image === undefined ? '/images/offers/photo_test.jpg' : getOne.image[0]}
+                    image={getOne.image === undefined ? plugImageFirst : getOne.image[0]}
                     title={`${getOne.name}_1`}
                   />
                 </section>
@@ -219,7 +222,7 @@ class Component extends React.Component {
                   <CardMedia
                     className={styles.image}
                     component="img"
-                    image={getOne.image === undefined ? 'https://placeimg.com/640/480/any' : getOne.image[1]}
+                    image={getOne.image === undefined ? plugImageSecond : getOne.image[1]}
                     title={`${getOne.name}_2`}
                   />
                 </section>
@@ -232,7 +235,7 @@ class Component extends React.Component {
                   <CardMedia
                     className={styles.image}
                     component="img"
-                    image={getOne.image === undefined ? 'https://placeimg.com/640/480/any' : getOne.image[2]}
+                    image={getOne.image === undefined ? plugImageThird : getOne.image[2]}
                     title={`${getOne.name}_3`}
                   />
                 </section>
