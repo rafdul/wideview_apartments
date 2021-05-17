@@ -291,7 +291,7 @@ class Component extends React.Component {
                           null
                         } */}
                         <div className={styles.map}>
-                          <iframe src={getOne.map} title={getOne.name + '-' + getOne.city} className={styles.map__item}/>
+                          <iframe src={getOne.map} title={getOne.name + '-' + getOne} className={styles.map__item}/>
                         </div>
                       </Paper>
                     </CardContent>
