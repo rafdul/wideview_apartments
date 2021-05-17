@@ -31,6 +31,12 @@ app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'));
 });
 
+/* START SERVER */
+const port = process.env.PORT || 8000;
+app.listen(port, () => {
+  console.log('Server is running on port: '+port);
+});
+
 /* MONGOOSE */
 // console.log('app get env:', app.get('env'));
 // const dbURI = (app.get('env') === 'production')
@@ -43,8 +49,4 @@ db.once('open', () => {
 });
 db.on('error', err => console.log('Error: ' + err));
 
-/* START SERVER */
-const port = process.env.PORT || 8000;
-app.listen(port, () => {
-  console.log('Server is running on port: '+port);
-});
+
