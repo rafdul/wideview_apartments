@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { API_URL } from '../config';
 
 /* selectors */
 export const getAllApartments = ({apartments}) => apartments.data;
@@ -32,7 +33,7 @@ export const fetchAllPublished = () => {
       dispatch(fetchStarted());
 
       Axios
-        .get('http://localhost:8000/api/apartments')
+        .get(`${API_URL}/apartments`)
         .then(res => {
           dispatch(fetchSuccess(res.data));
         })
@@ -48,7 +49,7 @@ export const fetchOnePublished = (id) => {
     dispatch(fetchStarted());
 
     Axios
-      .get(`http://localhost:8000/api/apartments/${id}`)
+      .get(`${API_URL}/apartments/${id}`)
       .then(res => {
         dispatch(fetchOne(res.data));
       })

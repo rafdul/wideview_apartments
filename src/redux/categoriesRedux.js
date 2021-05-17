@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { API_URL } from '../config';
 
 /* selectors */
 export const getAllCategories = ({categories}) => categories.data;
@@ -27,7 +28,7 @@ export const fetchAllCategories = () => {
       dispatch(fetchStarted());
 
       Axios
-        .get('http://localhost:8000/api/category')
+        .get(`${API_URL}/category`)
         .then(res => {
           dispatch(fetchSuccess(res.data));
         })
