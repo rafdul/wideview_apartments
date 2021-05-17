@@ -57,6 +57,7 @@
     "express": "^4.17.1",
     "formik": "^2.2.6",
     "google-map-react": "^2.1.9",
+    "helmet": "^4.6.0",
     "mongodb": "^3.3.2",
     "mongoose": "^5.7.1",
     "node-sass": "^4.13.0",

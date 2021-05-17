@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const helmet = require('helmet');
 
 const apartmentsRoutes = require('./routes/apartments.routes');
 const ordersRoutes = require('./routes/orders.routes');
@@ -14,6 +15,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(helmet());
 
 /* API ENDPOINTS */
 app.use('/api', apartmentsRoutes);
