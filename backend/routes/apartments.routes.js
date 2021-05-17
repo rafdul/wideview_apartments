@@ -9,6 +9,7 @@ router.get('/apartments', async (req, res) => {
     // console.log(req);
     if(!result) res.status(404).json({ apartment: 'Not found'});
     else res.json(result);
+    console.log(result);
   }
   catch(err) {
     res.status(500).json(err);

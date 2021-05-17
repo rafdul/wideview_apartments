@@ -25,14 +25,14 @@ export const fetchOne = payload => ({ payload, type: FETCH_ONE });
 
 /* thunk creators */
 export const fetchAllPublished = () => {
-  return(dispatch, getState) => {
+  return async (dispatch, getState) => {
     const { apartments } = getState();
     // console.log('apartments', apartments);
 
     if(apartments.data.length === 0 && apartments.loading.active === false) {
       dispatch(fetchStarted());
 
-      Axios
+      await Axios
         .get(`${API_URL}/apartments`)
         .then(res => {
           dispatch(fetchSuccess(res.data));
