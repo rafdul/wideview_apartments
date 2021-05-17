@@ -17,6 +17,7 @@ class Component extends React.Component {
   componentDidMount() {
     const { fetchAllApartments } = this.props;
     fetchAllApartments();
+    console.log('fetchAllApartments', fetchAllApartments);
   }
 
   render() {
