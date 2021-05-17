@@ -43,7 +43,7 @@ app.listen(port, () => {
 console.log('port', port);
 
 /* MONGOOSE */
-mongoose.connect(`mongodb+srv://rafal:kodilla@cluster0.67klc.mongodb.net/videwievDB?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(`mongodb+srv://${process.env.userApp}:${process.env.mongoApp}@cluster0.67klc.mongodb.net/videwievDB?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.once('open', () => {
   console.log('Successfully connected to the database');
