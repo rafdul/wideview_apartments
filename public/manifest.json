@@ -36,6 +36,5 @@
     "https://localhost/*",
     "https://maps.google.com/*",
     "https://maps.googleapis.com/*"
-  ],
-  "content_security_policy": "default-src 'none'; style-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; connect-src https://maps.googleapis.com; img-src https://maps.google.com"
+  ]
 }
