@@ -1,6 +1,4 @@
-This is Create React App with API server (Express) that uses database on the Mongo Atlas (and tools of Mongoose).
-
-## Available Scripts
+## This is Create React App with API server (Express) that uses database on the Mongo Atlas (and tools of Mongoose).
 
 Install packages: 
 
@@ -13,6 +11,7 @@ Run app in the project directory:
 Start API server:
 
 ### `npx nodemon backend/server.js`
+
 
 The app is deployed on Heroku:
 
