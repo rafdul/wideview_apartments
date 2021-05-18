@@ -1,6 +1,6 @@
 import {combineReducers, createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
-// import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { initialState } from './initialState';
 import { reducer as apartmentsReducer } from './apartmentsRedux';
@@ -27,11 +27,11 @@ const combinedReducers = combineReducers(reducers);
 export const store = createStore(
   combinedReducers,
   initialState,
-  // composeWithDevTools(
-  //   applyMiddleware(thunk)
-  // ),
-  compose(
-    applyMiddleware(thunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeWithDevTools(
+    applyMiddleware(thunk)
   ),
+  // compose(
+  //   applyMiddleware(thunk),
+  //   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  // ),
 );
