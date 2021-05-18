@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 // import { LocationPin } from '../../features/LocationPin/LocationPin';
 import { PlusMinusSwitcher } from '../../features/PlusMinusSwitcher/PlusMinusSwitcher';
 import { DatePicker } from '../../features/DatePicker/DatePicker';
@@ -290,9 +291,11 @@ class Component extends React.Component {
                           :
                           null
                         } */}
+
                         <div className={styles.map}>
                           <iframe src={getOne.map} title={getOne.name + '-' + getOne} className={styles.map__item}/>
                         </div>
+
                       </Paper>
                     </CardContent>
                   </Card>
